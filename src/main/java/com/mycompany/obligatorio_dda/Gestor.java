@@ -9,11 +9,13 @@ package com.mycompany.obligatorio_dda;
  * @author Usuario
  */
 public class Gestor implements ITipoCliente{
-    private static float descuento;
+    private static float descuento = 0.3f; //30% se puede modificar
 
     @Override
-    public float calcularCostoLlamada() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public float calcularCostoLlamada(Llamada llamada) {
+        int tiempoLlamada =(llamada.getHoraFin().getSecond()-llamada.getHoraAtencion().getSecond());
+        float costo = (tiempoLlamada * (Llamada.getCostoFijo()/2)) * descuento;
+        return costo;
     }
     
 }

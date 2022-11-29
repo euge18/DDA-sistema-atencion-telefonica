@@ -12,7 +12,8 @@ import java.util.ArrayList;
  * @author Usuario
  */
 public class Llamada {
-    private static int costoFijo;
+    
+    private static int costoFijo = 1;
     
     private int idLlamada;
     private EstadoLLamada estado;
@@ -136,6 +137,11 @@ public class Llamada {
 
     public void setObservadores(ArrayList<IObserverLlamada> observadores) {
         this.observadores = observadores;
+    }
+    
+    public void calcularCosto (){
+        float costo = cliente.getTipo().calcularCostoLlamada(this);
+        this.costo = costo;
     }
     
     
