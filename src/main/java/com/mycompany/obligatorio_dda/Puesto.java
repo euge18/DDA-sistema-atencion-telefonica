@@ -75,4 +75,8 @@ public class Puesto {
             llamada.setTrabajador(trabajadorAsignado);
             llamadaEnAtencion = llamada;
     }
+    
+    public void finalizarLlamada(Llamada llamamda){
+        llamamda.setEstado(EstadoLLamada.FINALIZADA);
+    }
 }
