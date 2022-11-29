@@ -17,16 +17,6 @@ public class Puesto {
     private Trabajador trabajadorAsignado;
     private Llamada llamadaEnAtencion;
     private int cantidadLlamadasAtendidas;
-    private float tiempoTotalAtencion;
-
-    public float getTiempoTotalAtencion() {
-        return tiempoTotalAtencion;
-    }
-
-    //El tiempo total se va incrementando llamada a llamada
-    public void setTiempoTotalAtencion(float tiempoTotalAtencion) {
-        this.tiempoTotalAtencion += tiempoTotalAtencion;
-    }
 
     public Puesto(int numeroPuesto, boolean activo, Trabajador trabajadorAsignado) {
         this.numeroPuesto = numeroPuesto;

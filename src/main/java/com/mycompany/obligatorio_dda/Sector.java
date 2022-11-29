@@ -86,17 +86,18 @@ public class Sector implements IObserverLlamada{
         puesto.setTrabajadorAsignado(null);
     }
     
+    //calcular timepo segun la lista de llamadas finalizadas
     public float calcularTiempoPromedioAtencion (){
         float timepoTotalAtencion = 0;
-        for(Puesto p : puestos){
-            timepoTotalAtencion += p.getTiempoTotalAtencion();
+        for(Llamada l : llamadasFinalizadas){
+            timepoTotalAtencion += (l.getHoraAtencion().getSecond()-l.getHoraFin().getSecond());
         }
         return timepoTotalAtencion/puestos.size();
     }
     
     public void recibirLlamada (Llamada llamada){
         try{
-            if (llamadasEspera.size() < 5) {
+            if (llamadasEspera.size() <= 5) {
                 llamadasEspera.add(llamada);
                 derivarLlamadaAPuesto(llamada);
             }
