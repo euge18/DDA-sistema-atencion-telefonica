@@ -144,5 +144,28 @@ public class Llamada {
         this.costo = costo;
     }
     
+    //Aqui se llama a esta funcion cuando se cambie el estado de la llamada a CURSO y FINALIZADA
+    public void notifiacearObservers(){
+        for(IObserverLlamada o : observadores){
+            o.update(this);
+        }
+    }
+    
+    //cuando la llamada deriva a un puesto a Sector se lo agrega
+    public void agregarObservador (IObserverLlamada o){
+        observadores.add(o);
+    }
+    
+    //cuando la llamada finaliza a Sector ya no le interesa seguir observando
+    public void removerObservador (IObserverLlamada o){
+        observadores.remove(o);
+    }
+    
+    /*
+    los metodos del UML (Llamada() (que en si seria atenderLlamada) y 
+    finalizarLlamada() son en si acciones que el cliente y el funcionario
+    provocan desde los formularios modificando los atributos de la llamada
+    */
+    
     
 }
