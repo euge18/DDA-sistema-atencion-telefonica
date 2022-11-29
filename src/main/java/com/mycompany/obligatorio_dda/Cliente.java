@@ -53,6 +53,8 @@ public class Cliente {
         this.tipo = tipo;
     }
     
-    //para el metodo hacer llamada sea una accion del boton del formulario que crea un obj Llamada
+    public void hacerLlmada(){
+        Llamada llamada = new Llamada();
+    }
     
 }

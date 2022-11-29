@@ -28,8 +28,7 @@ public class Llamada {
     private Trabajador trabajador; 
     private ArrayList<IObserverLlamada> observadores;
 
-    public Llamada(int idLlamada, EstadoLLamada estado, LocalDateTime horaInicio, Cliente cliente) {
-        this.idLlamada = idLlamada;
+    public Llamada(EstadoLLamada estado, LocalDateTime horaInicio, Cliente cliente) {
         this.estado = estado;
         this.horaInicio = horaInicio;
         this.cliente = cliente;
@@ -56,6 +55,10 @@ public class Llamada {
     }
 
     public void setEstado(EstadoLLamada estado) {
+        if(estado == EstadoLLamada.FINALIZADA){
+            notifiacearObservers();
+            this.estado = estado;
+        }
         this.estado = estado;
     }
 

@@ -111,7 +111,9 @@ public class Sector implements IObserverLlamada{
         try {
             Puesto puestoLibre = obtenerPuestoLibre();
             if (puestoLibre != null) {
-                puestoLibre.setLlamadaEnAtencion(llamada);
+                puestoLibre.atenderLlamada(llamada);
+                //Sector se agrega como observer
+                llamada.agregarObservador(this);
                 llamada.setEstado(EstadoLLamada.CURSO);
                 //Aqui se llama al observer desde la funcion del setEstado, 
                 //pues sector debe saber cuando finaliza para agregarla a las llamadas 
@@ -141,8 +143,9 @@ public class Sector implements IObserverLlamada{
             llamadasFinalizadas.add(llamada);
             llamada.removerObservador(this);
             Llamada proximaLlamada = llamadasEspera.get(0);
-            derivarLlamadaAPuesto(proximaLlamada);
-            
+            if(proximaLlamada!=null){
+                derivarLlamadaAPuesto(proximaLlamada);
+            }  
         }
     }
 }

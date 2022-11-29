@@ -4,6 +4,8 @@
  */
 package com.mycompany.obligatorio_dda;
 
+import java.time.LocalDateTime;
+
 
 /**
  *
@@ -71,5 +73,16 @@ public class Puesto {
     public void setCantidadLlamadasAtendidas(int cantidadLlamadasAtendidas) {
         this.cantidadLlamadasAtendidas = cantidadLlamadasAtendidas;
     }
-   
+    
+    //AtenderLlamada es otra accion que se reliza desde el formulario
+    //otra opcion es que sector no setee la llamada en Atencion, sino que se la pase al puesto y este
+    //sea quien la setee
+ 
+    //puede haber otro parametro booleano para botones de aceptar o rechazar la llamda
+    public void atenderLlamada(Llamada llamada){
+            llamada.setHoraAtencion(LocalDateTime.now());
+            llamada.setPuesto(this);
+            llamada.setTrabajador(trabajadorAsignado);
+            llamadaEnAtencion = llamada;
+    }
 }
