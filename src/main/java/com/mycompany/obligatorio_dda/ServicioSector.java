@@ -12,4 +12,17 @@ import java.util.ArrayList;
  */
 public class ServicioSector {
     private ArrayList<Sector> sectores;
+    private static ServicioSector instancia = null; //Singleton 
+    
+    public static ServicioSector getInstancia(){
+       if(instancia == null){
+           instancia = new ServicioSector();
+       }
+       return instancia;
+    }
+    
+    private ServicioSector(){
+        sectores = new ArrayList<>();
+        //Agregar sectores
+    }
 }
