@@ -12,4 +12,17 @@ import java.util.ArrayList;
  */
 public class ServicioCliente {
     private ArrayList<Cliente> clientes;
+    private static ServicioCliente instancia = null; //Singleton 
+    
+    public static ServicioCliente getInstancia(){
+       if(instancia == null){
+           instancia = new ServicioCliente();
+       }
+       return instancia;
+    }
+    
+    private ServicioCliente(){
+        clientes = new ArrayList<>();
+        //Agregar clientes
+    }
 }

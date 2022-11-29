@@ -14,4 +14,17 @@ public class ServicioLlamada {
     private static int ultimoIdLlamada;
     
     private ArrayList<Llamada> llamadas;
+    private static ServicioLlamada instancia = null; //Singleton 
+    
+    public static ServicioLlamada getInstancia(){
+       if(instancia == null){
+           instancia = new ServicioLlamada();
+       }
+       return instancia;
+    }
+    
+    private ServicioLlamada(){
+        llamadas = new ArrayList<>();
+        ultimoIdLlamada = 0;
+    }
 }
