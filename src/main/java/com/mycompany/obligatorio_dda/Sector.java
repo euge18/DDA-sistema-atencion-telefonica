@@ -112,6 +112,7 @@ public class Sector implements IObserverLlamada{
             Puesto puestoLibre = obtenerPuestoLibre();
             if (puestoLibre != null) {
                 puestoLibre.atenderLlamada(llamada);
+                llamada.setSector(this);
                 //Sector se agrega como observer
                 llamada.agregarObservador(this);
                 llamada.setEstado(EstadoLLamada.CURSO);

@@ -25,4 +25,8 @@ public class ServicioPuesto {
         puestos = new ArrayList<>();
         //Agregar puestos
     }
+    
+    public ArrayList<Puesto> obtenerPuestos(){
+        return puestos;
+    }
 }

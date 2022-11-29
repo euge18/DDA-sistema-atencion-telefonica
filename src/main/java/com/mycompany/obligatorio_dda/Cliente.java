@@ -4,6 +4,8 @@
  */
 package com.mycompany.obligatorio_dda;
 
+import java.time.LocalDateTime;
+
 /**
  *
  * @author Usuario
@@ -54,7 +56,9 @@ public class Cliente {
     }
     
     public void hacerLlmada(){
-        Llamada llamada = new Llamada();
+        Llamada llamada = new Llamada(EstadoLLamada.PENDIENTE, LocalDateTime.now(), this);
+        //Cuando ServicioLlamada este listo
+        //ServicioLlamada.agregarLlamada(llamada);
     }
     
 }

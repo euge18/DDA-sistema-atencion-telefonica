@@ -25,4 +25,8 @@ public class ServicioCliente {
         clientes = new ArrayList<>();
         //Agregar clientes
     }
+    
+    public ArrayList<Cliente> obtenerClientes(){
+        return clientes;
+    }
 }
