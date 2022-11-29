@@ -25,4 +25,14 @@ public class ServicioSector {
         sectores = new ArrayList<>();
         //Agregar sectores
     }
+    
+    public Sector ObtenerSector(int numSector){
+        for(Sector s : sectores){
+            if(s.getNumeroSector() == numSector){
+                return s;
+            }
+        }
+        return null;
+    }
+    
 }
