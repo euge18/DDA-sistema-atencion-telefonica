@@ -12,4 +12,17 @@ import java.util.ArrayList;
  */
 public class ServicioPuesto {
     private ArrayList<Puesto> puestos;
+    private static ServicioPuesto instancia = null; //Singleton 
+    
+    public static ServicioPuesto getInstancia(){
+       if(instancia == null){
+           instancia = new ServicioPuesto();
+       }
+       return instancia;
+    }
+    
+    private ServicioPuesto(){
+        puestos = new ArrayList<>();
+        //Agregar puestos
+    }
 }
