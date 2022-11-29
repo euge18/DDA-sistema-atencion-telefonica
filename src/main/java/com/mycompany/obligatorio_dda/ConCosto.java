@@ -22,5 +22,4 @@ public class ConCosto implements ITipoCliente{
             return costo;
         }
     }
-    
 }
