@@ -27,4 +27,17 @@ public class ServicioTrabajador {
         //trabajadores.add(new Trabajador(1,"1122","123Demo","Juan",));
     }
     
+    public ArrayList<Trabajador> ObtenerTrabajadores(){
+        return trabajadores;
+    }
+    
+    public ArrayList<Trabajador> ObtenerTrabajadoresPorSector(int numSector){
+        ArrayList<Trabajador> trabajadoresPorSector = new ArrayList<>();
+        for(Trabajador t : trabajadores){
+            if(t.getSector().getNumeroSector() == numSector){
+                trabajadoresPorSector.add(t);
+            }
+        }
+        return trabajadoresPorSector;
+    }
 }
