@@ -80,11 +80,15 @@ public class Puesto {
  
     //puede haber otro parametro booleano para botones de aceptar o rechazar la llamda
     public void atenderLlamada(Llamada llamada){
+            llamada.setEstado(EstadoLLamada.CURSO);
             llamada.setHoraAtencion(LocalDateTime.now());
             llamada.setPuesto(this);
             llamada.setTrabajador(trabajadorAsignado);
             llamadaEnAtencion = llamada;
     }
+    
+    //Aqui podria haber una funcion contestar, 
+    //para que el puesto no atienda de inmediato sino que el trabajador tenga la potestad
     
     public void finalizarLlamada(Llamada llamamda){
         llamamda.setEstado(EstadoLLamada.FINALIZADA);

@@ -21,6 +21,9 @@ public class Sector implements IObserverLlamada{
     public Sector(int numeroSector, String nombre) {
         this.numeroSector = numeroSector;
         this.nombre = nombre;
+        //Inicializo las listas en el constructor
+        llamadasEspera = new ArrayList<Llamada>();
+        llamadasFinalizadas = new ArrayList<Llamada>();
     }
 
     public int getNumeroSector() {
@@ -116,7 +119,6 @@ public class Sector implements IObserverLlamada{
                 llamada.setSector(this);
                 //Sector se agrega como observer
                 llamada.agregarObservador(this);
-                llamada.setEstado(EstadoLLamada.CURSO);
                 //Aqui se llama al observer desde la funcion del setEstado, 
                 //pues sector debe saber cuando finaliza para agregarla a las llamadas 
                 //finalizadas y reasignar el puesto

@@ -41,9 +41,15 @@ public class PrincipalPruebas {
       System.out.println(clientePrueba.getNombreCompleto());
       
       //llama a Adimnistracion
+      //Hasta este punto bien, Sector la recibe y deriva al puesto correspondiente
       clientePrueba.hacerLlmada(0);
       
       //el puesto libre en Administracion es el 0 atendido por Pablo Estigarribia
+      Puesto puestoPrueba = SP.obtenerPuesto(0);
+      Llamada llamada= puestoPrueba.getLlamadaEnAtencion();
+        System.out.println("Datos: " + llamada.getIdLlamada() + " " + llamada.getEstado() + " " + llamada.getTrabajador().getNombre() + " " + llamada.getCliente().getNombreCompleto() + " " + llamada.getHoraAtencion());
+      
+
       
     }
 }

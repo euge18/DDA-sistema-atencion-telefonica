@@ -48,4 +48,13 @@ public class ServicioPuesto {
         return puestosPorSector;
     }
     
+    public Puesto obtenerPuesto(int numeroPuesto){
+        for (Puesto p : puestos){
+            if(p.getNumeroPuesto()==numeroPuesto){
+                return p;
+            }
+        }
+        return null;
+    }
+    
 }
