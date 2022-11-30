@@ -79,4 +79,5 @@ public class Puesto {
     public void finalizarLlamada(Llamada llamamda){
         llamamda.setEstado(EstadoLLamada.FINALIZADA);
     }
+    
 }

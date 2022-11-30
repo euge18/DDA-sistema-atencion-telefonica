@@ -56,8 +56,8 @@ public class Llamada {
 
     public void setEstado(EstadoLLamada estado) {
         if(estado == EstadoLLamada.FINALIZADA){
+            this.puesto.setActivo(false);
             notifiacearObservers();
-            this.estado = estado;
         }
         this.estado = estado;
     }
