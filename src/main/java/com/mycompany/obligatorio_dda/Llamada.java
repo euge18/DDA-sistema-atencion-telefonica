@@ -144,13 +144,16 @@ public class Llamada {
         this.observadores = observadores;
     }
     
-    public void calcularCosto (){
-        float costo = cliente.getTipo().calcularCostoLlamada(this);
-        this.costo = costo;
+    public float calcularCosto (Llamada llamada){
+        return cliente.getTipo().calcularCostoLlamada(llamada);
     }
     
     //Se rompe aqui cuando finaliza la funcion update, no regresa el control a la clase principal
     //quizas porque ese update remueve el observador en el medio de la ejecucuion del for?
+    
+    //Cunado el cliente finaliza la llamda se da setEstado y notifica que finalizo, como finalizo
+    //va al for a recorrer sus observadores (size = 1) y va al update de Sector, y este se remueve
+    //cuando regresa el control al for el size=0 y rompe
     public void notifiacearObservers(){
         for(IObserverLlamada o : observadores){
             o.update(this);

@@ -4,7 +4,10 @@
  */
 package com.mycompany.obligatorio_dda;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -58,13 +61,48 @@ public class PrincipalPruebas{
         System.out.println("Observadores de esta llamada: " + llamada.getObservadores().size());
         
         System.out.println("Estado Llamada: " + llamada.getEstado());
-        clientePrueba.finalizarLlamda(llamada);
         
-        System.out.println("Estado Llamada: " + llamada.getEstado());
-        
+        //Tanto cliente como puesto pueden finalizar la llamada el caso es que se rompe en la notificacion del observer
+        //clientePrueba.finalizarLlamda(llamada);
+        //puestoPrueba.finalizarLlamada(llamada);      
+        //System.out.println("Estado Llamada: " + llamada.getEstado()); 
         //Aqui Sector ya deberia haberse removido como observador
-        System.out.println("Observadores de esta llamada: " + llamada.getObservadores().size());
-          
+        //System.out.println("Observadores de esta llamada: " + llamada.getObservadores().size());
+        
+        //CALCULO COSTO LLAMADA
+        
+        //clientePrueba es de tipo ConCosto
+        Cliente clienteExonerado = SC.obtenerCliente(1);
+        Cliente clienteGestor = SC.obtenerCliente(2);
+
+        
+        Llamada llamadaPruebaCosto = new Llamada(EstadoLLamada.FINALIZADA , LocalDateTime.now(),  clienteGestor);
+        llamadaPruebaCosto.setIdLlamada(7);
+        llamadaPruebaCosto.setDescripcion("Esta es una descripcion de Prueba");
+        llamadaPruebaCosto.setPuesto(puestoPrueba);
+        llamadaPruebaCosto.setTrabajador(puestoPrueba.getTrabajadorAsignado());
+        llamadaPruebaCosto.setSector(sectorPrueba);
+        
+        
+        System.out.println("Datos: " + llamadaPruebaCosto.getEstado() + " " + llamadaPruebaCosto.getCliente().getNombreCompleto() + " " + llamadaPruebaCosto.getHoraInicio());
+        
+        int respuesta = 1;
+        while(respuesta != 0){
+            respuesta = Integer.parseInt(JOptionPane.showInputDialog("Presione 0 para atender la llamda"));
+            llamadaPruebaCosto.setHoraAtencion(LocalDateTime.now());
+        }
+        
+        while (respuesta != 1) {
+            respuesta = Integer.parseInt(JOptionPane.showInputDialog("Presione 1 para finalizar la llamda"));
+            llamadaPruebaCosto.setHoraFin(LocalDateTime.now());
+        }
+        
+        System.out.println("La llamada demoro en ser atendida: " + (llamadaPruebaCosto.getHoraInicio().getSecond() - llamadaPruebaCosto.getHoraAtencion().getSecond()) + " segundos");
+        System.out.println("La llamada fue atendida durante: " + (llamadaPruebaCosto.getHoraFin().getSecond()- llamadaPruebaCosto.getHoraAtencion().getSecond()) + " segundos");
+        
+        System.out.println("El costo de la llamda fue de: " + llamadaPruebaCosto.calcularCosto(llamadaPruebaCosto));
+        //float costo = llamadaPruebaCosto.calcularCosto();
+        //llamadaPruebaCosto.setCosto(llamadaPruebaCosto.calcularCosto());
     }
 
 }

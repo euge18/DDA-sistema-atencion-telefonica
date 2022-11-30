@@ -9,12 +9,19 @@ package com.mycompany.obligatorio_dda;
  * @author Usuario
  */
 public class Gestor implements ITipoCliente{
-    private static float descuento = 0.3f; //30% se puede modificar
+    private static float descuento = 0.7f; //30% se puede modificar
 
     @Override
-    public float calcularCostoLlamada(Llamada llamada) {
+    public float calcularCostoLlamada(Llamada llamada) {    
+        //Hay que revisar el calculo del tiempo porque puede dar negativo
         int tiempoLlamada =(llamada.getHoraFin().getSecond()-llamada.getHoraAtencion().getSecond());
-        float costo = (tiempoLlamada * (Llamada.getCostoFijo()/2)) * descuento;
+        System.out.println(llamada.getHoraFin().getSecond());
+        System.out.println(llamada.getHoraAtencion().getSecond());
+        float costoFijo = (float)Llamada.getCostoFijo();
+        float costo = (tiempoLlamada * (costoFijo/2)) * descuento;
+        if(costo<0){
+            costo = 0;
+        }
         return costo;
     }
     

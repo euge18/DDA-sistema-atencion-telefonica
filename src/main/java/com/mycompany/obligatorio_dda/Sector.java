@@ -4,6 +4,7 @@
  */
 package com.mycompany.obligatorio_dda;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
@@ -144,6 +145,7 @@ public class Sector implements IObserverLlamada{
     @Override
     public void update(Llamada llamada) {
         if (llamada.getEstado() == EstadoLLamada.FINALIZADA){
+            llamada.setHoraFin(LocalDateTime.now());
             llamadasFinalizadas.add(llamada);
             llamada.removerObservador(this);
             
