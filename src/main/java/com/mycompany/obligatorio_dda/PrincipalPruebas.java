@@ -52,14 +52,6 @@ public class PrincipalPruebas{
       
       //Ahora voy a ver si puedo dejar 10 segundos con un Thread para el posterior calculo del costo
       
-      Thread t = new Thread(() -> {
-          try {
-              Thread.sleep(5000);
-          } catch (InterruptedException ex) {
-              
-          }
-      }, "otro hilo");
-        t.start();
         
         //Aqui deberia deberia estar Sector observando
         //Quize hacer un for pero no da datos el tipo de la interfaz
@@ -67,6 +59,7 @@ public class PrincipalPruebas{
         
         System.out.println("Estado Llamada: " + llamada.getEstado());
         clientePrueba.finalizarLlamda(llamada);
+        
         System.out.println("Estado Llamada: " + llamada.getEstado());
         
         //Aqui Sector ya deberia haberse removido como observador

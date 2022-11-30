@@ -146,14 +146,18 @@ public class Sector implements IObserverLlamada{
         if (llamada.getEstado() == EstadoLLamada.FINALIZADA){
             llamadasFinalizadas.add(llamada);
             llamada.removerObservador(this);
-            //Se rompe aqui cuando llamda viene null
-            Llamada proximaLlamada = llamadasEspera.get(0);
-            if(proximaLlamada==null){
+            
+            if (llamadasEspera.size()==0){
                 System.out.println("No hay mas llamadas por ahora");
-            }  else {
+            } else {
+                Llamada proximaLlamada = llamadasEspera.get(0);
                 System.out.println("Proxima llamada");
                 derivarLlamadaAPuesto(proximaLlamada);
             }
+            //Se rompe aqui cuando llamda viene null
+            
+            //if(proximaLlamada==null){
+            //}  else {}
         }
     }
 }

@@ -57,12 +57,11 @@ public class Llamada {
     }
 
     public void setEstado(EstadoLLamada estado) {
-        if(estado == EstadoLLamada.FINALIZADA){
+        if(this.estado != estado){
             //Gran ERRROR: como no seteaba primero siempre al update le llegaba en CURSO y rebotaba
             this.estado = estado;
             notifiacearObservers();
         }
-        this.estado = estado;
     }
 
     public LocalDateTime getHoraInicio() {
@@ -150,7 +149,8 @@ public class Llamada {
         this.costo = costo;
     }
     
-    //Aqui se llama a esta funcion cuando se cambie el estado de la llamada a CURSO y FINALIZADA
+    //Se rompe aqui cuando finaliza la funcion update, no regresa el control a la clase principal
+    //quizas porque ese update remueve el observador en el medio de la ejecucuion del for?
     public void notifiacearObservers(){
         for(IObserverLlamada o : observadores){
             o.update(this);
