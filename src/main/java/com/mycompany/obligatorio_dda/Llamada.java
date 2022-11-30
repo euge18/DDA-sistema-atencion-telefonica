@@ -32,6 +32,8 @@ public class Llamada {
         this.estado = estado;
         this.horaInicio = horaInicio;
         this.cliente = cliente;
+        
+        this.observadores = new ArrayList<IObserverLlamada>();
     }
 
     public static int getCostoFijo() {
@@ -56,8 +58,9 @@ public class Llamada {
 
     public void setEstado(EstadoLLamada estado) {
         if(estado == EstadoLLamada.FINALIZADA){
-            notifiacearObservers();
+            //Gran ERRROR: como no seteaba primero siempre al update le llegaba en CURSO y rebotaba
             this.estado = estado;
+            notifiacearObservers();
         }
         this.estado = estado;
     }

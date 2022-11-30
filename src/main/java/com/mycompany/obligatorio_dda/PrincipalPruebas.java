@@ -10,9 +10,9 @@ import java.util.ArrayList;
  *
  * @author zeek2
  */
-public class PrincipalPruebas {
+public class PrincipalPruebas{
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         
       //Para que lo primero que hagan las instancias sea inicializar las listas   
       ServicioCliente SC = ServicioCliente.getInstancia();
@@ -45,11 +45,33 @@ public class PrincipalPruebas {
       clientePrueba.hacerLlmada(0);
       
       //el puesto libre en Administracion es el 0 atendido por Pablo Estigarribia
+      //Funciona bien
       Puesto puestoPrueba = SP.obtenerPuesto(0);
       Llamada llamada= puestoPrueba.getLlamadaEnAtencion();
-        System.out.println("Datos: " + llamada.getIdLlamada() + " " + llamada.getEstado() + " " + llamada.getTrabajador().getNombre() + " " + llamada.getCliente().getNombreCompleto() + " " + llamada.getHoraAtencion());
+      System.out.println("Datos: " + llamada.getIdLlamada() + " " + llamada.getEstado() + " " + llamada.getTrabajador().getNombre() + " " + llamada.getCliente().getNombreCompleto() + " " + llamada.getHoraAtencion());
       
-
+      //Ahora voy a ver si puedo dejar 10 segundos con un Thread para el posterior calculo del costo
       
+      Thread t = new Thread(() -> {
+          try {
+              Thread.sleep(5000);
+          } catch (InterruptedException ex) {
+              
+          }
+      }, "otro hilo");
+        t.start();
+        
+        //Aqui deberia deberia estar Sector observando
+        //Quize hacer un for pero no da datos el tipo de la interfaz
+        System.out.println("Observadores de esta llamada: " + llamada.getObservadores().size());
+        
+        System.out.println("Estado Llamada: " + llamada.getEstado());
+        clientePrueba.finalizarLlamda(llamada);
+        System.out.println("Estado Llamada: " + llamada.getEstado());
+        
+        //Aqui Sector ya deberia haberse removido como observador
+        System.out.println("Observadores de esta llamada: " + llamada.getObservadores().size());
+          
     }
+
 }
