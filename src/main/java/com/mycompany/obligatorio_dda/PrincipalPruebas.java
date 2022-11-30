@@ -4,6 +4,8 @@
  */
 package com.mycompany.obligatorio_dda;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author zeek2
@@ -20,14 +22,28 @@ public class PrincipalPruebas {
       ServicioTrabajador ST = ServicioTrabajador.getInstancia();
       
       //Hay que tener cudado con las listas que sector nesecita de puestos y trabajadores
-      //Se pueden inicilizar como ArraysList vacias en los constructores o como aqui (que ya estan
-      // precargados pero no asignados a sector)
+      //Se pueden inicilizar como ArraysList vacios en los constructores, o llamar a los servicios
+      //de trabajador y puestos y pedirle sus listas por sector 
       Sector sectorPrueba = SS.ObtenerSector(0);
       sectorPrueba.setPuestos(SP.ObtenerPuetosPorSector(sectorPrueba.getNumeroSector()));
       sectorPrueba.setTrabajadores(ST.ObtenerTrabajadoresPorSector(sectorPrueba.getNumeroSector()));
       for (Puesto p : sectorPrueba.getPuestos()){
           System.out.println("lista de puestos: " + p.getTrabajadorAsignado().getNombre());
       }
+      
+      ArrayList<Cliente> clientes = SC.obtenerClientes();
+      for (Cliente c : clientes){
+          System.out.println("Cliente: " + c.getNombreCompleto() + " " + c.getCedula() + " " + c.getTipo());
+      }
+      
+      //Alision Bekar
+      Cliente clientePrueba = SC.obtenerCliente(0);
+      System.out.println(clientePrueba.getNombreCompleto());
+      
+      //llama a Adimnistracion
+      clientePrueba.hacerLlmada(0);
+      
+      //el puesto libre en Administracion es el 0 atendido por Pablo Estigarribia
       
     }
 }
