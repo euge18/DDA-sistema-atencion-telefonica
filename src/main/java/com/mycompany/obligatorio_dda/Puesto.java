@@ -17,11 +17,21 @@ public class Puesto {
     private Trabajador trabajadorAsignado;
     private Llamada llamadaEnAtencion;
     private int cantidadLlamadasAtendidas;
+    private Sector sector;
 
-    public Puesto(int numeroPuesto, boolean activo, Trabajador trabajadorAsignado) {
+    public Sector getSector() {
+        return sector;
+    }
+
+    public void setSector(Sector sector) {
+        this.sector = sector;
+    }
+
+    public Puesto(int numeroPuesto, boolean activo, Trabajador trabajadorAsignado, Sector sector) {
         this.numeroPuesto = numeroPuesto;
         this.activo = activo;
         this.trabajadorAsignado = trabajadorAsignado;
+        this.sector = sector;
     }
 
     public int getNumeroPuesto() {

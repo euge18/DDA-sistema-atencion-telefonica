@@ -23,7 +23,12 @@ public class ServicioCliente {
     
     private ServicioCliente(){
         clientes = new ArrayList<>();
-        //Agregar clientes
+        clientes.add(new Cliente(0, "48756325", "Alison Beker", new ConCosto()));
+        clientes.add(new Cliente(1, "86542258", "Martin Polar", new Exonerado()));
+        clientes.add(new Cliente(2, "74235452", "Cedric Velmonte", new Gestor()));
+        clientes.add(new Cliente(3, "85256214", "Karen Gutierrez", new ConCosto()));
+        clientes.add(new Cliente(4, "24566997", "Victoria Donda", new Exonerado()));
+        clientes.add(new Cliente(5, "36655892", "Elias Sané", new Gestor()));
     }
     
     public ArrayList<Cliente> obtenerClientes(){
