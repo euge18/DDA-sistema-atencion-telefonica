@@ -8,6 +8,6 @@ package com.mycompany.obligatorio_dda;
  *
  * @author Usuario
  */
-public interface IObserverLlamada {
+public interface IObserverLlamada{
     public void update(Llamada llamada);
 }

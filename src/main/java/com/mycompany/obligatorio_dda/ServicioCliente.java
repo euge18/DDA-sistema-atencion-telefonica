@@ -29,4 +29,13 @@ public class ServicioCliente {
     public ArrayList<Cliente> obtenerClientes(){
         return clientes;
     }
+    
+    public Cliente ObtenerCliente(int idCliente) {
+        for (Cliente c : clientes) {
+            if (c.getIdCliente() == idCliente) {
+                return c;
+            }
+        }
+        return null;
+    }
 }

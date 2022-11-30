@@ -40,4 +40,13 @@ public class ServicioTrabajador {
         }
         return trabajadoresPorSector;
     }
+    
+    public Trabajador ObtenerTrabajador(int idTrabajador) {
+        for (Trabajador t : trabajadores) {
+            if (t.getIdTrabajador() == idTrabajador) {
+                return t;
+            }
+        }
+        return null;
+    }
 }

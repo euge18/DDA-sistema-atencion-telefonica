@@ -8,6 +8,7 @@ package com.mycompany.obligatorio_dda;
  *
  * @author zeek2
  */
-public class Evento {
-    
+public enum Evento {
+    LLAMADA_CONTESTADA,
+    LLAMADA_FINALIZADA
 }
