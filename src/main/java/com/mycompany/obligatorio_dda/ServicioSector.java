@@ -35,4 +35,14 @@ public class ServicioSector {
         return null;
     }
     
+    public float calcularTiempoPromedioAtencionSector (int numeroSector){
+        Sector s = ObtenerSector(numeroSector);
+        int tiempoTotalAtencion = 0;
+        for (Llamada l : s.getLlamadasFinalizadas()){
+            tiempoTotalAtencion += (l.getHoraFin().getSecond() - l.getHoraAtencion().getSecond());
+        }
+        float promedio = tiempoTotalAtencion/s.getLlamadasFinalizadas().size();
+        return promedio;
+    }
+    
 }

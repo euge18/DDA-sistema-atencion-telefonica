@@ -27,4 +27,53 @@ public class ServicioLlamada {
         llamadas = new ArrayList<>();
         ultimoIdLlamada = 0;
     }
+    
+    public void agregarLlamada (Llamada llamda){
+        ++ultimoIdLlamada;
+        llamda.setIdLlamada(ultimoIdLlamada);
+        llamadas.add(llamda);
+    }
+    
+    public Llamada obtenerLlamada(int id){
+        for(Llamada l : llamadas){
+            if (l.getIdLlamada()==id){
+                return l;
+            }
+        }
+        return null;
+    }
+    
+    public ArrayList<Llamada> obtenerLlamadas(){
+        return llamadas;
+    }
+    
+    public ArrayList<Llamada> obtenerLlamadasTrabajador(int idTrabajador){
+        ArrayList<Llamada> llamadasTrabajador = new ArrayList<Llamada>();
+        for (Llamada l : llamadas){
+            if (l.getTrabajador().getIdTrabajador()==idTrabajador){
+                llamadasTrabajador.add(l);
+            }
+        }
+        return llamadasTrabajador;
+    }
+    
+    public int calcularCantLlamadasTrabajador(int idTrabajador) {
+        int cantLlamadas = 0;
+        for (Llamada l : llamadas) {
+            if (l.getTrabajador().getIdTrabajador() == idTrabajador) {
+                ++cantLlamadas;
+            }
+        }
+        return cantLlamadas;
+    }
+    
+    public ArrayList<Llamada> obtenerLlamadasPorSector(int numeroSector){
+        ArrayList<Llamada> llamadasSector = new ArrayList<Llamada>();
+        for(Llamada l : llamadas){
+            if (l.getSector().getNumeroSector()==numeroSector){
+                llamadasSector.add(l);
+            }
+        }
+        return llamadasSector;
+    }
 }

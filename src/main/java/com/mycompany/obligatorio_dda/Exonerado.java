@@ -11,8 +11,8 @@ package com.mycompany.obligatorio_dda;
 public class Exonerado implements ITipoCliente{
 
     @Override
-    public float calcularCostoLlamada() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public float calcularCostoLlamada(Llamada llamada) {
+        return 0;
     }
     
 }

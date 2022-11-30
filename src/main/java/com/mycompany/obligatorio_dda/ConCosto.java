@@ -11,8 +11,16 @@ package com.mycompany.obligatorio_dda;
 public class ConCosto implements ITipoCliente{
 
     @Override
-    public float calcularCostoLlamada() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public float calcularCostoLlamada(Llamada llamada) {
+        int tiempoLlamada =(llamada.getHoraFin().getSecond()-llamada.getHoraAtencion().getSecond());
+        float costo;
+        if(60>=(llamada.getHoraInicio().getSecond()-llamada.getHoraAtencion().getSecond())){
+            costo = tiempoLlamada * Llamada.getCostoFijo();
+            return costo;       
+        } else {
+            costo = tiempoLlamada * (Llamada.getCostoFijo()/2);
+            return costo;
+        }
     }
     
 }

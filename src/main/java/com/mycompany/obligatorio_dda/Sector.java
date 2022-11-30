@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author Usuario
  */
-public class Sector {
+public class Sector implements IObserverLlamada{
     private int numeroSector;
     private String nombre;
     private ArrayList<Puesto> puestos;
@@ -70,5 +70,83 @@ public class Sector {
     public void setTrabajadores(ArrayList<Trabajador> trabajadores) {
         this.trabajadores = trabajadores;
     }
-   
+    
+    //cuando el trabajador se logea que esta funcion lo asigne automaticamnete
+    // caso no encuentre un puesto se puede crear uno fuera del for, se debe de agregar el nuevo puesto a la lista
+    // pero si todo esta precargado pueden se 5 trabajadores para 5 puestos
+    public void asignarTrabajadorLibre(Trabajador trabajador) {
+        for (Puesto p : puestos) {
+            if (p.isActivo() == false) {
+                p.setTrabajadorAsignado(trabajador);
+            }
+        }
+    }
+    
+    public void dejarPuesto (Puesto puesto){
+        puesto.setTrabajadorAsignado(null);
+    }
+    
+    public float calcularTiempoPromedioAtencion (){
+        float timepoTotalAtencion = 0;
+        for(Puesto p : puestos){
+            timepoTotalAtencion += p.getTiempoTotalAtencion();
+        }
+        return timepoTotalAtencion/puestos.size();
+    }
+    
+    public void recibirLlamada (Llamada llamada){
+        try{
+            if (llamadasEspera.size() < 5) {
+                llamadasEspera.add(llamada);
+                derivarLlamadaAPuesto(llamada);
+            }
+        } catch (Exception e){
+            //lanzar mensaje "llame mas tarde"
+        }
+
+ 
+    }
+    
+    public void derivarLlamadaAPuesto(Llamada llamada) {
+        try {
+            Puesto puestoLibre = obtenerPuestoLibre();
+            if (puestoLibre != null) {
+                puestoLibre.atenderLlamada(llamada);
+                llamada.setSector(this);
+                //Sector se agrega como observer
+                llamada.agregarObservador(this);
+                llamada.setEstado(EstadoLLamada.CURSO);
+                //Aqui se llama al observer desde la funcion del setEstado, 
+                //pues sector debe saber cuando finaliza para agregarla a las llamadas 
+                //finalizadas y reasignar el puesto
+                llamadasEspera.remove(llamada);
+            }
+        } catch (Exception ex) {
+            //lanzar mensaje: "aguarde en linea que pronto sera atendido
+        }
+    }
+    
+    public Puesto obtenerPuestoLibre (){
+        for (Puesto p : puestos) {
+            if (p.isActivo() == true && p.getLlamadaEnAtencion() == null) {
+                return p;
+            }
+        }
+        return null;
+    }
+    
+    /*Cuando finalice un llamada y el puesto quede libre que Sector busque otra llamada en espera
+    y se lo asigne, ademas de eliminarse como observador de esa llamada*/
+
+    @Override
+    public void update(Llamada llamada) {
+        if (llamada.getEstado() == EstadoLLamada.FINALIZADA){
+            llamadasFinalizadas.add(llamada);
+            llamada.removerObservador(this);
+            Llamada proximaLlamada = llamadasEspera.get(0);
+            if(proximaLlamada!=null){
+                derivarLlamadaAPuesto(proximaLlamada);
+            }  
+        }
+    }
 }

@@ -12,7 +12,8 @@ import java.util.ArrayList;
  * @author Usuario
  */
 public class Llamada {
-    private static int costoFijo;
+    
+    private static int costoFijo = 1;
     
     private int idLlamada;
     private EstadoLLamada estado;
@@ -27,8 +28,7 @@ public class Llamada {
     private Trabajador trabajador; 
     private ArrayList<IObserverLlamada> observadores;
 
-    public Llamada(int idLlamada, EstadoLLamada estado, LocalDateTime horaInicio, Cliente cliente) {
-        this.idLlamada = idLlamada;
+    public Llamada(EstadoLLamada estado, LocalDateTime horaInicio, Cliente cliente) {
         this.estado = estado;
         this.horaInicio = horaInicio;
         this.cliente = cliente;
@@ -55,6 +55,10 @@ public class Llamada {
     }
 
     public void setEstado(EstadoLLamada estado) {
+        if(estado == EstadoLLamada.FINALIZADA){
+            notifiacearObservers();
+            this.estado = estado;
+        }
         this.estado = estado;
     }
 
@@ -137,6 +141,34 @@ public class Llamada {
     public void setObservadores(ArrayList<IObserverLlamada> observadores) {
         this.observadores = observadores;
     }
+    
+    public void calcularCosto (){
+        float costo = cliente.getTipo().calcularCostoLlamada(this);
+        this.costo = costo;
+    }
+    
+    //Aqui se llama a esta funcion cuando se cambie el estado de la llamada a CURSO y FINALIZADA
+    public void notifiacearObservers(){
+        for(IObserverLlamada o : observadores){
+            o.update(this);
+        }
+    }
+    
+    //cuando la llamada deriva a un puesto a Sector se lo agrega
+    public void agregarObservador (IObserverLlamada o){
+        observadores.add(o);
+    }
+    
+    //cuando la llamada finaliza a Sector ya no le interesa seguir observando
+    public void removerObservador (IObserverLlamada o){
+        observadores.remove(o);
+    }
+    
+    /*
+    los metodos del UML (Llamada() (que en si seria atenderLlamada) y 
+    finalizarLlamada() son en si acciones que el cliente y el funcionario
+    provocan desde los formularios modificando los atributos de la llamada
+    */
     
     
 }

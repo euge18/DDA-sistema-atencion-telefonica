@@ -9,5 +9,5 @@ package com.mycompany.obligatorio_dda;
  * @author Usuario
  */
 public interface ITipoCliente {
-    public float calcularCostoLlamada();
+    public float calcularCostoLlamada(Llamada llamada);
 }
