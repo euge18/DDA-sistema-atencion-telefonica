@@ -100,6 +100,9 @@ public class PrincipalPruebas{
         System.out.println("La llamada demoro en ser atendida: " + (llamadaPruebaCosto.getHoraInicio().getSecond() - llamadaPruebaCosto.getHoraAtencion().getSecond()) + " segundos");
         System.out.println("La llamada fue atendida durante: " + (llamadaPruebaCosto.getHoraFin().getSecond()- llamadaPruebaCosto.getHoraAtencion().getSecond()) + " segundos");
         
+        System.out.println("Hora atencion: " + llamadaPruebaCosto.getHoraAtencion().toString());
+        System.out.println("Hora atencion: " + llamadaPruebaCosto.getHoraFin().toString());
+        
         System.out.println("El costo de la llamda fue de: " + llamadaPruebaCosto.calcularCosto(llamadaPruebaCosto));
         //float costo = llamadaPruebaCosto.calcularCosto();
         //llamadaPruebaCosto.setCosto(llamadaPruebaCosto.calcularCosto());

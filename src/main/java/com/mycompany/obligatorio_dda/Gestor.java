@@ -15,8 +15,6 @@ public class Gestor implements ITipoCliente{
     public float calcularCostoLlamada(Llamada llamada) {    
         //Hay que revisar el calculo del tiempo porque puede dar negativo
         int tiempoLlamada =(llamada.getHoraFin().getSecond()-llamada.getHoraAtencion().getSecond());
-        System.out.println(llamada.getHoraFin().getSecond());
-        System.out.println(llamada.getHoraAtencion().getSecond());
         float costoFijo = (float)Llamada.getCostoFijo();
         float costo = (tiempoLlamada * (costoFijo/2)) * descuento;
         if(costo<0){
