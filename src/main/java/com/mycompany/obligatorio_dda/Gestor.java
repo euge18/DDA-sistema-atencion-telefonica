@@ -13,7 +13,7 @@ public class Gestor implements ITipoCliente{
 
     @Override
     public float calcularCostoLlamada(Llamada llamada) {
-        int tiempoLlamada =(llamada.getHoraFin().getSecond()-llamada.getHoraAtencion().getSecond());
+        int tiempoLlamada = (llamada.getHoraFin().getSecond()-llamada.getHoraAtencion().getSecond());
         float costo = (tiempoLlamada * (Llamada.getCostoFijo()/2)) * descuento;
         return costo;
     }

@@ -58,7 +58,11 @@ public class Cliente {
     public void hacerLlmada(){
         Llamada llamada = new Llamada(EstadoLLamada.PENDIENTE, LocalDateTime.now(), this);
         //Cuando ServicioLlamada este listo
-        //ServicioLlamada.agregarLlamada(llamada);
+        ServicioLlamada.getInstancia().agregarLlamada(llamada);
+    }
+    
+    public void finalizarLlamda(Llamada llmada){
+        llmada.setEstado(EstadoLLamada.FINALIZADA);
     }
     
 }

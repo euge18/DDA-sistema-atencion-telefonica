@@ -63,6 +63,8 @@ public class Trabajador {
         this.sector = sector;
     } 
     
+    
+    
     //Login y Logout son funciones que usa el formulario de Login (como el PortalTareas)
     // por tanto son responsabilidades del controlador verificar la existencia de ese trabajador
 }

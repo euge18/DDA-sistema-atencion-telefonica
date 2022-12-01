@@ -29,4 +29,13 @@ public class ServicioPuesto {
     public ArrayList<Puesto> obtenerPuestos(){
         return puestos;
     }
+    
+    public Puesto ObtenerPuesto(int numeroPuesto) {
+        for (Puesto p : puestos) {
+            if (p.getNumeroPuesto() == numeroPuesto) {
+                return p;
+            }
+        }
+        return null;
+    }
 }
