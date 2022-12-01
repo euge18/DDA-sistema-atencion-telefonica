@@ -76,7 +76,7 @@ public class PrincipalPruebas{
         Cliente clienteGestor = SC.obtenerCliente(2);
 
         
-        Llamada llamadaPruebaCosto = new Llamada(EstadoLLamada.FINALIZADA , LocalDateTime.now(),  clienteGestor);
+        Llamada llamadaPruebaCosto = new Llamada(EstadoLLamada.FINALIZADA , LocalDateTime.now(),  clientePrueba);
         llamadaPruebaCosto.setIdLlamada(7);
         llamadaPruebaCosto.setDescripcion("Esta es una descripcion de Prueba");
         llamadaPruebaCosto.setPuesto(puestoPrueba);
@@ -97,8 +97,6 @@ public class PrincipalPruebas{
             llamadaPruebaCosto.setHoraFin(LocalDateTime.now());
         }
         
-        System.out.println("La llamada demoro en ser atendida: " + (llamadaPruebaCosto.getHoraInicio().getSecond() - llamadaPruebaCosto.getHoraAtencion().getSecond()) + " segundos");
-        System.out.println("La llamada fue atendida durante: " + (llamadaPruebaCosto.getHoraFin().getSecond()- llamadaPruebaCosto.getHoraAtencion().getSecond()) + " segundos");
         
         System.out.println("Hora atencion: " + llamadaPruebaCosto.getHoraAtencion().toString());
         System.out.println("Hora atencion: " + llamadaPruebaCosto.getHoraFin().toString());

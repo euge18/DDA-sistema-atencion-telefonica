@@ -12,13 +12,19 @@ public class ConCosto implements ITipoCliente{
 
     @Override
     public float calcularCostoLlamada(Llamada llamada) {
-        int tiempoLlamada =(llamada.getHoraFin().getSecond()-llamada.getHoraAtencion().getSecond());
+        
+        long momentoAtencion = CalculadoraFechas.calcularMilisegundos(llamada.getHoraAtencion().getYear(), llamada.getHoraAtencion().getMonthValue(), llamada.getHoraAtencion().getDayOfMonth(), llamada.getHoraAtencion().getHour(), llamada.getHoraAtencion().getMinute(), llamada.getHoraAtencion().getSecond());
+        long momentoFin = CalculadoraFechas.calcularMilisegundos(llamada.getHoraFin().getYear(), llamada.getHoraFin().getMonthValue(), llamada.getHoraFin().getDayOfMonth(), llamada.getHoraFin().getHour(), llamada.getHoraFin().getMinute(), llamada.getHoraFin().getSecond());
+
+        long difernciaTiempo = CalculadoraFechas.calcularDiferenciaDeTiempo(momentoAtencion, momentoFin);
+        
+        float costoFijo = (float)Llamada.getCostoFijo();
         float costo;
-        if(60>=(llamada.getHoraInicio().getSecond()-llamada.getHoraAtencion().getSecond())){
-            costo = tiempoLlamada * Llamada.getCostoFijo();
+        if(60>=difernciaTiempo){
+            costo = difernciaTiempo * costoFijo;
             return costo;       
         } else {
-            costo = tiempoLlamada * (Llamada.getCostoFijo()/2);
+            costo = (float)difernciaTiempo * (costoFijo/2);
             return costo;
         }
     }
