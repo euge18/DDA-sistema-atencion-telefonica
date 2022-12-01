@@ -100,20 +100,15 @@ public class Sector implements IObserverLlamada{
     }
     
     public void recibirLlamada (Llamada llamada){
-        try{
             if (llamadasEspera.size() <= 5) {
                 llamadasEspera.add(llamada);
                 derivarLlamadaAPuesto(llamada);
+            } else {
+                System.out.println("Todas nuestras lineas se encuentran ocupada, intente llamndo más tarde");
             }
-        } catch (Exception e){
-            //lanzar mensaje "llame mas tarde"
-        }
-
- 
     }
     
     public void derivarLlamadaAPuesto(Llamada llamada) {
-        try {
             Puesto puestoLibre = obtenerPuestoLibre();
             if (puestoLibre != null) {
                 puestoLibre.atenderLlamada(llamada);
@@ -124,10 +119,11 @@ public class Sector implements IObserverLlamada{
                 //pues sector debe saber cuando finaliza para agregarla a las llamadas 
                 //finalizadas y reasignar el puesto
                 llamadasEspera.remove(llamada);
+            } else {
+                System.out.println("Actualmente no hay puestos libres");
+                recibirLlamada(llamada);
             }
-        } catch (Exception ex) {
-            //lanzar mensaje: "aguarde en linea que pronto sera atendido
-        }
+
     }
     
     public Puesto obtenerPuestoLibre (){
