@@ -145,7 +145,7 @@ public class Sector implements IObserverLlamada{
             llamadasFinalizadas.add(llamada);
             llamada.removerObservador(this);
             
-            if (llamadasEspera.size()==0){
+            if (llamadasEspera.isEmpty()){
                 System.out.println("No hay mas llamadas por ahora");
             } else {
                 Llamada proximaLlamada = llamadasEspera.get(0);
