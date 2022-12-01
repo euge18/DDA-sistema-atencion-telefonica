@@ -16,7 +16,7 @@ public class Puesto {
     private boolean activo;
     private Trabajador trabajadorAsignado;
     private Llamada llamadaEnAtencion;
-    private int cantidadLlamadasAtendidas;
+    private int cantidadLlamadasAtendidas = 0;
     private Sector sector;
 
     public Sector getSector() {
@@ -84,6 +84,7 @@ public class Puesto {
             llamada.setHoraAtencion(LocalDateTime.now());
             llamada.setPuesto(this);
             llamada.setTrabajador(trabajadorAsignado);
+            ++cantidadLlamadasAtendidas;
             llamadaEnAtencion = llamada;
     }
     

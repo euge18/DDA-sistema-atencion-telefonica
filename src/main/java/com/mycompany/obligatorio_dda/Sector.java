@@ -135,6 +135,22 @@ public class Sector implements IObserverLlamada{
         return null;
     }
     
+    public long calcularTiempoAtencioPuesto(int numPuesto){
+        Puesto puesto = ServicioPuesto.getInstancia().obtenerPuesto(numPuesto);
+        long tiempoTotalAtencion =0;
+        for(Llamada l : llamadasFinalizadas){
+            if(l.getPuesto().getNumeroPuesto()==numPuesto){
+                long momentoAtencion = CalculadoraFechas.calcularMilisegundos(l.getHoraAtencion().getYear(), l.getHoraAtencion().getMonthValue(), l.getHoraAtencion().getDayOfMonth(), l.getHoraAtencion().getHour(), l.getHoraAtencion().getMinute(), l.getHoraAtencion().getSecond());
+                long momentoFin = CalculadoraFechas.calcularMilisegundos(l.getHoraFin().getYear(), l.getHoraFin().getMonthValue(), l.getHoraFin().getDayOfMonth(), l.getHoraFin().getHour(), l.getHoraFin().getMinute(), l.getHoraFin().getSecond());
+
+                long difernciaTiempo = CalculadoraFechas.calcularDiferenciaDeTiempo(momentoAtencion, momentoFin);
+                
+                tiempoTotalAtencion+=difernciaTiempo;
+            }
+        }
+        return tiempoTotalAtencion/puesto.getCantidadLlamadasAtendidas();
+    }
+    
     /*Cuando finalice un llamada y el puesto quede libre que Sector busque otra llamada en espera
     y se lo asigne, ademas de eliminarse como observador de esa llamada*/
 
