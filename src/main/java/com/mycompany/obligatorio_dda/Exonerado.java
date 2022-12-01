@@ -12,6 +12,7 @@ public class Exonerado implements ITipoCliente{
 
     @Override
     public float calcularCostoLlamada(Llamada llamada) {
+        llamada.setCosto(0);
         return 0;
     }
     

@@ -22,10 +22,12 @@ public class ConCosto implements ITipoCliente{
         float costo;
         if(60>=difernciaTiempo){
             costo = difernciaTiempo * costoFijo;
+            llamada.setCosto(costo);
             return costo;       
         } else {
             costo = (float)difernciaTiempo * (costoFijo/2);
-            return costo;
+            llamada.setCosto(costo);
+            return costo; 
         }
     }
 }

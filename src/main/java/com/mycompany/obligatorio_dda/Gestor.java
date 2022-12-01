@@ -26,6 +26,7 @@ public class Gestor implements ITipoCliente{
         if(costo<0){
             costo = 0;
         }
+        llamada.setCosto(costo);
         return costo;
     }
     

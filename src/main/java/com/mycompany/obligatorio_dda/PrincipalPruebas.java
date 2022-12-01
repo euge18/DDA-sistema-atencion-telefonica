@@ -63,11 +63,11 @@ public class PrincipalPruebas{
         System.out.println("Estado Llamada: " + llamada.getEstado());
         
         //Tanto cliente como puesto pueden finalizar la llamada el caso es que se rompe en la notificacion del observer
-        //clientePrueba.finalizarLlamda(llamada);
+        clientePrueba.finalizarLlamda(llamada);
         //puestoPrueba.finalizarLlamada(llamada);      
-        //System.out.println("Estado Llamada: " + llamada.getEstado()); 
+        System.out.println("Estado Llamada: " + llamada.getEstado()); 
         //Aqui Sector ya deberia haberse removido como observador
-        //System.out.println("Observadores de esta llamada: " + llamada.getObservadores().size());
+        System.out.println("Observadores de esta llamada: " + llamada.getObservadores().size());
         
         //CALCULO COSTO LLAMADA
         

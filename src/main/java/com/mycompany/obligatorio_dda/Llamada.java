@@ -155,7 +155,9 @@ public class Llamada {
     //va al for a recorrer sus observadores (size = 1) y va al update de Sector, y este se remueve
     //cuando regresa el control al for el size=0 y rompe
     public void notifiacearObservers(){
-        for(IObserverLlamada o : observadores){
+        //ArrayList<IObserverLlamada> copiaLista = observadores;
+        ArrayList<IObserverLlamada> copiaListaObservadores = (ArrayList<IObserverLlamada>) observadores.clone();
+        for(IObserverLlamada o : copiaListaObservadores){      
             o.update(this);
         }
     }
