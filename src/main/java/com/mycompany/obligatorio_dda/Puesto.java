@@ -16,12 +16,22 @@ public class Puesto {
     private boolean activo;
     private Trabajador trabajadorAsignado;
     private Llamada llamadaEnAtencion;
-    private int cantidadLlamadasAtendidas;
+    private int cantidadLlamadasAtendidas = 0;
+    private Sector sector;
 
-    public Puesto(int numeroPuesto, boolean activo, Trabajador trabajadorAsignado) {
+    public Sector getSector() {
+        return sector;
+    }
+
+    public void setSector(Sector sector) {
+        this.sector = sector;
+    }
+
+    public Puesto(int numeroPuesto, boolean activo, Trabajador trabajadorAsignado, Sector sector) {
         this.numeroPuesto = numeroPuesto;
         this.activo = activo;
         this.trabajadorAsignado = trabajadorAsignado;
+        this.sector = sector;
     }
 
     public int getNumeroPuesto() {
@@ -70,11 +80,16 @@ public class Puesto {
  
     //puede haber otro parametro booleano para botones de aceptar o rechazar la llamda
     public void atenderLlamada(Llamada llamada){
+            llamada.setEstado(EstadoLLamada.CURSO);
             llamada.setHoraAtencion(LocalDateTime.now());
             llamada.setPuesto(this);
             llamada.setTrabajador(trabajadorAsignado);
+            ++cantidadLlamadasAtendidas;
             llamadaEnAtencion = llamada;
     }
+    
+    //Aqui podria haber una funcion contestar, 
+    //para que el puesto no atienda de inmediato sino que el trabajador tenga la potestad
     
     public void finalizarLlamada(Llamada llamamda){
         llamamda.setEstado(EstadoLLamada.FINALIZADA);

@@ -55,10 +55,16 @@ public class Cliente {
         this.tipo = tipo;
     }
     
-    public void hacerLlmada(){
+    public void hacerLlmada(int numeroSector){
         Llamada llamada = new Llamada(EstadoLLamada.PENDIENTE, LocalDateTime.now(), this);
-        //Cuando ServicioLlamada este listo
         ServicioLlamada.getInstancia().agregarLlamada(llamada);
+        Sector sector = ServicioSector.getInstancia().ObtenerSector(numeroSector);
+        if(sector!=null){
+            sector.recibirLlamada(llamada);
+        } else {
+            //Ver como lanzar mensajes
+            System.out.println("Ingrese un número de Sector valido");
+        }   
     }
     
     public void finalizarLlamda(Llamada llmada){

@@ -32,6 +32,8 @@ public class Llamada {
         this.estado = estado;
         this.horaInicio = horaInicio;
         this.cliente = cliente;
+        
+        this.observadores = new ArrayList<IObserverLlamada>();
     }
 
     public static int getCostoFijo() {
@@ -55,11 +57,10 @@ public class Llamada {
     }
 
     public void setEstado(EstadoLLamada estado) {
-        if(estado == EstadoLLamada.FINALIZADA){
-            this.puesto.setActivo(false);
+        if(this.estado != estado){
+            this.estado = estado;
             notifiacearObservers();
         }
-        this.estado = estado;
     }
 
     public LocalDateTime getHoraInicio() {
@@ -142,14 +143,20 @@ public class Llamada {
         this.observadores = observadores;
     }
     
-    public void calcularCosto (){
-        float costo = cliente.getTipo().calcularCostoLlamada(this);
-        this.costo = costo;
+    public float calcularCosto (Llamada llamada){
+        return cliente.getTipo().calcularCostoLlamada(llamada);
     }
     
-    //Aqui se llama a esta funcion cuando se cambie el estado de la llamada a CURSO y FINALIZADA
+    //Se rompe aqui cuando finaliza la funcion update, no regresa el control a la clase principal
+    //quizas porque ese update remueve el observador en el medio de la ejecucuion del for?
+    
+    //Cunado el cliente finaliza la llamda se da setEstado y notifica que finalizo, como finalizo
+    //va al for a recorrer sus observadores (size = 1) y va al update de Sector, y este se remueve
+    //cuando regresa el control al for el size=0 y rompe
     public void notifiacearObservers(){
-        for(IObserverLlamada o : observadores){
+        //ArrayList<IObserverLlamada> copiaLista = observadores;
+        ArrayList<IObserverLlamada> copiaListaObservadores = (ArrayList<IObserverLlamada>) observadores.clone();
+        for(IObserverLlamada o : copiaListaObservadores){      
             o.update(this);
         }
     }

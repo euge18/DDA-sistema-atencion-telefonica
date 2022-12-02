@@ -4,6 +4,7 @@
  */
 package com.mycompany.obligatorio_dda;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
@@ -21,6 +22,9 @@ public class Sector implements IObserverLlamada{
     public Sector(int numeroSector, String nombre) {
         this.numeroSector = numeroSector;
         this.nombre = nombre;
+        //Inicializo las listas en el constructor
+        llamadasEspera = new ArrayList<Llamada>();
+        llamadasFinalizadas = new ArrayList<Llamada>();
     }
 
     public int getNumeroSector() {
@@ -96,35 +100,30 @@ public class Sector implements IObserverLlamada{
     }
     
     public void recibirLlamada (Llamada llamada){
-        try{
             if (llamadasEspera.size() <= 5) {
                 llamadasEspera.add(llamada);
                 derivarLlamadaAPuesto(llamada);
+            } else {
+                System.out.println("Todas nuestras lineas se encuentran ocupada, intente llamndo más tarde");
             }
-        } catch (Exception e){
-            //lanzar mensaje "llame mas tarde"
-        }
-
- 
     }
     
     public void derivarLlamadaAPuesto(Llamada llamada) {
-        try {
             Puesto puestoLibre = obtenerPuestoLibre();
             if (puestoLibre != null) {
                 puestoLibre.atenderLlamada(llamada);
                 llamada.setSector(this);
                 //Sector se agrega como observer
                 llamada.agregarObservador(this);
-                llamada.setEstado(EstadoLLamada.CURSO);
                 //Aqui se llama al observer desde la funcion del setEstado, 
                 //pues sector debe saber cuando finaliza para agregarla a las llamadas 
                 //finalizadas y reasignar el puesto
                 llamadasEspera.remove(llamada);
+            } else {
+                System.out.println("Actualmente no hay puestos libres");
+                recibirLlamada(llamada);
             }
-        } catch (Exception ex) {
-            //lanzar mensaje: "aguarde en linea que pronto sera atendido
-        }
+
     }
     
     public Puesto obtenerPuestoLibre (){
@@ -136,18 +135,43 @@ public class Sector implements IObserverLlamada{
         return null;
     }
     
+    public long calcularTiempoAtencioPuesto(int numPuesto){
+        Puesto puesto = ServicioPuesto.getInstancia().obtenerPuesto(numPuesto);
+        long tiempoTotalAtencion =0;
+        for(Llamada l : llamadasFinalizadas){
+            if(l.getPuesto().getNumeroPuesto()==numPuesto){
+                long momentoAtencion = CalculadoraFechas.calcularMilisegundos(l.getHoraAtencion().getYear(), l.getHoraAtencion().getMonthValue(), l.getHoraAtencion().getDayOfMonth(), l.getHoraAtencion().getHour(), l.getHoraAtencion().getMinute(), l.getHoraAtencion().getSecond());
+                long momentoFin = CalculadoraFechas.calcularMilisegundos(l.getHoraFin().getYear(), l.getHoraFin().getMonthValue(), l.getHoraFin().getDayOfMonth(), l.getHoraFin().getHour(), l.getHoraFin().getMinute(), l.getHoraFin().getSecond());
+
+                long difernciaTiempo = CalculadoraFechas.calcularDiferenciaDeTiempo(momentoAtencion, momentoFin);
+                
+                tiempoTotalAtencion+=difernciaTiempo;
+            }
+        }
+        return tiempoTotalAtencion/puesto.getCantidadLlamadasAtendidas();
+    }
+    
     /*Cuando finalice un llamada y el puesto quede libre que Sector busque otra llamada en espera
     y se lo asigne, ademas de eliminarse como observador de esa llamada*/
 
     @Override
     public void update(Llamada llamada) {
         if (llamada.getEstado() == EstadoLLamada.FINALIZADA){
+            llamada.setHoraFin(LocalDateTime.now());
             llamadasFinalizadas.add(llamada);
             llamada.removerObservador(this);
-            Llamada proximaLlamada = llamadasEspera.get(0);
-            if(proximaLlamada!=null){
+            
+            if (llamadasEspera.isEmpty()){
+                System.out.println("No hay mas llamadas por ahora");
+            } else {
+                Llamada proximaLlamada = llamadasEspera.get(0);
+                System.out.println("Proxima llamada");
                 derivarLlamadaAPuesto(proximaLlamada);
-            }  
+            }
+            //Se rompe aqui cuando llamda viene null
+            
+            //if(proximaLlamada==null){
+            //}  else {}
         }
     }
 }

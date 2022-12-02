@@ -109,7 +109,7 @@ public class Fachada implements IFachada, Observer{
 
     @Override
     public Puesto obtenerPuesto(int numeroPuesto) throws RemoteException {
-       return ServicioPuesto.getInstancia().ObtenerPuesto(numeroPuesto);
+       return ServicioPuesto.getInstancia().obtenerPuesto(numeroPuesto);
     }
 
     @Override
