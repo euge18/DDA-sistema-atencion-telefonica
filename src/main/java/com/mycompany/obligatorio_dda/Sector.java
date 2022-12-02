@@ -104,6 +104,7 @@ public class Sector implements IObserverLlamada{
                 llamadasEspera.add(llamada);
                 derivarLlamadaAPuesto(llamada);
             } else {
+                llamada.setEstado(EstadoLLamada.RECHAZADA);
                 System.out.println("Todas nuestras lineas se encuentran ocupada, intente llamndo más tarde");
             }
     }
