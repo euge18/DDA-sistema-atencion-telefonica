@@ -9,7 +9,7 @@ package com.mycompany.obligatorio_dda;
  * @author zeek2
  */
 public class Fachada {
-    
+    /*
     private ServicioCliente clientes;
     
     private ServicioLlamada llamadas;
@@ -37,4 +37,5 @@ public class Fachada {
         }
         return instancia;
     }
+*/
 }
