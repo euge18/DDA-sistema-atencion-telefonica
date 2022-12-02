@@ -35,9 +35,9 @@ public class ServicioCliente {
         return clientes;
     }
     
-    public Cliente obtenerCliente (int idCliente){
-        for(Cliente c : clientes){
-            if(c.getIdCliente()==idCliente){
+    public Cliente ObtenerCliente(int idCliente) {
+        for (Cliente c : clientes) {
+            if (c.getIdCliente() == idCliente) {
                 return c;
             }
         }

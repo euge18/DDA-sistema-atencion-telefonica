@@ -37,4 +37,9 @@ public class ServicioSector {
         return null;
     }
     
+    public ArrayList<Sector> obtenerSectores(){
+        return sectores;
+    }
+    
+    
 }

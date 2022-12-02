@@ -50,11 +50,10 @@ public class ServicioPuesto {
     
     public Puesto obtenerPuesto(int numeroPuesto){
         for (Puesto p : puestos){
-            if(p.getNumeroPuesto()==numeroPuesto){
+            if(p.getNumeroPuesto() == numeroPuesto){
                 return p;
             }
         }
         return null;
     }
-    
 }

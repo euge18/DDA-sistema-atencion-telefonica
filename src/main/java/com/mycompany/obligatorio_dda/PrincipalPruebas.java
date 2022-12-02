@@ -6,7 +6,6 @@ package com.mycompany.obligatorio_dda;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 import javax.swing.JOptionPane;
 
 /**
@@ -40,7 +39,7 @@ public class PrincipalPruebas{
       }
       
       //Alision Bekar
-      Cliente clientePrueba = SC.obtenerCliente(0);
+      Cliente clientePrueba = SC.ObtenerCliente(0);
       System.out.println(clientePrueba.getNombreCompleto());
       
       //llama a Adimnistracion
@@ -72,8 +71,8 @@ public class PrincipalPruebas{
         //CALCULO COSTO LLAMADA
         
         //clientePrueba es de tipo ConCosto
-        Cliente clienteExonerado = SC.obtenerCliente(1);
-        Cliente clienteGestor = SC.obtenerCliente(2);
+        Cliente clienteExonerado = SC.ObtenerCliente(1);
+        Cliente clienteGestor = SC.ObtenerCliente(2);
 
         
         Llamada llamadaPruebaCosto = new Llamada(EstadoLLamada.FINALIZADA , LocalDateTime.now(),  clienteGestor);
@@ -105,5 +104,4 @@ public class PrincipalPruebas{
         //float costo = llamadaPruebaCosto.calcularCosto();
         //llamadaPruebaCosto.setCosto(llamadaPruebaCosto.calcularCosto());
     }
-
 }
