@@ -29,8 +29,6 @@ public class Gestor implements ITipoCliente{
         float costoFijo = (float)Llamada.getCostoFijo()/2;
         float costo;
         
-        difernciaTiempo=90;
-        
         if (difernciaTiempo >= 180) {
             costo = difernciaTiempo * costoFijo;
             llamada.setCosto(costo);
