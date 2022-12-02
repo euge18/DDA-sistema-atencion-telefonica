@@ -122,6 +122,7 @@ public class Sector implements IObserverLlamada{
             } else {
                 System.out.println("Actualmente no hay puestos libres");
                 recibirLlamada(llamada);
+                //hoa
             }
 
     }
