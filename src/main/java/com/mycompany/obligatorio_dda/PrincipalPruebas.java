@@ -76,7 +76,7 @@ public class PrincipalPruebas{
         Cliente clienteGestor = SC.obtenerCliente(2);
 
         
-        Llamada llamadaPruebaCosto = new Llamada(EstadoLLamada.FINALIZADA , LocalDateTime.now(),  clientePrueba);
+        Llamada llamadaPruebaCosto = new Llamada(EstadoLLamada.FINALIZADA , LocalDateTime.now(),  clienteGestor);
         llamadaPruebaCosto.setIdLlamada(7);
         llamadaPruebaCosto.setDescripcion("Esta es una descripcion de Prueba");
         llamadaPruebaCosto.setPuesto(puestoPrueba);
