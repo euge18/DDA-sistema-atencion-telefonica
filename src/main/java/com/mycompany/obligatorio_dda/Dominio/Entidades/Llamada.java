@@ -36,6 +36,11 @@ public class Llamada {
         
         this.observadores = new ArrayList<IObserverLlamada>();
     }
+   
+    public Llamada (int num, String descripcionEncabezado){
+        this.idLlamada = -1;
+        this.descripcion = descripcionEncabezado;
+    }
 
     public static int getCostoFijo() {
         return costoFijo;
@@ -173,11 +178,16 @@ public class Llamada {
         observadores.remove(o);
     }
     
+    
+
+    
     //Ver como convertir las fechas en formatos mas lindos
     @Override
-    public String toString(){
-        
-        long difernciaTiempo = 0;
+    public String toString(){       
+        if(this.idLlamada==-1){
+            return this.descripcion;
+        } else {
+                  long difernciaTiempo = 0;
         boolean Fin;
         if (this.estado==EstadoLLamada.FINALIZADA){
             Fin = true;
@@ -186,9 +196,9 @@ public class Llamada {
             difernciaTiempo = CalculadoraFechas.calcularDiferenciaDeTiempo(momentoAtencion, momentoFin);
         } else {
             Fin = false;
+        }    
+        return this.idLlamada + " | " + this.estado + " | " + CalculadoraFechas.formatearFecha(this.horaInicio) + " | " + (Fin? CalculadoraFechas.formatearFecha(this.horaFin): "Sin Finalizar") + " | " + this.puesto + " | " + this.puesto.getTrabajadorAsignado() + " | " +(Fin? difernciaTiempo: "Sin Finalizar") + " | " + (Fin? this.costo: "Sin Finalizar") + " | " + this.cliente + " | " + this.cliente.getSaldo();  
         }
-        
-        return this.idLlamada + " " + this.estado + " " + this.horaInicio + " " + (Fin? this.horaFin: "Sin Finalizar") + " " + this.puesto + " " + this.puesto.getTrabajadorAsignado() + " " +(Fin? difernciaTiempo: "Sin Finalizar") + " " + (Fin? this.costo: "Sin Finalizar") + " " + this.cliente + " " + this.cliente.getSaldo();
     }
     
      

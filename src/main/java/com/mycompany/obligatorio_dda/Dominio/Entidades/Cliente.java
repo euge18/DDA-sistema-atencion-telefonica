@@ -87,4 +87,9 @@ public class Cliente {
     public void finalizarLlamda(Llamada llmada){
         llmada.setEstado(EstadoLLamada.FINALIZADA);
     }
+    
+    @Override
+    public String toString() {
+        return this.nombreCompleto;
+    }
 }

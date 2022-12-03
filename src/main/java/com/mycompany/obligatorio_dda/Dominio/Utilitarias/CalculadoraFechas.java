@@ -4,6 +4,8 @@
  */
 package com.mycompany.obligatorio_dda.Dominio.Utilitarias;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
@@ -23,5 +25,10 @@ public class CalculadoraFechas {
         long diferenciaMilisegundos = Math.abs(atencion - fin);
 
         return TimeUnit.MILLISECONDS.toSeconds(diferenciaMilisegundos);
+    }
+    
+    public static String formatearFecha(LocalDateTime momento) {
+        String fecha = "Fecha: " + momento.getYear() + "/" + momento.getMonthValue()+ "/" + momento.getDayOfMonth() + " - Hora: " + momento.getHour() + ":" + momento.getMinute() + ":" + momento.getSecond();
+        return fecha;
     }
 }

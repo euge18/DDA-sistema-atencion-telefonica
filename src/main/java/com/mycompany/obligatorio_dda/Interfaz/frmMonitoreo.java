@@ -162,15 +162,23 @@ public class frmMonitoreo extends javax.swing.JFrame implements VentanaMantMonit
     @Override
     public void mostrarSectores(ArrayList<Sector> sectores) {
         Sector sectorTodos = new Sector(-1, "<Todos los Sectores>");
-        sectores.add(0, sectorTodos);
-        lstSectores.setListData((sectores.toArray()));
+        ArrayList<Sector> sectoresListado = new ArrayList<Sector>();
+        sectoresListado.add(sectorTodos);
+        for (Sector s : sectores){
+            sectoresListado.add(s);
+        }
+        lstSectores.setListData((sectoresListado.toArray()));
     }
 
     @Override
     public void mostrarLlamadas(ArrayList<Llamada> llamadas) {
-        //Ver como poner encabezado
-        //opcion hacer una llamda por defecto que tenga su encabezado propio y que usando un condicional retorne el texto desdeado
-        lstLlmadas.setListData((llamadas.toArray()));
+        Llamada llamadaEncabezado = new Llamada(-1, "# llamda | Estado | Inicio | Fin | # puesto | Trabajador | Duración | Costo | Cliente | Saldo");
+        ArrayList<Llamada> llamadasAListar = new ArrayList<Llamada>();
+        llamadasAListar.add(llamadaEncabezado);
+        for (Llamada l : llamadas){
+            llamadasAListar.add(l);
+        }
+        lstLlmadas.setListData((llamadasAListar.toArray()));
     }
 
     @Override

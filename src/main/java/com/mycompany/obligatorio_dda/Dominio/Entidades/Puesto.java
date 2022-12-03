@@ -4,6 +4,7 @@
  */
 package com.mycompany.obligatorio_dda.Dominio.Entidades;
 
+import com.mycompany.obligatorio_dda.Dominio.Utilitarias.CalculadoraFechas;
 import java.time.LocalDateTime;
 
 /**
@@ -84,7 +85,20 @@ public class Puesto {
             llamada.setPuesto(this);
             llamada.setTrabajador(trabajadorAsignado);
             ++cantidadLlamadasAtendidas;
-            llamadaEnAtencion = llamada;
+            llamadaEnAtencion = llamada;      
+        /*    
+        float tiempoSaldo = llamadaEnAtencion.getCliente().getSaldo();
+            
+        long momentoInicial = CalculadoraFechas.calcularMilisegundos(llamada.getHoraInicio().getYear(), llamada.getHoraInicio().getMonthValue(), llamada.getHoraInicio().getDayOfMonth(), llamada.getHoraInicio().getHour(), llamada.getHoraInicio().getMinute(), llamada.getHoraInicio().getSecond());
+        long momentoAtencion = CalculadoraFechas.calcularMilisegundos(llamada.getHoraAtencion().getYear(), llamada.getHoraAtencion().getMonthValue(), llamada.getHoraAtencion().getDayOfMonth(), llamada.getHoraAtencion().getHour(), llamada.getHoraAtencion().getMinute(), llamada.getHoraAtencion().getSecond());
+        long tiempoDemora = CalculadoraFechas.calcularDiferenciaDeTiempo(momentoInicial, momentoAtencion);
+        
+        if(tiempoDemora>=60){
+            tiempoSaldo = tiempoSaldo * 2;
+        }
+        
+        cronometroSaldo((long)tiempoSaldo);
+        */      
     }
     
     //Aqui podria haber una funcion contestar, 
@@ -93,4 +107,44 @@ public class Puesto {
     public void finalizarLlamada(Llamada llamamda){
         llamamda.setEstado(EstadoLLamada.FINALIZADA);
     }
+    
+    //el tiempoDisponible seria el saldo del cliente * 1000, un segundo = 1000 milisegundos
+    //se puede comprobar antes en la funcion atender llamda si el tiempo de demora fue de mas de 60 seg
+    //que se le duplique el tiempo (Costo fijo/2, es decir el doble de tiempo disponible por el saldo) 
+    public void cronometroSaldo(long tiepoDisponible) {        
+        if (!(llamadaEnAtencion.getCliente().getTipo() instanceof Exonerado)) {
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(tiepoDisponible);
+                        if (llamadaEnAtencion.getEstado() == EstadoLLamada.CURSO) {
+                            finalizarLlamada(llamadaEnAtencion);
+                        }
+                    } catch (InterruptedException ex) {
+
+                    }
+                }
+            }, "otro hilo");
+            t.start();
+        }
+                
+        /* OPCION 2
+        if (!(llamadaEnAtencion.getCliente().getTipo() instanceof Exonerado)) {
+            try {
+                Thread.sleep(tiepoDisponible);
+                if (llamadaEnAtencion.getEstado() == EstadoLLamada.CURSO) {
+                    finalizarLlamada(llamadaEnAtencion);
+                }
+            } catch (InterruptedException e) {
+
+            }
+        }*/
+    }
+    
+        @Override
+    public String toString(){
+        return this.numeroPuesto+"";
+    }
+       
 }
