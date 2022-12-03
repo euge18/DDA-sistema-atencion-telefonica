@@ -17,12 +17,22 @@ public class Cliente {
     private String cedula;
     private String nombreCompleto;
     private ITipoCliente tipo;
+    private float saldo;
 
-    public Cliente(int idCliente, String cedula, String nombreCompleto, ITipoCliente tipo) {
+    public float getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(float saldo) {
+        this.saldo = saldo;
+    }
+
+    public Cliente(int idCliente, String cedula, String nombreCompleto, ITipoCliente tipo, float saldo) {
         this.idCliente = idCliente;
         this.cedula = cedula;
         this.nombreCompleto = nombreCompleto;
         this.tipo = tipo;
+        this.saldo = saldo;
     }
 
     public int getIdCliente() {
@@ -58,15 +68,20 @@ public class Cliente {
     }
     
     public void hacerLlmada(int numeroSector){
-        Llamada llamada = new Llamada(EstadoLLamada.PENDIENTE, LocalDateTime.now(), this);
-        ServicioLlamada.getInstancia().agregarLlamada(llamada);
-        Sector sector = ServicioSector.getInstancia().ObtenerSector(numeroSector);
-        if(sector!=null){
-            sector.recibirLlamada(llamada);
+        if (saldo>0){
+            Llamada llamada = new Llamada(EstadoLLamada.PENDIENTE, LocalDateTime.now(), this);
+            ServicioLlamada.getInstancia().agregarLlamada(llamada);
+            Sector sector = ServicioSector.getInstancia().ObtenerSector(numeroSector);
+            if (sector != null) {
+                sector.recibirLlamada(llamada);
+            } else {
+                //Ver como lanzar mensajes
+                System.out.println("Ingrese un número de Sector valido");
+            }
         } else {
-            //Ver como lanzar mensajes
-            System.out.println("Ingrese un número de Sector valido");
-        }   
+            System.out.println("Regarge su saldo");
+        }
+  
     }
     
     public void finalizarLlamda(Llamada llmada){

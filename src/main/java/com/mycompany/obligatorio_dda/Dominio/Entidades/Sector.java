@@ -15,7 +15,8 @@ import java.util.ArrayList;
  * @author zeek2
  */
 public class Sector implements IObserverLlamada {
-        private int numeroSector;
+    
+    private int numeroSector;
     private String nombre;
     private ArrayList<Puesto> puestos;
     private ArrayList<Llamada> llamadasEspera;
@@ -172,11 +173,12 @@ public class Sector implements IObserverLlamada {
                 Llamada proximaLlamada = llamadasEspera.get(0);
                 System.out.println("Proxima llamada");
                 derivarLlamadaAPuesto(proximaLlamada);
-            }
-            //Se rompe aqui cuando llamda viene null
-            
-            //if(proximaLlamada==null){
-            //}  else {}
+            }         
         }
+    }
+    
+    @Override
+    public String toString(){
+        return this.nombre;
     }
 }

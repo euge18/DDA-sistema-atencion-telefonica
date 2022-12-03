@@ -4,17 +4,30 @@
  */
 package com.mycompany.obligatorio_dda.Interfaz;
 
+import com.mycompany.obligatorio_dda.Controladores.MantMonitoreoController;
+import com.mycompany.obligatorio_dda.Controladores.VentanaMantMonitoreo;
+import com.mycompany.obligatorio_dda.Dominio.Entidades.EstadoLLamada;
+import com.mycompany.obligatorio_dda.Dominio.Entidades.Llamada;
+import com.mycompany.obligatorio_dda.Dominio.Entidades.Sector;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 /**
  *
  * @author zeek2
  */
-public class frmMonitoreo extends javax.swing.JFrame {
+public class frmMonitoreo extends javax.swing.JFrame implements VentanaMantMonitoreo{
 
+    
+    private MantMonitoreoController controlador;
     /**
      * Creates new form frmMonitoreo
      */
     public frmMonitoreo() {
         initComponents();
+        this.controlador = new MantMonitoreoController(this);
+        controlador.listarLlamadas();
+        mostrarSectorSeleccionado();
     }
 
     /**
@@ -28,20 +41,33 @@ public class frmMonitoreo extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         lstSectores = new javax.swing.JList<>();
-        jLabel1 = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         lstLlmadas = new javax.swing.JList<>();
-        jButton1 = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
+        lblSector = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        lstSectores.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstSectoresValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(lstSectores);
 
-        jLabel1.setText("Aplicación de Monitoreo");
+        lblTitulo.setText("Aplicación de Monitoreo");
 
         jScrollPane2.setViewportView(lstLlmadas);
 
-        jButton1.setText("jButton1");
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+
+        lblSector.setText("Sector Seleccionado:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -50,29 +76,43 @@ public class frmMonitoreo extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel1)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(lblTitulo)
+                            .addGap(240, 240, 240)
+                            .addComponent(lblSector))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTitulo)
+                    .addComponent(lblSector))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void lstSectoresValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstSectoresValueChanged
+          controlador.listarLlamadas();
+          mostrarSectorSeleccionado();
+    }//GEN-LAST:event_lstSectoresValueChanged
 
     /**
      * @param args the command line arguments
@@ -110,11 +150,44 @@ public class frmMonitoreo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblSector;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JList<Object> lstLlmadas;
     private javax.swing.JList<Object> lstSectores;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void mostrarSectores(ArrayList<Sector> sectores) {
+        Sector sectorTodos = new Sector(-1, "<Todos los Sectores>");
+        sectores.add(0, sectorTodos);
+        lstSectores.setListData((sectores.toArray()));
+    }
+
+    @Override
+    public void mostrarLlamadas(ArrayList<Llamada> llamadas) {
+        //Ver como poner encabezado
+        //opcion hacer una llamda por defecto que tenga su encabezado propio y que usando un condicional retorne el texto desdeado
+        lstLlmadas.setListData((llamadas.toArray()));
+    }
+
+    @Override
+    public Sector obtenerSectorSeleccionado() {
+        if (lstSectores.getSelectedIndex() >= 0) {
+            return (Sector) lstSectores.getSelectedValue();
+        }
+        return null;
+    }
+    
+    public void mostrarSectorSeleccionado(){
+        Sector sectorSelected = obtenerSectorSeleccionado();
+        if (sectorSelected==null){
+            lblSector.setText("Sector Seleccionado: Ninguno");
+        } else {
+            lblSector.setText("Sector Seleccionado: " + sectorSelected.getNombre());
+        }
+    }
+
 }
