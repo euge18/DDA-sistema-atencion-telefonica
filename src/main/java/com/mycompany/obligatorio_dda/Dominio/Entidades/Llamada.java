@@ -4,6 +4,7 @@
  */
 package com.mycompany.obligatorio_dda.Dominio.Entidades;
 
+import com.mycompany.obligatorio_dda.Dominio.Fachada.Fachada;
 import com.mycompany.obligatorio_dda.Dominio.Repositorios.IObserverLlamada;
 import com.mycompany.obligatorio_dda.Dominio.Utilitarias.CalculadoraFechas;
 import java.time.LocalDateTime;
@@ -67,6 +68,7 @@ public class Llamada {
             //Gran ERRROR: como no seteaba primero siempre al update le llegaba en CURSO y rebotaba
             this.estado = estado;
             notifiacearObservers();
+            Fachada.getInstancia().notificarObserversDeFachada();
         }
     }
 
