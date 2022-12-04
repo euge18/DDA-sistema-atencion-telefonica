@@ -59,4 +59,5 @@ public class ServicioTrabajador {
         }
         return trabajadoresPorSector;
     } 
+    
 }

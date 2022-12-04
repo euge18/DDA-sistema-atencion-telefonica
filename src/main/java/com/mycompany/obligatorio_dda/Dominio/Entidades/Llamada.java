@@ -64,7 +64,6 @@ public class Llamada {
 
     public void setEstado(EstadoLLamada estado) {
         if(this.estado != estado){
-            //Gran ERRROR: como no seteaba primero siempre al update le llegaba en CURSO y rebotaba
             this.estado = estado;
             notifiacearObservers();
         }

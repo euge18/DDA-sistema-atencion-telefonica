@@ -38,7 +38,7 @@ public class ServicioCliente {
     
     public Cliente ObtenerCliente (int idCliente){
         for(Cliente c : clientes){
-            if(c.getIdCliente()==idCliente){
+            if(c.getIdCliente() == idCliente){
                 return c;
             }
         }

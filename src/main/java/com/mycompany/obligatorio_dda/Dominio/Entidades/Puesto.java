@@ -95,14 +95,9 @@ public class Puesto {
         llamamda.setEstado(EstadoLLamada.FINALIZADA);
     }
     
-    //el tiempoDisponible seria el saldo del cliente * 1000, un segundo = 1000 milisegundos
-    //se puede comprobar antes en la funcion atender llamda si el tiempo de demora fue de mas de 60 seg
-    //que se le duplique el tiempo (Costo fijo/2, es decir el doble de tiempo disponible por el saldo) 
-
-    
     @Override
     public String toString(){
         return this.numeroPuesto+"";
     }
-       
 }
+       
