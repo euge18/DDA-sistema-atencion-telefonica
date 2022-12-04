@@ -4,6 +4,11 @@
  */
 package com.mycompany.obligatorio_dda;
 
+import com.mycompany.obligatorio_dda.Dominio.Entidades.Cliente;
+import com.mycompany.obligatorio_dda.Dominio.Entidades.Llamada;
+import com.mycompany.obligatorio_dda.Dominio.Entidades.Puesto;
+import com.mycompany.obligatorio_dda.Dominio.Entidades.Sector;
+import com.mycompany.obligatorio_dda.Dominio.Entidades.Trabajador;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;

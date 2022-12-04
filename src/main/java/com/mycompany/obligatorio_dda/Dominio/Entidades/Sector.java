@@ -2,16 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.obligatorio_dda;
+package com.mycompany.obligatorio_dda.Dominio.Entidades;
 
+import com.mycompany.obligatorio_dda.Dominio.Repositorios.IObserverLlamada;
+import com.mycompany.obligatorio_dda.Dominio.Servicios.*;
+import com.mycompany.obligatorio_dda.Dominio.Utilitarias.CalculadoraFechas;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
  *
- * @author Usuario
+ * @author zeek2
  */
-public class Sector implements IObserverLlamada{
+public class Sector implements IObserverLlamada {
+    
     private int numeroSector;
     private String nombre;
     private ArrayList<Puesto> puestos;
@@ -104,6 +108,7 @@ public class Sector implements IObserverLlamada{
                 llamadasEspera.add(llamada);
                 derivarLlamadaAPuesto(llamada);
             } else {
+                llamada.setEstado(EstadoLLamada.RECHAZADA);
                 System.out.println("Todas nuestras lineas se encuentran ocupada, intente llamndo más tarde");
             }
     }
@@ -122,6 +127,7 @@ public class Sector implements IObserverLlamada{
             } else {
                 System.out.println("Actualmente no hay puestos libres");
                 recibirLlamada(llamada);
+                //hoa
             }
 
     }
@@ -167,11 +173,12 @@ public class Sector implements IObserverLlamada{
                 Llamada proximaLlamada = llamadasEspera.get(0);
                 System.out.println("Proxima llamada");
                 derivarLlamadaAPuesto(proximaLlamada);
-            }
-            //Se rompe aqui cuando llamda viene null
-            
-            //if(proximaLlamada==null){
-            //}  else {}
+            }         
         }
+    }
+    
+    @Override
+    public String toString(){
+        return this.nombre;
     }
 }

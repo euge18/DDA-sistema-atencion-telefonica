@@ -2,18 +2,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.obligatorio_dda;
+package com.mycompany.obligatorio_dda.Dominio.Entidades;
 
+import com.mycompany.obligatorio_dda.Dominio.Repositorios.IObserverLlamada;
+import com.mycompany.obligatorio_dda.Dominio.Utilitarias.CalculadoraFechas;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
  *
- * @author Usuario
+ * @author zeek2
  */
 public class Llamada {
-    
-    private static int costoFijo = 1;
+      private static int costoFijo = 1;
     
     private int idLlamada;
     private EstadoLLamada estado;
@@ -34,6 +35,11 @@ public class Llamada {
         this.cliente = cliente;
         
         this.observadores = new ArrayList<IObserverLlamada>();
+    }
+   
+    public Llamada (int num, String descripcionEncabezado){
+        this.idLlamada = -1;
+        this.descripcion = descripcionEncabezado;
     }
 
     public static int getCostoFijo() {
@@ -171,11 +177,28 @@ public class Llamada {
         observadores.remove(o);
     }
     
-    /*
-    los metodos del UML (Llamada() (que en si seria atenderLlamada) y 
-    finalizarLlamada() son en si acciones que el cliente y el funcionario
-    provocan desde los formularios modificando los atributos de la llamada
-    */
     
+
     
+    //Ver como convertir las fechas en formatos mas lindos
+    @Override
+    public String toString(){       
+        if(this.idLlamada==-1){
+            return this.descripcion;
+        } else {
+                  long difernciaTiempo = 0;
+        boolean Fin;
+        if (this.estado==EstadoLLamada.FINALIZADA){
+            Fin = true;
+            long momentoAtencion = CalculadoraFechas.calcularMilisegundos(this.getHoraAtencion().getYear(), this.getHoraAtencion().getMonthValue(), this.getHoraAtencion().getDayOfMonth(), this.getHoraAtencion().getHour(), this.getHoraAtencion().getMinute(), this.getHoraAtencion().getSecond());
+            long momentoFin = CalculadoraFechas.calcularMilisegundos(this.getHoraFin().getYear(), this.getHoraFin().getMonthValue(), this.getHoraFin().getDayOfMonth(), this.getHoraFin().getHour(), this.getHoraFin().getMinute(), this.getHoraFin().getSecond());
+            difernciaTiempo = CalculadoraFechas.calcularDiferenciaDeTiempo(momentoAtencion, momentoFin);
+        } else {
+            Fin = false;
+        }    
+        return this.idLlamada + " | " + this.estado + " | " + CalculadoraFechas.formatearFecha(this.horaInicio) + " | " + (Fin? CalculadoraFechas.formatearFecha(this.horaFin): "Sin Finalizar") + " | " + this.puesto + " | " + this.puesto.getTrabajadorAsignado() + " | " +(Fin? difernciaTiempo: "Sin Finalizar") + " | " + (Fin? this.costo: "Sin Finalizar") + " | " + this.cliente + " | " + this.cliente.getSaldo();  
+        }
+    }
+    
+     
 }

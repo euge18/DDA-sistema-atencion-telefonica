@@ -2,17 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.obligatorio_dda;
+package com.mycompany.obligatorio_dda.Dominio.Entidades;
 
+import com.mycompany.obligatorio_dda.Dominio.Utilitarias.CalculadoraFechas;
 import java.time.LocalDateTime;
-
 
 /**
  *
- * @author Usuario
+ * @author zeek2
  */
 public class Puesto {
-    private int numeroPuesto;
+      private int numeroPuesto;
     private boolean activo;
     private Trabajador trabajadorAsignado;
     private Llamada llamadaEnAtencion;
@@ -85,7 +85,7 @@ public class Puesto {
             llamada.setPuesto(this);
             llamada.setTrabajador(trabajadorAsignado);
             ++cantidadLlamadasAtendidas;
-            llamadaEnAtencion = llamada;
+            llamadaEnAtencion = llamada;           
     }
     
     //Aqui podria haber una funcion contestar, 
@@ -95,4 +95,9 @@ public class Puesto {
         llamamda.setEstado(EstadoLLamada.FINALIZADA);
     }
     
+    @Override
+    public String toString(){
+        return this.numeroPuesto+"";
+    }
 }
+       

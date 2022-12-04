@@ -2,25 +2,37 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.obligatorio_dda;
+package com.mycompany.obligatorio_dda.Dominio.Entidades;
 
+import com.mycompany.obligatorio_dda.Dominio.Repositorios.ITipoCliente;
+import com.mycompany.obligatorio_dda.Dominio.Servicios.*;
 import java.time.LocalDateTime;
 
 /**
  *
- * @author Usuario
+ * @author zeek2
  */
 public class Cliente {
     private int idCliente;
     private String cedula;
     private String nombreCompleto;
     private ITipoCliente tipo;
+    private float saldo;
 
-    public Cliente(int idCliente, String cedula, String nombreCompleto, ITipoCliente tipo) {
+    public float getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(float saldo) {
+        this.saldo = saldo;
+    }
+
+    public Cliente(int idCliente, String cedula, String nombreCompleto, ITipoCliente tipo, float saldo) {
         this.idCliente = idCliente;
         this.cedula = cedula;
         this.nombreCompleto = nombreCompleto;
         this.tipo = tipo;
+        this.saldo = saldo;
     }
 
     public int getIdCliente() {
@@ -56,19 +68,28 @@ public class Cliente {
     }
     
     public void hacerLlmada(int numeroSector){
-        Llamada llamada = new Llamada(EstadoLLamada.PENDIENTE, LocalDateTime.now(), this);
-        ServicioLlamada.getInstancia().agregarLlamada(llamada);
-        Sector sector = ServicioSector.getInstancia().ObtenerSector(numeroSector);
-        if(sector!=null){
-            sector.recibirLlamada(llamada);
+        if (saldo>0){
+            Llamada llamada = new Llamada(EstadoLLamada.PENDIENTE, LocalDateTime.now(), this);
+            ServicioLlamada.getInstancia().agregarLlamada(llamada);
+            Sector sector = ServicioSector.getInstancia().ObtenerSector(numeroSector);
+            if (sector != null) {
+                sector.recibirLlamada(llamada);
+            } else {
+                //Ver como lanzar mensajes
+                System.out.println("Ingrese un número de Sector valido");
+            }
         } else {
-            //Ver como lanzar mensajes
-            System.out.println("Ingrese un número de Sector valido");
-        }   
+            System.out.println("Regarge su saldo");
+        }
+  
     }
     
     public void finalizarLlamda(Llamada llmada){
         llmada.setEstado(EstadoLLamada.FINALIZADA);
     }
     
+    @Override
+    public String toString() {
+        return this.nombreCompleto;
+    }
 }

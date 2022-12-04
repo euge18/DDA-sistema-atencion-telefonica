@@ -4,6 +4,9 @@
  */
 package com.mycompany.obligatorio_dda;
 
+import com.mycompany.obligatorio_dda.Dominio.Entidades.*;
+import com.mycompany.obligatorio_dda.Dominio.Servicios.*;
+import com.mycompany.obligatorio_dda.Interfaz.frmMonitoreo;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -12,9 +15,8 @@ import javax.swing.JOptionPane;
  *
  * @author zeek2
  */
-public class PrincipalPruebas{
-
-    public static void main(String[] args){
+public class Principal {
+        public static void main(String[] args){
         
       //Para que lo primero que hagan las instancias sea inicializar las listas   
       ServicioCliente SC = ServicioCliente.getInstancia();
@@ -101,7 +103,11 @@ public class PrincipalPruebas{
         System.out.println("Hora atencion: " + llamadaPruebaCosto.getHoraFin().toString());
         
         System.out.println("El costo de la llamda fue de: " + llamadaPruebaCosto.calcularCosto(llamadaPruebaCosto));
+        
+            frmMonitoreo fMonitoreo = new frmMonitoreo();
+            fMonitoreo.setVisible(true);
         //float costo = llamadaPruebaCosto.calcularCosto();
+        
         //llamadaPruebaCosto.setCosto(llamadaPruebaCosto.calcularCosto());
     }
 }

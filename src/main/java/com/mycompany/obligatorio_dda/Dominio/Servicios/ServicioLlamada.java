@@ -2,16 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.obligatorio_dda;
+package com.mycompany.obligatorio_dda.Dominio.Servicios;
 
+import com.mycompany.obligatorio_dda.Dominio.Entidades.Llamada;
 import java.util.ArrayList;
 
 /**
  *
- * @author Usuario
+ * @author zeek2
  */
 public class ServicioLlamada {
-    private static int ultimoIdLlamada;
+       private static int ultimoIdLlamada;
     
     private ArrayList<Llamada> llamadas;
     private static ServicioLlamada instancia = null; //Singleton 

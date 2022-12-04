@@ -2,16 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.obligatorio_dda;
+package com.mycompany.obligatorio_dda.Dominio.Servicios;
 
+import com.mycompany.obligatorio_dda.Dominio.Entidades.Trabajador;
 import java.util.ArrayList;
 
 /**
  *
- * @author Usuario
+ * @author zeek2
  */
 public class ServicioTrabajador {
-    private ArrayList<Trabajador> trabajadores;
+       private ArrayList<Trabajador> trabajadores;
     private static ServicioTrabajador instancia = null; //Singleton 
     
     public static ServicioTrabajador getInstancia(){
@@ -57,14 +58,6 @@ public class ServicioTrabajador {
             }
         }
         return trabajadoresPorSector;
-    }
+    } 
     
-    public Trabajador ObtenerTrabajador(int idTrabajador) {
-        for (Trabajador t : trabajadores) {
-            if (t.getIdTrabajador() == idTrabajador) {
-                return t;
-            }
-        }
-        return null;
-    }
 }

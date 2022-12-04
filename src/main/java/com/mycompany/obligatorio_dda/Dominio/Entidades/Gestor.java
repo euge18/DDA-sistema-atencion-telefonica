@@ -2,16 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.obligatorio_dda;
+package com.mycompany.obligatorio_dda.Dominio.Entidades;
 
-
+import com.mycompany.obligatorio_dda.Dominio.Repositorios.ITipoCliente;
+import com.mycompany.obligatorio_dda.Dominio.Utilitarias.CalculadoraFechas;
 
 /**
  *
- * @author Usuario
+ * @author zeek2
  */
-public class Gestor implements ITipoCliente{
-
+public class Gestor implements ITipoCliente {
     @Override
     public float calcularCostoLlamada(Llamada llamada) { 
  
@@ -42,5 +42,4 @@ public class Gestor implements ITipoCliente{
             return costo;
         }
     }
-    
 }
