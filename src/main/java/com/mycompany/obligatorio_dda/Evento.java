@@ -6,12 +6,9 @@ package com.mycompany.obligatorio_dda;
 
 /**
  *
- * @author Usuario
+ * @author zeek2
  */
-public enum EstadoLLamada {
-    PENDIENTE,
-    ESPERA,
-    CURSO,
-    FINALIZADA,
-    RECHAZADA
+public enum Evento {
+    LLAMADA_CONTESTADA,
+    LLAMADA_FINALIZADA
 }

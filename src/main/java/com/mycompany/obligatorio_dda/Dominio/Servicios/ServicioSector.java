@@ -2,16 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.obligatorio_dda;
+package com.mycompany.obligatorio_dda.Dominio.Servicios;
 
+import com.mycompany.obligatorio_dda.Dominio.Entidades.Sector;
 import java.util.ArrayList;
 
 /**
  *
- * @author Usuario
+ * @author zeek2
  */
 public class ServicioSector {
-    private ArrayList<Sector> sectores;
+      private ArrayList<Sector> sectores;
     private static ServicioSector instancia = null; //Singleton 
     
     public static ServicioSector getInstancia(){
@@ -23,7 +24,9 @@ public class ServicioSector {
     
     private ServicioSector(){
         sectores = new ArrayList<>();
-        //Agregar sectores
+        sectores.add(new Sector(0, "Administración"));
+        sectores.add(new Sector(1, "Ventas"));
+        sectores.add(new Sector(2, "Desarrollo"));
     }
     
     public Sector ObtenerSector(int numSector){
@@ -35,4 +38,7 @@ public class ServicioSector {
         return null;
     }
     
+    public ArrayList<Sector> obtenerSectores(){
+        return sectores;
+    }
 }

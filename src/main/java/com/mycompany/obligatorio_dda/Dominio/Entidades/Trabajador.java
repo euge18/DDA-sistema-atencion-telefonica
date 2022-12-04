@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.obligatorio_dda;
+package com.mycompany.obligatorio_dda.Dominio.Entidades;
 
 /**
  *
- * @author Usuario
+ * @author zeek2
  */
 public class Trabajador {
     private int idTrabajador;
@@ -62,4 +62,12 @@ public class Trabajador {
     public void setSector(Sector sector) {
         this.sector = sector;
     } 
+    
+    @Override
+    public String toString(){
+        return this.nombre;
+    }
+    
+    //Login y Logout son funciones que usa el formulario de Login (como el PortalTareas)
+    // por tanto son responsabilidades del controlador verificar la existencia de ese trabajador
 }

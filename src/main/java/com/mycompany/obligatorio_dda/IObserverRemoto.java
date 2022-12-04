@@ -4,10 +4,13 @@
  */
 package com.mycompany.obligatorio_dda;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
 /**
  *
- * @author Usuario
+ * @author zeek2
  */
-public interface IObserverLlamada {
-    public void update(Llamada llamada);
+public interface IObserverRemoto extends Remote{
+    void actualizar(Object o, Evento evt) throws RemoteException;
 }
