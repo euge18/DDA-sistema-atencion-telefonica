@@ -4,6 +4,7 @@
  */
 package com.mycompany.obligatorio_dda.Dominio.Fachada;
 
+import com.mycompany.obligatorio_dda.Controladores.IFachada;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.*;
 import com.mycompany.obligatorio_dda.Dominio.Servicios.*;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 
 public class Fachada {
     
+    private ArrayList<IFachada> observadores; 
     
      private static Fachada instancia = null; //Singleton 
     
@@ -29,7 +31,17 @@ public class Fachada {
     }
     
     private Fachada(){
-        
+        observadores = new ArrayList<IFachada>();
+    }
+    
+    public void notificarObserversDeFachada() {
+        for (IFachada o : observadores) {
+            o.update(this);
+        }
+    }
+    
+    public void agregarObservador(IFachada o) {
+        observadores.add(o);
     }
     
     public ArrayList<Llamada> obtenerLlamadas() {
@@ -38,6 +50,7 @@ public class Fachada {
 
     public void agregarLlamada(Llamada llamada) {
         ServicioLlamada.getInstancia().agregarLlamada(llamada);
+        notificarObserversDeFachada();
     }
 
     public Llamada obtenerLlamada(int idLlamada) {

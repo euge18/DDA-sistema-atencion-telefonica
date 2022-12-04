@@ -11,7 +11,7 @@ import com.mycompany.obligatorio_dda.Dominio.Fachada.Fachada;
  *
  * @author zeek2
  */
-public class MantMonitoreoController {
+public class MantMonitoreoController implements IFachada{
     
     private VentanaMantMonitoreo ventana;
     
@@ -20,6 +20,7 @@ public class MantMonitoreoController {
         //Automticamente que liste todo
         this.ventana.mostrarLlamadas(Fachada.getInstancia().obtenerLlamadas());
         this.ventana.mostrarSectores(Fachada.getInstancia().obtenerSectores());
+        Fachada.getInstancia().agregarObservador(this);
     }
     
     public VentanaMantMonitoreo getVentana() {
@@ -47,4 +48,9 @@ public class MantMonitoreoController {
      //Posiblemente nesecite hacer que mi monitoreo sea un observer de la fachada para que cuando se ejecute
      //alguna accion de interes sobre las llamadas (se agrego o cambio su estado) se actulize automaticamente 
      //los listados de llamdas
+
+    @Override
+    public void update(Fachada fachada) {
+        listarLlamadas();
+    }
 }

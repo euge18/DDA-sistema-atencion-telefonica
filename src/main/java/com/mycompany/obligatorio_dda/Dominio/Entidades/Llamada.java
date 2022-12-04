@@ -4,6 +4,7 @@
  */
 package com.mycompany.obligatorio_dda.Dominio.Entidades;
 
+import com.mycompany.obligatorio_dda.Dominio.Fachada.Fachada;
 import com.mycompany.obligatorio_dda.Dominio.Repositorios.IObserverLlamada;
 import com.mycompany.obligatorio_dda.Dominio.Utilitarias.CalculadoraFechas;
 import java.time.LocalDateTime;
@@ -66,6 +67,7 @@ public class Llamada {
         if(this.estado != estado){
             this.estado = estado;
             notifiacearObservers();
+            Fachada.getInstancia().notificarObserversDeFachada();
         }
     }
 
