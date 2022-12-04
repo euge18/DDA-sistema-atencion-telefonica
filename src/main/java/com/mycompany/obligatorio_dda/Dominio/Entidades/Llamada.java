@@ -42,6 +42,10 @@ public class Llamada {
         this.idLlamada = -1;
         this.descripcion = descripcionEncabezado;
     }
+    
+    public Llamada(){
+        
+    }
 
     public static int getCostoFijo() {
         return costoFijo;
