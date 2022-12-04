@@ -4,6 +4,7 @@
  */
 package com.mycompany.obligatorio_dda.Dominio.Entidades;
 
+import com.mycompany.obligatorio_dda.DataBase.DataBase;
 import com.mycompany.obligatorio_dda.Dominio.Repositorios.IObserverLlamada;
 import com.mycompany.obligatorio_dda.Dominio.Servicios.*;
 import com.mycompany.obligatorio_dda.Dominio.Utilitarias.CalculadoraFechas;
@@ -22,11 +23,11 @@ public class Sector implements IObserverLlamada {
     private ArrayList<Llamada> llamadasEspera;
     private ArrayList<Llamada> llamadasFinalizadas;
     private ArrayList<Trabajador> trabajadores;
+    private DataBase baseDeDatos = new DataBase();
 
     public Sector(int numeroSector, String nombre) {
         this.numeroSector = numeroSector;
         this.nombre = nombre;
-        //Inicializo las listas en el constructor
         llamadasEspera = new ArrayList<Llamada>();
         llamadasFinalizadas = new ArrayList<Llamada>();
     }
@@ -118,16 +119,11 @@ public class Sector implements IObserverLlamada {
             if (puestoLibre != null) {
                 puestoLibre.atenderLlamada(llamada);
                 llamada.setSector(this);
-                //Sector se agrega como observer
                 llamada.agregarObservador(this);
-                //Aqui se llama al observer desde la funcion del setEstado, 
-                //pues sector debe saber cuando finaliza para agregarla a las llamadas 
-                //finalizadas y reasignar el puesto
                 llamadasEspera.remove(llamada);
             } else {
                 System.out.println("Actualmente no hay puestos libres");
                 recibirLlamada(llamada);
-                //hoa
             }
 
     }
@@ -164,6 +160,8 @@ public class Sector implements IObserverLlamada {
     public void update(Llamada llamada) {
         if (llamada.getEstado() == EstadoLLamada.FINALIZADA){
             llamada.setHoraFin(LocalDateTime.now());
+            llamada.calcularCosto(llamada);
+            baseDeDatos.modificarLlamadaFinalizada(llamada.getEstado(), llamada.getHoraFin(), llamada.getIdLlamada(), llamada.getCosto());
             llamadasFinalizadas.add(llamada);
             llamada.removerObservador(this);
             

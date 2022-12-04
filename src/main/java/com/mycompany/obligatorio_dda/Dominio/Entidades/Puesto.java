@@ -4,6 +4,7 @@
  */
 package com.mycompany.obligatorio_dda.Dominio.Entidades;
 
+import com.mycompany.obligatorio_dda.DataBase.DataBase;
 import com.mycompany.obligatorio_dda.Dominio.Utilitarias.CalculadoraFechas;
 import java.time.LocalDateTime;
 
@@ -18,6 +19,7 @@ public class Puesto {
     private Llamada llamadaEnAtencion;
     private int cantidadLlamadasAtendidas = 0;
     private Sector sector;
+    private DataBase baseDeDatos = new DataBase();
 
     public Sector getSector() {
         return sector;
@@ -84,6 +86,8 @@ public class Puesto {
             llamada.setHoraAtencion(LocalDateTime.now());
             llamada.setPuesto(this);
             llamada.setTrabajador(trabajadorAsignado);
+            //ACA CAE
+            baseDeDatos.modificarLlamadaCurso(llamada.getEstado(), llamada.getHoraAtencion(), this.numeroPuesto, llamada.getTrabajador().getIdTrabajador(), llamada.getSector().getNumeroSector(), llamada.getIdLlamada());
             ++cantidadLlamadasAtendidas;
             llamadaEnAtencion = llamada;      
         /*    

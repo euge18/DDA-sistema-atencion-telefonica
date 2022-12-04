@@ -102,6 +102,8 @@ public class Principal {
         System.out.println("Hora atencion: " + llamadaPruebaCosto.getHoraAtencion().toString());
         System.out.println("Hora atencion: " + llamadaPruebaCosto.getHoraFin().toString());
         
+        llamada.getCosto();
+        
         System.out.println("El costo de la llamda fue de: " + llamadaPruebaCosto.calcularCosto(llamadaPruebaCosto));
         
             frmMonitoreo fMonitoreo = new frmMonitoreo();

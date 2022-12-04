@@ -4,6 +4,7 @@
  */
 package com.mycompany.obligatorio_dda.Dominio.Entidades;
 
+import com.mycompany.obligatorio_dda.DataBase.DataBase;
 import com.mycompany.obligatorio_dda.Dominio.Repositorios.ITipoCliente;
 import com.mycompany.obligatorio_dda.Dominio.Servicios.*;
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ public class Cliente {
     private String nombreCompleto;
     private ITipoCliente tipo;
     private float saldo;
+    private static DataBase baseDeDatos = new DataBase();
 
     public float getSaldo() {
         return saldo;
@@ -70,12 +72,12 @@ public class Cliente {
     public void hacerLlmada(int numeroSector){
         if (saldo>0){
             Llamada llamada = new Llamada(EstadoLLamada.PENDIENTE, LocalDateTime.now(), this);
+            baseDeDatos.insertarLlamada(llamada.getIdLlamada(), llamada.getEstado(), llamada.getHoraInicio(), llamada.getCliente().getIdCliente());
             ServicioLlamada.getInstancia().agregarLlamada(llamada);
             Sector sector = ServicioSector.getInstancia().ObtenerSector(numeroSector);
             if (sector != null) {
                 sector.recibirLlamada(llamada);
             } else {
-                //Ver como lanzar mensajes
                 System.out.println("Ingrese un número de Sector valido");
             }
         } else {
