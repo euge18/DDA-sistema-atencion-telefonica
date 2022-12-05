@@ -30,10 +30,9 @@ public class Llamada {
     private Trabajador trabajador; 
     private ArrayList<IObserverLlamada> observadores;
 
-    public Llamada(EstadoLLamada estado, LocalDateTime horaInicio, Cliente cliente) {
+    public Llamada(EstadoLLamada estado, LocalDateTime horaInicio) {
         this.estado = estado;
         this.horaInicio = horaInicio;
-        this.cliente = cliente;
         
         this.observadores = new ArrayList<IObserverLlamada>();
     }

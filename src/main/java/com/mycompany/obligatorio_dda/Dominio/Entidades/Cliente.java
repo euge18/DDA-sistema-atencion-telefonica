@@ -34,6 +34,7 @@ public class Cliente {
         this.tipo = tipo;
         this.saldo = saldo;
     }
+    
 
     public int getIdCliente() {
         return idCliente;
@@ -69,7 +70,8 @@ public class Cliente {
     
     public void hacerLlmada(int numeroSector){
         if (saldo>0){
-            Llamada llamada = new Llamada(EstadoLLamada.PENDIENTE, LocalDateTime.now(), this);
+            Llamada llamada = new Llamada(EstadoLLamada.PENDIENTE, LocalDateTime.now());
+            llamada.setCliente(this);
             ServicioLlamada.getInstancia().agregarLlamada(llamada);
             Sector sector = ServicioSector.getInstancia().ObtenerSector(numeroSector);
             if (sector != null) {

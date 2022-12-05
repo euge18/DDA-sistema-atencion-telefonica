@@ -7,6 +7,7 @@ package com.mycompany.obligatorio_dda;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.*;
 import com.mycompany.obligatorio_dda.Dominio.Servicios.*;
 import com.mycompany.obligatorio_dda.Interfaz.frmMonitoreo;
+import com.mycompany.obligatorio_dda.Interfaz.frmSimuladorLlamada;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -28,7 +29,7 @@ public class Principal {
       //Hay que tener cudado con las listas que sector nesecita de puestos y trabajadores
       //Se pueden inicilizar como ArraysList vacios en los constructores, o llamar a los servicios
       //de trabajador y puestos y pedirle sus listas por sector 
-      Sector sectorPrueba = SS.ObtenerSector(0);
+      Sector sectorPrueba = SS.ObtenerSector(1);
       sectorPrueba.setPuestos(SP.ObtenerPuetosPorSector(sectorPrueba.getNumeroSector()));
       sectorPrueba.setTrabajadores(ST.ObtenerTrabajadoresPorSector(sectorPrueba.getNumeroSector()));
       for (Puesto p : sectorPrueba.getPuestos()){
@@ -46,7 +47,7 @@ public class Principal {
       
       //llama a Adimnistracion
       //Hasta este punto bien, Sector la recibe y deriva al puesto correspondiente
-      clientePrueba.hacerLlmada(0);
+      clientePrueba.hacerLlmada(1);
       
       //el puesto libre en Administracion es el 0 atendido por Pablo Estigarribia
       //Funciona bien
@@ -77,7 +78,8 @@ public class Principal {
         Cliente clienteGestor = SC.ObtenerCliente(2);
 
         
-        Llamada llamadaPruebaCosto = new Llamada(EstadoLLamada.FINALIZADA , LocalDateTime.now(),  clienteGestor);
+        Llamada llamadaPruebaCosto = new Llamada(EstadoLLamada.FINALIZADA , LocalDateTime.now());
+        llamadaPruebaCosto.setCliente(clientePrueba);
         llamadaPruebaCosto.setIdLlamada(7);
         llamadaPruebaCosto.setDescripcion("Esta es una descripcion de Prueba");
         llamadaPruebaCosto.setPuesto(puestoPrueba);
@@ -101,13 +103,21 @@ public class Principal {
         
         System.out.println("Hora atencion: " + llamadaPruebaCosto.getHoraAtencion().toString());
         System.out.println("Hora atencion: " + llamadaPruebaCosto.getHoraFin().toString());
+            System.out.println("Hora Inicio: " + llamadaPruebaCosto.getHoraFin().toString());
+        /*
+        llamadaPruebaCosto.calcularCosto(llamadaPruebaCosto);
         
-        System.out.println("El costo de la llamda fue de: " + llamadaPruebaCosto.calcularCosto(llamadaPruebaCosto));
+        System.out.println("El costo de la llamda fue de: " + llamadaPruebaCosto.getCosto());
         
+        /*
             frmMonitoreo fMonitoreo = new frmMonitoreo();
             fMonitoreo.setVisible(true);
+        */
         //float costo = llamadaPruebaCosto.calcularCosto();
         
         //llamadaPruebaCosto.setCosto(llamadaPruebaCosto.calcularCosto());
+        
+        frmSimuladorLlamada fSimulador = new frmSimuladorLlamada();
+        fSimulador.setVisible(true);
     }
 }

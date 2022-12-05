@@ -104,37 +104,9 @@ public class Fachada {
     public Cliente obtenerCliente(int idCliente) {
         return ServicioCliente.getInstancia().ObtenerCliente(idCliente);
     }
- 
-    /*
-    private ArrayList<IObserverRemoto> observadores;
     
-    public Fachada(){
-        observadores = new ArrayList<>();
-    }
-    
-    @Override
-    public void agregarObserverRemoto(IObserverRemoto obs) throws RemoteException {
-        observadores.add(obs);
-        System.out.println("Agregado observador remoto a servidor");
-    }
-    
-    public void notificarObservadoresRemotos(Object o, Evento evt){
-        for(IObserverRemoto io : observadores){
-            try {
-                io.actualizar(o, evt);
-            } catch (RemoteException ex) {
-                Logger.getLogger(Fachada.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+    public Cliente ObtenerClientePorCedula(String cedulaCliente) {
+        return ServicioCliente.getInstancia().ObtenerClientePorCedula(cedulaCliente);
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        System.out.println("Ingreso update Fachada");
-        if (arg instanceof Evento) {
-            notificarObservadoresRemotos(null, (Evento) arg);
-        }
-    }
-    */
-   
 }

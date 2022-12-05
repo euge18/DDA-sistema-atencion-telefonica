@@ -25,8 +25,8 @@ public class ServicioTrabajador {
     private ServicioTrabajador(){
         trabajadores = new ArrayList<>();
 
-        trabajadores.add(new Trabajador(0, "4548452", "123", "Pablo Estigarribia", ServicioSector.getInstancia().ObtenerSector(0)));
-        trabajadores.add(new Trabajador(1, "8742156", "234", "Marcela Lopez", ServicioSector.getInstancia().ObtenerSector(0)));
+        trabajadores.add(new Trabajador(0, "4548452", "123", "Pablo Estigarribia", ServicioSector.getInstancia().ObtenerSector(1)));
+        trabajadores.add(new Trabajador(1, "8742156", "234", "Marcela Lopez", ServicioSector.getInstancia().ObtenerSector(1)));
 
         trabajadores.add(new Trabajador(2, "8741545", "789", "Eloisa Perez", ServicioSector.getInstancia().ObtenerSector(1)));
         trabajadores.add(new Trabajador(3, "7456622", "456", "Tadeo Molina", ServicioSector.getInstancia().ObtenerSector(1)));
