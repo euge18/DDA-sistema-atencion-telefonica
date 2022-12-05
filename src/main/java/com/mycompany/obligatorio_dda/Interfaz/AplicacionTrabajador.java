@@ -4,20 +4,26 @@
  */
 package com.mycompany.obligatorio_dda.Interfaz;
 
+import com.mycompany.obligatorio_dda.Controladores.AppTrabajadorController;
+import com.mycompany.obligatorio_dda.Controladores.VentanaTrabajador;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.Trabajador;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Usuario
  */
-public class AplicacionTrabajador extends javax.swing.JFrame {
+public class AplicacionTrabajador extends javax.swing.JFrame implements VentanaTrabajador{
     private Trabajador trabajador;
+    private AppTrabajadorController controlador;
     /**
      * Creates new form AplicacionTrabajador
      */
     public AplicacionTrabajador(Trabajador trabajador) {
-        this.trabajador = trabajador;
         initComponents();
+        this.trabajador = trabajador;
+        this.controlador = new AppTrabajadorController(this, trabajador);
+        mostrarDatosInicialesTrabajador();
     }
     
     /**
@@ -86,6 +92,11 @@ public class AplicacionTrabajador extends javax.swing.JFrame {
 
         btnFinalizarLlamada.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnFinalizarLlamada.setText("Finalizar llamada");
+        btnFinalizarLlamada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalizarLlamadaActionPerformed(evt);
+            }
+        });
 
         btnSalir.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnSalir.setText("Salir");
@@ -187,8 +198,13 @@ public class AplicacionTrabajador extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        // TODO add your handling code here:
+        controlador.salirAplicacion();
+        this.setVisible(false);
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnFinalizarLlamadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarLlamadaActionPerformed
+        controlador.finalizarLlamada();
+    }//GEN-LAST:event_btnFinalizarLlamadaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -242,4 +258,49 @@ public class AplicacionTrabajador extends javax.swing.JFrame {
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextArea txtDescripcion;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public String getDescripcion() {
+        return txtDescripcion.getText();
+    }
+
+    @Override
+    public void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje, "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    public void mostrarDatosInicialesTrabajador() {
+        int numPuesto = trabajador.getSector().obtenerPuestoTrabajador(trabajador).getNumeroPuesto();
+        lblNombreTrabajador.setText(trabajador.getNombre());
+        lblSectorNumPuesto.setText("Sector: " + trabajador.getSector().getNombre() + " | Puesto Nro. #" + numPuesto);
+    }
+
+    @Override
+    public void mostrarMensajeLlamadaEnCurso(String mensaje) {
+        lblIndicadorEstadoLlamada.setText("");
+        lblIndicadorEstadoLlamada.setText(mensaje);
+    }
+
+    @Override
+    public void mostrarNombreCliente(String nombre) {
+        lblNombreCliente.setText("");
+        lblNombreCliente.setText(nombre);
+    }
+
+    @Override
+    public void mostrarCantidadLlamadasAtendidas(int cant) {
+        lblNumLlamadasAtendidas.setText(Integer.toString(cant));
+    }
+
+    @Override
+    public void limpiarPantalla() {
+        txtDescripcion.setText("");
+        lblNombreCliente.setText("");
+        
+    }
+
+    @Override
+    public void mostrarTiempoPromedioLlamadas(int cant) {
+        lblNumPromedioTiempo.setText(Integer.toString(cant));
+    }
 }

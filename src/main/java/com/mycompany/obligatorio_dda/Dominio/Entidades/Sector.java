@@ -81,6 +81,15 @@ public class Sector implements IObserverLlamada {
         this.trabajadores = trabajadores;
     }
     
+    public Puesto obtenerPuestoTrabajador(Trabajador trabajador){
+        for (Puesto p : puestos) {
+            if (p.getTrabajadorAsignado().equals(trabajador)) {
+                return p;
+            }
+        }
+        return null;
+    }
+    
     //cuando el trabajador se logea que esta funcion lo asigne automaticamnete
     // caso no encuentre un puesto se puede crear uno fuera del for, se debe de agregar el nuevo puesto a la lista
     // pero si todo esta precargado pueden se 5 trabajadores para 5 puestos
