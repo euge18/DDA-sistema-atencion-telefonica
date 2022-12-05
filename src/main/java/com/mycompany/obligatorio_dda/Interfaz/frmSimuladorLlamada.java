@@ -426,4 +426,10 @@ public class frmSimuladorLlamada extends javax.swing.JFrame implements MantVenta
         txtMensajes.setText(mensaje);
     }
 
+    @Override
+    public void mostrarMensajeSectorOcupado(String mensaje) {
+        txtMensajes.setText("");
+        txtMensajes.setText(mensaje);
+    }
+
 }

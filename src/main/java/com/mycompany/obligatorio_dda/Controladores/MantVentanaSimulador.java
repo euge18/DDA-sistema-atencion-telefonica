@@ -25,6 +25,8 @@ public interface MantVentanaSimulador {
     public void mostrarMensajeClienteNoEncontrado(String mensaje);
     
     public void mostrarMensajeLlamadaEnCurso(String mensaje);
+    
+    public void mostrarMensajeSectorOcupado(String mensaje);
    
     
 }

@@ -77,6 +77,26 @@ public class MantSimuladorController implements IObserverLlamada{
         public void buscarSectorYLlamar(){
             if(clienteIdentificado==true){
                 int numeroSector = Integer.parseInt(ultimoNumero);
+                if(Fachada.getInstancia().obtenerSector(numeroSector).getLlamadasEspera().size()>=5){
+                    this.mensaje= "Todas nuestras lineas estan ocupadas, intentelo más tarde";
+                    this.cedulaCliente = "";
+                    this.clienteIdentificado = false;
+                    this.cliente = null;
+                    this.llamadaPendiente = null;
+                    this.ultimoNumero = "";
+                    this.ventana.mostrarMensajeSectorOcupado(mensaje);
+                    return;
+                }
+                if(Fachada.getInstancia().obtenerSector(numeroSector)==null){
+                    this.mensaje= "Numero de Sector Incorrecto, vuelva a intentarlo";
+                    this.cedulaCliente = "";
+                    this.clienteIdentificado = false;
+                    this.cliente = null;
+                    this.llamadaPendiente = null;
+                    this.ultimoNumero = "";
+                    this.ventana.mostrarMensajeSectorOcupado(mensaje);
+                    return;
+                }
                 this.cliente.hacerLlmada(numeroSector, llamadaPendiente);
                 llamadaPendiente.agregarObservador(this);
                
