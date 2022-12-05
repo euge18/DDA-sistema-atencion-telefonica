@@ -88,6 +88,10 @@ public class Fachada {
     public Trabajador obtenerTrabajador(int idTrabajador) {
        return ServicioTrabajador.getInstancia().obtenerTrabajador(idTrabajador);
     }
+    
+    public Trabajador obtenerTrabajadorLogin(String ci, String pass){
+        return ServicioTrabajador.getInstancia().obtenerTrabajadorLogin(ci, pass);
+    }
 
     public ArrayList<Puesto> obtenerPuestos() {
        return ServicioPuesto.getInstancia().obtenerPuestos();

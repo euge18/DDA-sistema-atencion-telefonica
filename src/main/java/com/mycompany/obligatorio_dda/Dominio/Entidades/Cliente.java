@@ -68,6 +68,7 @@ public class Cliente {
         this.tipo = tipo;
     }
     
+    //ESTE DEJAR => LO NESECITA EL SIMULADOR DEL LADO DEL CLIENTE
     public void hacerLlmada(int numeroSector, Llamada llamada){
         if (saldo>0){
             llamada.setCliente(this);
@@ -75,6 +76,24 @@ public class Cliente {
             Sector sector = ServicioSector.getInstancia().ObtenerSector(numeroSector);
             if (sector != null) {
                 sector.recibirLlamada(llamada);
+            } else {
+                //Ver como lanzar mensajes
+                System.out.println("Ingrese un número de Sector valido");
+            }
+        } else {
+            System.out.println("Regarge su saldo");
+        }
+  
+    }
+    
+    //Este SACAR => SOLO PARA QUE ANDE LA APPTEST TRABAJADOR
+        public void hacerLlmada(int numeroSector){
+        if (saldo>0){
+            Llamada llamda = new Llamada(EstadoLLamada.PENDIENTE, LocalDateTime.now(), this);
+            ServicioLlamada.getInstancia().agregarLlamada(llamda);
+            Sector sector = ServicioSector.getInstancia().ObtenerSector(numeroSector);
+            if (sector != null) {
+                sector.recibirLlamada(llamda);
             } else {
                 //Ver como lanzar mensajes
                 System.out.println("Ingrese un número de Sector valido");

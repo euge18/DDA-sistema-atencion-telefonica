@@ -8,7 +8,9 @@ import com.mycompany.obligatorio_dda.Controladores.MantMonitoreoController;
 import com.mycompany.obligatorio_dda.Controladores.VentanaMantMonitoreo;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.EstadoLLamada;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.Llamada;
+import com.mycompany.obligatorio_dda.Dominio.Entidades.Puesto;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.Sector;
+import com.mycompany.obligatorio_dda.Dominio.Entidades.Trabajador;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -56,6 +58,7 @@ public class frmMonitoreo extends javax.swing.JFrame implements VentanaMantMonit
         });
         jScrollPane1.setViewportView(lstSectores);
 
+        lblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblTitulo.setText("Aplicación de Monitoreo");
 
         jScrollPane2.setViewportView(lstLlmadas);
@@ -67,6 +70,7 @@ public class frmMonitoreo extends javax.swing.JFrame implements VentanaMantMonit
             }
         });
 
+        lblSector.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lblSector.setText("Sector Seleccionado:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -78,27 +82,28 @@ public class frmMonitoreo extends javax.swing.JFrame implements VentanaMantMonit
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(lblTitulo)
-                            .addGap(240, 240, 240)
-                            .addComponent(lblSector))
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(29, Short.MAX_VALUE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(77, 77, 77)
+                            .addComponent(lblSector))
+                        .addComponent(lblTitulo)))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTitulo)
+                .addGap(22, 22, 22)
+                .addComponent(lblTitulo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblSector))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

@@ -36,6 +36,13 @@ public class Llamada {
         
         this.observadores = new ArrayList<IObserverLlamada>();
     }
+    
+    public Llamada(EstadoLLamada estado, LocalDateTime horaInicio, Cliente cliente) {
+        this.estado = estado;
+        this.horaInicio = horaInicio;
+        this.cliente = cliente;
+        this.observadores = new ArrayList<IObserverLlamada>();
+    }
    
     public Llamada (int num, String descripcionEncabezado){
         this.idLlamada = -1;
