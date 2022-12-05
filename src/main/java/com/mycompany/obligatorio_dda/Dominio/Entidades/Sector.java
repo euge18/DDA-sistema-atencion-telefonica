@@ -29,6 +29,8 @@ public class Sector implements IObserverLlamada {
         //Inicializo las listas en el constructor
         llamadasEspera = new ArrayList<Llamada>();
         llamadasFinalizadas = new ArrayList<Llamada>();
+        puestos = new ArrayList<Puesto>();
+        trabajadores = new ArrayList<Trabajador>();
     }
 
     public int getNumeroSector() {
@@ -82,12 +84,14 @@ public class Sector implements IObserverLlamada {
     //cuando el trabajador se logea que esta funcion lo asigne automaticamnete
     // caso no encuentre un puesto se puede crear uno fuera del for, se debe de agregar el nuevo puesto a la lista
     // pero si todo esta precargado pueden se 5 trabajadores para 5 puestos
-    public void asignarTrabajadorLibre(Trabajador trabajador) {
+    public boolean asignarTrabajadorLibre(Trabajador trabajador) {
         for (Puesto p : puestos) {
             if (p.isActivo() == false) {
                 p.setTrabajadorAsignado(trabajador);
-            }
+                return true;
+            } 
         }
+        return false;
     }
     
     public void dejarPuesto (Puesto puesto){

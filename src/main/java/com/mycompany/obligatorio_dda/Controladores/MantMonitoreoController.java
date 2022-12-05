@@ -4,8 +4,11 @@
  */
 package com.mycompany.obligatorio_dda.Controladores;
 
+import com.mycompany.obligatorio_dda.Dominio.Entidades.Puesto;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.Sector;
+import com.mycompany.obligatorio_dda.Dominio.Entidades.Trabajador;
 import com.mycompany.obligatorio_dda.Dominio.Fachada.Fachada;
+import java.util.ArrayList;
 
 /**
  *
@@ -48,6 +51,7 @@ public class MantMonitoreoController implements IFachada{
      //Posiblemente nesecite hacer que mi monitoreo sea un observer de la fachada para que cuando se ejecute
      //alguna accion de interes sobre las llamadas (se agrego o cambio su estado) se actulize automaticamente 
      //los listados de llamdas
+   
 
     @Override
     public void update(Fachada fachada) {

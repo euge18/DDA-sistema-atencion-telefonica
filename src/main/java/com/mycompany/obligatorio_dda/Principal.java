@@ -6,6 +6,7 @@ package com.mycompany.obligatorio_dda;
 
 import com.mycompany.obligatorio_dda.Dominio.Entidades.*;
 import com.mycompany.obligatorio_dda.Dominio.Servicios.*;
+import com.mycompany.obligatorio_dda.Interfaz.frmAplicacionTest;
 import com.mycompany.obligatorio_dda.Interfaz.frmMonitoreo;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,7 +17,20 @@ import javax.swing.JOptionPane;
  * @author zeek2
  */
 public class Principal {
-        public static void main(String[] args){
+    public static void main(String[] args){
+        ServicioSector SS = ServicioSector.getInstancia();
+        ServicioPuesto SP = ServicioPuesto.getInstancia();
+        ServicioTrabajador ST = ServicioTrabajador.getInstancia();
+        
+        
+        Sector sector0 = SS.ObtenerSector(0);
+        sector0.setPuestos(SP.ObtenerPuetosPorSector(sector0.getNumeroSector()));
+        sector0.setTrabajadores(ST.ObtenerTrabajadoresPorSector(sector0.getNumeroSector()));
+        
+        frmAplicacionTest frmTestApp = new frmAplicacionTest();
+        frmTestApp.setVisible(true);
+          
+    /*
         
       //Para que lo primero que hagan las instancias sea inicializar las listas   
       ServicioCliente SC = ServicioCliente.getInstancia();
@@ -109,5 +123,6 @@ public class Principal {
         //float costo = llamadaPruebaCosto.calcularCosto();
         
         //llamadaPruebaCosto.setCosto(llamadaPruebaCosto.calcularCosto());
+    }*/
     }
 }

@@ -94,8 +94,8 @@ public class frmAplicacionTest extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAppTrabajadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAppTrabajadoresActionPerformed
-        // Login fm = new Login();
-        //fm.setVisible(true)
+        frmLogin frmL = new frmLogin();
+        frmL.setVisible(true);
     }//GEN-LAST:event_btnAppTrabajadoresActionPerformed
 
     private void btnSimuladorLlamadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimuladorLlamadasActionPerformed
@@ -103,8 +103,8 @@ public class frmAplicacionTest extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSimuladorLlamadasActionPerformed
 
     private void btnAppMonitoreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAppMonitoreoActionPerformed
-        frmMonitoreo fm = new frmMonitoreo();
-        fm.setVisible(true);
+        frmMonitoreo frmM = new frmMonitoreo();
+        frmM.setVisible(true);
     }//GEN-LAST:event_btnAppMonitoreoActionPerformed
 
     /**

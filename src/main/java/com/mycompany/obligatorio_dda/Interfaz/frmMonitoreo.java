@@ -8,7 +8,9 @@ import com.mycompany.obligatorio_dda.Controladores.MantMonitoreoController;
 import com.mycompany.obligatorio_dda.Controladores.VentanaMantMonitoreo;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.EstadoLLamada;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.Llamada;
+import com.mycompany.obligatorio_dda.Dominio.Entidades.Puesto;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.Sector;
+import com.mycompany.obligatorio_dda.Dominio.Entidades.Trabajador;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 

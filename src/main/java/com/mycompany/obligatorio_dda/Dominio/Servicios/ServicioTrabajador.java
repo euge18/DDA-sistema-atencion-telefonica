@@ -25,7 +25,7 @@ public class ServicioTrabajador {
     private ServicioTrabajador(){
         trabajadores = new ArrayList<>();
 
-        trabajadores.add(new Trabajador(0, "4548452", "123", "Pablo Estigarribia", ServicioSector.getInstancia().ObtenerSector(0)));
+        trabajadores.add(new Trabajador(0, "11112222", "123", "Pablo Estigarribia", ServicioSector.getInstancia().ObtenerSector(0)));
         trabajadores.add(new Trabajador(1, "8742156", "234", "Marcela Lopez", ServicioSector.getInstancia().ObtenerSector(0)));
 
         trabajadores.add(new Trabajador(2, "8741545", "789", "Eloisa Perez", ServicioSector.getInstancia().ObtenerSector(1)));
@@ -33,8 +33,6 @@ public class ServicioTrabajador {
 
         trabajadores.add(new Trabajador(4, "75565653", "555", "Gabriela Mendez", ServicioSector.getInstancia().ObtenerSector(2)));
         trabajadores.add(new Trabajador(5, "15464455", "111", "Rueben Nubes", ServicioSector.getInstancia().ObtenerSector(2)));
-        //Agregar trabajadores
-        //trabajadores.add(new Trabajador(1,"1122","123Demo","Juan",));
     }
     
     public ArrayList<Trabajador> ObtenerTrabajadores(){
@@ -59,5 +57,14 @@ public class ServicioTrabajador {
         }
         return trabajadoresPorSector;
     } 
+    
+    public Trabajador obtenerTrabajadorLogin(String ci, String pass){
+        for(Trabajador t : trabajadores){
+            if(t.getCedula().equals(ci) && t.getPass().equals(pass) ){
+                return t;
+            }
+        }
+        return null;
+    }
     
 }
