@@ -69,7 +69,7 @@ public class MantSimuladorController implements IObserverLlamada{
             llamadaPendiente.setCliente(cliente);
             clienteIdentificado=true;
             
-            this.mensaje = "Para comunicarse con Administracion presione 1\n Ventas presione 2 \n Desarrollo 3 \n y presione *";
+            this.mensaje = "Para comunicarse con Administracion presione 0\nVentas presione 1 \n Desarrollo presione 3 \n y finalmente presione *";
             this.ventana.mostrarSectores(mensaje);
             cedulaCliente="";
         }
@@ -81,11 +81,11 @@ public class MantSimuladorController implements IObserverLlamada{
                 llamadaPendiente.agregarObservador(this);
                
                 if(llamadaPendiente.getEstado()==EstadoLLamada.CURSO){
-                    this.mensaje = "Llamada en curso... usted se esta comunicando con el Sector: " + llamadaPendiente.getSector().getNombre() + " y se esta atendido por " + llamadaPendiente.getTrabajador().getNombre() + " Su llamada se ha iniciado: " + llamadaPendiente.getHoraInicio();
+                    this.mensaje = "Llamada en curso...\n usted se esta comunicando con el Sector: " + llamadaPendiente.getSector().getNombre() + "\n y se esta atendido por " + llamadaPendiente.getTrabajador().getNombre() + "\n Su llamada se ha iniciado: " + CalculadoraFechas.formatearFecha(llamadaPendiente.getHoraInicio());
                     this.ventana.mostrarMensajeLlamadaEnCurso(mensaje);               
                 }
             } else {
-                this.mensaje = "No existe un cliente con es cedula vuelva a intentarlo\n porque llega aca???";
+                this.mensaje = "No existe un cliente con es cedula vuelva a intentarlo";
                 this.ventana.mostrarMensajeClienteNoEncontrado(mensaje);
             }
         }
@@ -100,11 +100,10 @@ public class MantSimuladorController implements IObserverLlamada{
     public void update(Llamada llamada) {
         if(llamada.getEstado()==EstadoLLamada.FINALIZADA){
             llamada.removerObservador(this);
-            //long momentoInicial = CalculadoraFechas.calcularMilisegundos(llamada.getHoraInicio().getYear(), llamada.getHoraInicio().getMonthValue(), llamada.getHoraInicio().getDayOfMonth(), llamada.getHoraInicio().getHour(), llamada.getHoraInicio().getMinute(), llamada.getHoraInicio().getSecond());
-            //long momentoFin = CalculadoraFechas.calcularMilisegundos(llamada.getHoraFin().getYear(), llamada.getHoraFin().getMonthValue(), llamada.getHoraFin().getDayOfMonth(), llamada.getHoraFin().getHour(), llamada.getHoraFin().getMinute(), llamada.getHoraFin().getSecond());
-            //long difernciaTiempo = CalculadoraFechas.calcularDiferenciaDeTiempo(momentoInicial, momentoFin);           
-            //this.mensaje = "La llamada ha finalizado... Duración: " + difernciaTiempo + " segundos, y su saldo ha quedado en: " + llamada.getCliente().getSaldo() + "$";
-            this.mensaje = "finalizo la llamada";
+            long momentoInicial = CalculadoraFechas.calcularMilisegundos(llamada.getHoraInicio().getYear(), llamada.getHoraInicio().getMonthValue(), llamada.getHoraInicio().getDayOfMonth(), llamada.getHoraInicio().getHour(), llamada.getHoraInicio().getMinute(), llamada.getHoraInicio().getSecond());
+            long momentoFin = CalculadoraFechas.calcularMilisegundos(llamada.getHoraFin().getYear(), llamada.getHoraFin().getMonthValue(), llamada.getHoraFin().getDayOfMonth(), llamada.getHoraFin().getHour(), llamada.getHoraFin().getMinute(), llamada.getHoraFin().getSecond());
+            long difernciaTiempo = CalculadoraFechas.calcularDiferenciaDeTiempo(momentoInicial, momentoFin);           
+            this.mensaje = "La llamada ha finalizado...\n Duración: " + difernciaTiempo + " segundos\nha costado: " + llamada.calcularCosto(llamada) + "\ny su saldo ha quedado en: " + llamada.getCliente().getSaldo() + "$";
             this.ventana.mostrarMensajeFin(mensaje);
         }
     }
