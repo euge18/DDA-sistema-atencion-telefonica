@@ -68,9 +68,8 @@ public class Cliente {
         this.tipo = tipo;
     }
     
-    public void hacerLlmada(int numeroSector){
+    public void hacerLlmada(int numeroSector, Llamada llamada){
         if (saldo>0){
-            Llamada llamada = new Llamada(EstadoLLamada.PENDIENTE, LocalDateTime.now());
             llamada.setCliente(this);
             ServicioLlamada.getInstancia().agregarLlamada(llamada);
             Sector sector = ServicioSector.getInstancia().ObtenerSector(numeroSector);

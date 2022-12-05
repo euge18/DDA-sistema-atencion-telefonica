@@ -26,6 +26,10 @@ public class Principal {
       ServicioSector SS = ServicioSector.getInstancia();
       ServicioTrabajador ST = ServicioTrabajador.getInstancia();
       
+      Sector sectorPrueba = SS.ObtenerSector(1);
+      sectorPrueba.setPuestos(SP.ObtenerPuetosPorSector(sectorPrueba.getNumeroSector()));
+      sectorPrueba.setTrabajadores(ST.ObtenerTrabajadoresPorSector(sectorPrueba.getNumeroSector()));
+      /*
       //Hay que tener cudado con las listas que sector nesecita de puestos y trabajadores
       //Se pueden inicilizar como ArraysList vacios en los constructores, o llamar a los servicios
       //de trabajador y puestos y pedirle sus listas por sector 
@@ -86,7 +90,7 @@ public class Principal {
         llamadaPruebaCosto.setTrabajador(puestoPrueba.getTrabajadorAsignado());
         llamadaPruebaCosto.setSector(sectorPrueba);
         
-        
+        /*
         System.out.println("Datos: " + llamadaPruebaCosto.getEstado() + " " + llamadaPruebaCosto.getCliente().getNombreCompleto() + " " + llamadaPruebaCosto.getHoraInicio());
         
         int respuesta = 1;
@@ -115,7 +119,11 @@ public class Principal {
         */
         //float costo = llamadaPruebaCosto.calcularCosto();
         
-        //llamadaPruebaCosto.setCosto(llamadaPruebaCosto.calcularCosto());
+        //llamadaPruebaCosto.setCosto(llamadaPruebaCosto.calcularCosto());*/
+        
+        
+        
+
         
         frmSimuladorLlamada fSimulador = new frmSimuladorLlamada();
         fSimulador.setVisible(true);

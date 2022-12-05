@@ -71,6 +71,11 @@ public class frmSimuladorLlamada extends javax.swing.JFrame implements MantVenta
         });
 
         btnFinalizar.setText("Finalizar");
+        btnFinalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalizarActionPerformed(evt);
+            }
+        });
 
         lblMensaje.setText("Mensaje de la central Telefonica");
 
@@ -262,8 +267,7 @@ public class frmSimuladorLlamada extends javax.swing.JFrame implements MantVenta
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-      
-        this.setEnabled(false);
+        this.setVisible(false);
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
@@ -316,8 +320,12 @@ public class frmSimuladorLlamada extends javax.swing.JFrame implements MantVenta
     }//GEN-LAST:event_btnNumeralActionPerformed
 
     private void btnAsteriscoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsteriscoActionPerformed
-        controlador.buscarSectorYLlamar();
+      controlador.buscarSectorYLlamar();
     }//GEN-LAST:event_btnAsteriscoActionPerformed
+
+    private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
+        controlador.finalizarLlamada();
+    }//GEN-LAST:event_btnFinalizarActionPerformed
 
     /**
      * @param args the command line arguments

@@ -24,6 +24,8 @@ public class MantSimuladorController implements IObserverLlamada{
         
         private Llamada llamadaPendiente;
         
+        private Cliente cliente;
+        
         private String cedulaCliente = "";
         
         private boolean clienteIdentificado= false;
@@ -49,6 +51,8 @@ public class MantSimuladorController implements IObserverLlamada{
             //o en su defecto ofreserle un boton de "reset cedula"
             if(!clienteIdentificado){
                 cedulaCliente = cedulaCliente + numero;
+                
+            } else {
                 ultimoNumero = numero;
             }
         }
@@ -61,6 +65,7 @@ public class MantSimuladorController implements IObserverLlamada{
                 cedulaCliente = "";
                 return;
             }
+            this.cliente = cliente;
             llamadaPendiente.setCliente(cliente);
             clienteIdentificado=true;
             
@@ -72,9 +77,9 @@ public class MantSimuladorController implements IObserverLlamada{
         public void buscarSectorYLlamar(){
             if(clienteIdentificado==true){
                 int numeroSector = Integer.parseInt(ultimoNumero);
-                Cliente cliente = Fachada.getInstancia().ObtenerClientePorCedula(cedulaCliente);
-                cliente.hacerLlmada(numeroSector);
+                this.cliente.hacerLlmada(numeroSector, llamadaPendiente);
                 llamadaPendiente.agregarObservador(this);
+               
                 if(llamadaPendiente.getEstado()==EstadoLLamada.CURSO){
                     this.mensaje = "Llamada en curso... usted se esta comunicando con el Sector: " + llamadaPendiente.getSector().getNombre() + " y se esta atendido por " + llamadaPendiente.getTrabajador().getNombre() + " Su llamada se ha iniciado: " + llamadaPendiente.getHoraInicio();
                     this.ventana.mostrarMensajeLlamadaEnCurso(mensaje);               
@@ -85,19 +90,22 @@ public class MantSimuladorController implements IObserverLlamada{
             }
         }
         
+        public void finalizarLlamada(){
+            llamadaPendiente.setEstado(EstadoLLamada.FINALIZADA);
+        }
+        
         
 
     @Override
     public void update(Llamada llamada) {
         if(llamada.getEstado()==EstadoLLamada.FINALIZADA){
-            long momentoInicial = CalculadoraFechas.calcularMilisegundos(llamada.getHoraInicio().getYear(), llamada.getHoraInicio().getMonthValue(), llamada.getHoraInicio().getDayOfMonth(), llamada.getHoraInicio().getHour(), llamada.getHoraInicio().getMinute(), llamada.getHoraInicio().getSecond());
-            long momentoFin = CalculadoraFechas.calcularMilisegundos(llamada.getHoraFin().getYear(), llamada.getHoraFin().getMonthValue(), llamada.getHoraFin().getDayOfMonth(), llamada.getHoraFin().getHour(), llamada.getHoraFin().getMinute(), llamada.getHoraFin().getSecond());
-            long difernciaTiempo = CalculadoraFechas.calcularDiferenciaDeTiempo(momentoInicial, momentoFin);
-            
-            this.mensaje = "La llamada ha finalizado... Duración: " + difernciaTiempo + " segundos, y su saldo ha quedado en: " + llamada.getCliente().getSaldo() + "$";           
-            this.ventana.mostrarMensajeFin(mensaje);
-            
             llamada.removerObservador(this);
+            //long momentoInicial = CalculadoraFechas.calcularMilisegundos(llamada.getHoraInicio().getYear(), llamada.getHoraInicio().getMonthValue(), llamada.getHoraInicio().getDayOfMonth(), llamada.getHoraInicio().getHour(), llamada.getHoraInicio().getMinute(), llamada.getHoraInicio().getSecond());
+            //long momentoFin = CalculadoraFechas.calcularMilisegundos(llamada.getHoraFin().getYear(), llamada.getHoraFin().getMonthValue(), llamada.getHoraFin().getDayOfMonth(), llamada.getHoraFin().getHour(), llamada.getHoraFin().getMinute(), llamada.getHoraFin().getSecond());
+            //long difernciaTiempo = CalculadoraFechas.calcularDiferenciaDeTiempo(momentoInicial, momentoFin);           
+            //this.mensaje = "La llamada ha finalizado... Duración: " + difernciaTiempo + " segundos, y su saldo ha quedado en: " + llamada.getCliente().getSaldo() + "$";
+            this.mensaje = "finalizo la llamada";
+            this.ventana.mostrarMensajeFin(mensaje);
         }
     }
 
