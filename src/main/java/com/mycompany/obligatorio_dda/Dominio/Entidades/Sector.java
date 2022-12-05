@@ -178,7 +178,6 @@ public class Sector implements IObserverLlamada {
     @Override
     public void update(Llamada llamada) {
         if (llamada.getEstado() == EstadoLLamada.FINALIZADA){
-            llamada.setHoraFin(LocalDateTime.now());
             llamadasFinalizadas.add(llamada);
             llamada.removerObservador(this);
             

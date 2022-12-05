@@ -21,6 +21,15 @@ public class Puesto {
     private int cantidadLlamadasAtendidas = 0;
     private Sector sector;
     private ArrayList<IObserverPuesto> observadoresPuesto;
+    private ArrayList<Llamada> llamadasAtendidas;
+
+    public ArrayList<Llamada> getLlamadasAtendidas() {
+        return llamadasAtendidas;
+    }
+
+    public void setLlamadasAtendidas(ArrayList<Llamada> llamadasAtendidas) {
+        this.llamadasAtendidas = llamadasAtendidas;
+    }
 
     public Sector getSector() {
         return sector;
@@ -36,6 +45,7 @@ public class Puesto {
         this.trabajadorAsignado = trabajadorAsignado;
         this.sector = sector;
         this.observadoresPuesto = new ArrayList<IObserverPuesto>();
+        this.llamadasAtendidas = new ArrayList<Llamada>();
     }
 
     public int getNumeroPuesto() {
@@ -127,5 +137,20 @@ public class Puesto {
     public String toString(){
         return this.numeroPuesto+"";
     }
+    
+    /*
+    public long calcularTiempoAtencioPuesto() {
+        long tiempoTotalAtencion = 0;
+        for (Llamada l : llamadasAtendidas) {
+                long momentoAtencion = CalculadoraFechas.calcularMilisegundos(l.getHoraAtencion().getYear(), l.getHoraAtencion().getMonthValue(), l.getHoraAtencion().getDayOfMonth(), l.getHoraAtencion().getHour(), l.getHoraAtencion().getMinute(), l.getHoraAtencion().getSecond());
+                long momentoFin = CalculadoraFechas.calcularMilisegundos(l.getHoraFin().getYear(), l.getHoraFin().getMonthValue(), l.getHoraFin().getDayOfMonth(), l.getHoraFin().getHour(), l.getHoraFin().getMinute(), l.getHoraFin().getSecond());
+
+                long difernciaTiempo = CalculadoraFechas.calcularDiferenciaDeTiempo(momentoAtencion, momentoFin);
+
+                tiempoTotalAtencion += difernciaTiempo;
+        }
+        return tiempoTotalAtencion / this.getCantidadLlamadasAtendidas();
+    }
+    */
 }
        

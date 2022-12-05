@@ -198,8 +198,10 @@ public class AplicacionTrabajador extends javax.swing.JFrame implements VentanaT
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        controlador.salirAplicacion();
-        this.setVisible(false);
+        boolean salir = controlador.salirAplicacion();
+        if(salir){
+            this.setVisible(false); 
+        }
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnFinalizarLlamadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarLlamadaActionPerformed
