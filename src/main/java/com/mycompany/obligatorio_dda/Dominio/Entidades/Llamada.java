@@ -40,6 +40,7 @@ public class Llamada {
     public Llamada (int num, String descripcionEncabezado){
         this.idLlamada = -1;
         this.descripcion = descripcionEncabezado;
+        this.observadores = new ArrayList<IObserverLlamada>();
     }
 
     public static int getCostoFijo() {

@@ -85,7 +85,7 @@ public class Puesto {
             llamada.setPuesto(this);
             llamada.setTrabajador(trabajadorAsignado);
             ++cantidadLlamadasAtendidas;
-            llamadaEnAtencion = llamada;           
+            setLlamadaEnAtencion(llamada) ;           
     }
     
     //Aqui podria haber una funcion contestar, 

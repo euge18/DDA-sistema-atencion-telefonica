@@ -34,6 +34,8 @@ public class MantSimuladorController implements IObserverLlamada{
         
         private String mensaje;
         
+        
+        
         public MantSimuladorController(MantVentanaSimulador ventana){
             this.ventana = ventana;
             this.mensaje = "--BIENVENIDO--\n Para Comunicarse con nosotros presione el botón Iniciar\n Si desea abandonar la seción puede presionar Salir";
@@ -77,7 +79,18 @@ public class MantSimuladorController implements IObserverLlamada{
         public void buscarSectorYLlamar(){
             if(clienteIdentificado==true){
                 int numeroSector = Integer.parseInt(ultimoNumero);
-                if(Fachada.getInstancia().obtenerSector(numeroSector).getLlamadasEspera().size()>=5){
+                Sector sector = Fachada.getInstancia().obtenerSector(numeroSector);
+                if (sector == null) {
+                    this.mensaje = "Numero de Sector Incorrecto, vuelva a intentarlo";
+                    this.cedulaCliente = "";
+                    this.clienteIdentificado = false;
+                    this.cliente = null;
+                    this.llamadaPendiente = null;
+                    this.ultimoNumero = "";
+                    this.ventana.mostrarMensajeSectorOcupado(mensaje);
+                    return;
+                }
+                if(sector.getLlamadasEspera().size()>=5){
                     this.mensaje= "Todas nuestras lineas estan ocupadas, intentelo más tarde";
                     this.cedulaCliente = "";
                     this.clienteIdentificado = false;
@@ -87,22 +100,15 @@ public class MantSimuladorController implements IObserverLlamada{
                     this.ventana.mostrarMensajeSectorOcupado(mensaje);
                     return;
                 }
-                if(Fachada.getInstancia().obtenerSector(numeroSector)==null){
-                    this.mensaje= "Numero de Sector Incorrecto, vuelva a intentarlo";
-                    this.cedulaCliente = "";
-                    this.clienteIdentificado = false;
-                    this.cliente = null;
-                    this.llamadaPendiente = null;
-                    this.ultimoNumero = "";
-                    this.ventana.mostrarMensajeSectorOcupado(mensaje);
-                    return;
-                }
+
                 this.cliente.hacerLlmada(numeroSector, llamadaPendiente);
                 llamadaPendiente.agregarObservador(this);
                
                 if(llamadaPendiente.getEstado()==EstadoLLamada.CURSO){
                     this.mensaje = "Llamada en curso...\n usted se esta comunicando con el Sector: " + llamadaPendiente.getSector().getNombre() + "\n y se esta atendido por " + llamadaPendiente.getTrabajador().getNombre() + "\n Su llamada se ha iniciado: " + CalculadoraFechas.formatearFecha(llamadaPendiente.getHoraInicio());
                     this.ventana.mostrarMensajeLlamadaEnCurso(mensaje);               
+                } else {
+                    this.mensaje = "Aguarde en linea Usted se encentra en la posicion " + sector.getLlamadasEspera().indexOf(llamadaPendiente);
                 }
             } else {
                 this.mensaje = "No existe un cliente con es cedula vuelva a intentarlo";
