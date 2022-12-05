@@ -29,7 +29,7 @@ public class Principal {
         
         frmAplicacionTest frmTestApp = new frmAplicacionTest();
         frmTestApp.setVisible(true);
-          
+        
     /*
         
       //Para que lo primero que hagan las instancias sea inicializar las listas   
