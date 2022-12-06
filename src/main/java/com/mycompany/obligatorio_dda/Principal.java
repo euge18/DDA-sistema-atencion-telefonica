@@ -25,9 +25,9 @@ public class Principal {
         ServicioCliente SC = ServicioCliente.getInstancia();
         
         
-        Sector sector0 = SS.ObtenerSector(1);
-        sector0.setPuestos(SP.ObtenerPuetosPorSector(sector0.getNumeroSector()));
-        sector0.setTrabajadores(ST.ObtenerTrabajadoresPorSector(sector0.getNumeroSector()));
+        Sector sector1 = SS.ObtenerSector(1);
+        sector1.setPuestos(SP.ObtenerPuetosPorSector(sector1.getNumeroSector()));
+        sector1.setTrabajadores(ST.ObtenerTrabajadoresPorSector(sector1.getNumeroSector()));
        
         
         frmAplicacionTest frmTestApp = new frmAplicacionTest();
