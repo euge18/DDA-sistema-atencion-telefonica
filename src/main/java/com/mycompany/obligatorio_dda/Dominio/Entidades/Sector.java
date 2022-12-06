@@ -30,6 +30,8 @@ public class Sector implements IObserverLlamada {
         this.nombre = nombre;
         llamadasEspera = new ArrayList<Llamada>();
         llamadasFinalizadas = new ArrayList<Llamada>();
+        puestos = new ArrayList<Puesto>();
+        trabajadores = new ArrayList<Trabajador>();
     }
 
     public int getNumeroSector() {
@@ -80,18 +82,49 @@ public class Sector implements IObserverLlamada {
         this.trabajadores = trabajadores;
     }
     
+    public Puesto obtenerPuestoTrabajador(Trabajador trabajador){
+        for (Puesto p : puestos) {
+            if (p.getTrabajadorAsignado().equals(trabajador)) {
+                return p;
+            }
+        }
+        return null;
+    }
+    
     //cuando el trabajador se logea que esta funcion lo asigne automaticamnete
     // caso no encuentre un puesto se puede crear uno fuera del for, se debe de agregar el nuevo puesto a la lista
     // pero si todo esta precargado pueden se 5 trabajadores para 5 puestos
-    public void asignarTrabajadorLibre(Trabajador trabajador) {
+    public boolean asignarTrabajadorLibre(Trabajador trabajador) {
         for (Puesto p : puestos) {
             if (p.isActivo() == false) {
+                p.setActivo(true);
                 p.setTrabajadorAsignado(trabajador);
+                return true;
             }
         }
+        return false;
     }
     
+        public boolean puestosLibres() {
+            
+        int puestoLibre = 0;
+        for (Puesto p : puestos) {
+            if (p.isActivo() == true) {
+                ++puestoLibre;
+
+            }
+        }
+        if(puestoLibre>0){
+            return false;
+        } else {
+            return true;
+        } 
+    }
+        
+        
+    
     public void dejarPuesto (Puesto puesto){
+        puesto.setActivo(false);
         puesto.setTrabajadorAsignado(null);
     }
     
@@ -159,7 +192,6 @@ public class Sector implements IObserverLlamada {
     @Override
     public void update(Llamada llamada) {
         if (llamada.getEstado() == EstadoLLamada.FINALIZADA){
-            llamada.setHoraFin(LocalDateTime.now());
             llamada.calcularCosto(llamada);
             baseDeDatos.modificarLlamadaFinalizada(llamada.getEstado(), llamada.getHoraFin(), llamada.getIdLlamada(), llamada.getCosto());
             llamadasFinalizadas.add(llamada);

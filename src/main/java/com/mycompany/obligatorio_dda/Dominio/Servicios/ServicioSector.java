@@ -24,9 +24,9 @@ public class ServicioSector {
     
     private ServicioSector(){
         sectores = new ArrayList<>();
-        sectores.add(new Sector(0, "Administración"));
-        sectores.add(new Sector(1, "Ventas"));
-        sectores.add(new Sector(2, "Desarrollo"));
+        sectores.add(new Sector(1, "Administración"));
+        sectores.add(new Sector(2, "Ventas"));
+        sectores.add(new Sector(3, "Desarrollo"));
     }
     
     public Sector ObtenerSector(int numSector){

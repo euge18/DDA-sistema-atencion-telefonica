@@ -24,7 +24,7 @@ public class ServicioCliente {
     
     private ServicioCliente(){
         clientes = new ArrayList<>();
-        clientes.add(new Cliente(0, "48756325", "Alison Beker", new ConCosto(), 500));
+        clientes.add(new Cliente(0, "123", "Alison Beker", new ConCosto(), 500));
         clientes.add(new Cliente(1, "86542258", "Martin Polar", new Exonerado(), 1500));
         clientes.add(new Cliente(2, "74235452", "Cedric Velmonte", new Gestor(), 1100));
         clientes.add(new Cliente(3, "85256214", "Karen Gutierrez", new ConCosto(),2100));
@@ -38,7 +38,16 @@ public class ServicioCliente {
     
     public Cliente ObtenerCliente (int idCliente){
         for(Cliente c : clientes){
-            if(c.getIdCliente()==idCliente){
+            if(c.getIdCliente() == idCliente){
+                return c;
+            }
+        }
+        return null;
+    }
+    
+        public Cliente ObtenerClientePorCedula (String cedulaCliente){
+        for(Cliente c : clientes){
+            if(c.getCedula() == null ? cedulaCliente == null : c.getCedula().equals(cedulaCliente)){
                 return c;
             }
         }

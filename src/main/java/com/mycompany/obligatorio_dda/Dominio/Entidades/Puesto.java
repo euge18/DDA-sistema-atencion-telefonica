@@ -5,21 +5,36 @@
 package com.mycompany.obligatorio_dda.Dominio.Entidades;
 
 import com.mycompany.obligatorio_dda.DataBase.DataBase;
+
+import com.mycompany.obligatorio_dda.Dominio.Repositorios.IObserverPuesto;
 import com.mycompany.obligatorio_dda.Dominio.Utilitarias.CalculadoraFechas;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 /**
  *
  * @author zeek2
  */
 public class Puesto {
-      private int numeroPuesto;
+    private int numeroPuesto;
     private boolean activo;
     private Trabajador trabajadorAsignado;
     private Llamada llamadaEnAtencion;
     private int cantidadLlamadasAtendidas = 0;
     private Sector sector;
+
     private DataBase baseDeDatos = new DataBase();
+
+    private ArrayList<IObserverPuesto> observadoresPuesto;
+    private ArrayList<Llamada> llamadasAtendidas;
+
+    public ArrayList<Llamada> getLlamadasAtendidas() {
+        return llamadasAtendidas;
+    }
+
+    public void setLlamadasAtendidas(ArrayList<Llamada> llamadasAtendidas) {
+        this.llamadasAtendidas = llamadasAtendidas;
+    }
 
     public Sector getSector() {
         return sector;
@@ -34,6 +49,8 @@ public class Puesto {
         this.activo = activo;
         this.trabajadorAsignado = trabajadorAsignado;
         this.sector = sector;
+        this.observadoresPuesto = new ArrayList<IObserverPuesto>();
+        this.llamadasAtendidas = new ArrayList<Llamada>();
     }
 
     public int getNumeroPuesto() {
@@ -65,7 +82,8 @@ public class Puesto {
     }
 
     public void setLlamadaEnAtencion(Llamada llamadaEnAtencion) {
-        this.llamadaEnAtencion = llamadaEnAtencion;
+         this.llamadaEnAtencion = llamadaEnAtencion;
+            notifiacearObservers();
     }
 
     public int getCantidadLlamadasAtendidas() {
@@ -86,69 +104,60 @@ public class Puesto {
             llamada.setHoraAtencion(LocalDateTime.now());
             llamada.setPuesto(this);
             llamada.setTrabajador(trabajadorAsignado);
-            //ACA CAE
-            baseDeDatos.modificarLlamadaCurso(llamada.getEstado(), llamada.getHoraAtencion(), this.numeroPuesto, llamada.getTrabajador().getIdTrabajador(), llamada.getSector().getNumeroSector(), llamada.getIdLlamada());
-            ++cantidadLlamadasAtendidas;
-            llamadaEnAtencion = llamada;      
-        /*    
-        float tiempoSaldo = llamadaEnAtencion.getCliente().getSaldo();
-            
-        long momentoInicial = CalculadoraFechas.calcularMilisegundos(llamada.getHoraInicio().getYear(), llamada.getHoraInicio().getMonthValue(), llamada.getHoraInicio().getDayOfMonth(), llamada.getHoraInicio().getHour(), llamada.getHoraInicio().getMinute(), llamada.getHoraInicio().getSecond());
-        long momentoAtencion = CalculadoraFechas.calcularMilisegundos(llamada.getHoraAtencion().getYear(), llamada.getHoraAtencion().getMonthValue(), llamada.getHoraAtencion().getDayOfMonth(), llamada.getHoraAtencion().getHour(), llamada.getHoraAtencion().getMinute(), llamada.getHoraAtencion().getSecond());
-        long tiempoDemora = CalculadoraFechas.calcularDiferenciaDeTiempo(momentoInicial, momentoAtencion);
-        
-        if(tiempoDemora>=60){
-            tiempoSaldo = tiempoSaldo * 2;
-        }
-        
-        cronometroSaldo((long)tiempoSaldo);
-        */      
+
+            baseDeDatos.modificarLlamadaCurso(llamada.getEstado(), llamada.getHoraAtencion(), this.numeroPuesto, llamada.getTrabajador().getIdTrabajador(), llamada.getSector().getNumeroSector(), llamada.getIdLlamada());     
+
+            setLlamadaEnAtencion(llamada);          
+    }
+
+    public ArrayList<IObserverPuesto> getObservadoresPuesto() {
+        return observadoresPuesto;
+    }
+
+    public void setObservadoresPuesto(ArrayList<IObserverPuesto> observadoresPuesto) {
+        this.observadoresPuesto = observadoresPuesto;
     }
     
     //Aqui podria haber una funcion contestar, 
-    //para que el puesto no atienda de inmediato sino que el trabajador tenga la potestad
     
     public void finalizarLlamada(Llamada llamamda){
         llamamda.setEstado(EstadoLLamada.FINALIZADA);
     }
     
-    //el tiempoDisponible seria el saldo del cliente * 1000, un segundo = 1000 milisegundos
-    //se puede comprobar antes en la funcion atender llamda si el tiempo de demora fue de mas de 60 seg
-    //que se le duplique el tiempo (Costo fijo/2, es decir el doble de tiempo disponible por el saldo) 
-    public void cronometroSaldo(long tiepoDisponible) {        
-        if (!(llamadaEnAtencion.getCliente().getTipo() instanceof Exonerado)) {
-            Thread t = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(tiepoDisponible);
-                        if (llamadaEnAtencion.getEstado() == EstadoLLamada.CURSO) {
-                            finalizarLlamada(llamadaEnAtencion);
-                        }
-                    } catch (InterruptedException ex) {
-
-                    }
-                }
-            }, "otro hilo");
-            t.start();
+    public void notifiacearObservers(){
+        for(IObserverPuesto o : observadoresPuesto){      
+            o.update(this);
         }
-                
-        /* OPCION 2
-        if (!(llamadaEnAtencion.getCliente().getTipo() instanceof Exonerado)) {
-            try {
-                Thread.sleep(tiepoDisponible);
-                if (llamadaEnAtencion.getEstado() == EstadoLLamada.CURSO) {
-                    finalizarLlamada(llamadaEnAtencion);
-                }
-            } catch (InterruptedException e) {
-
-            }
-        }*/
     }
     
-        @Override
+    //cuando la llamada deriva a un puesto a Sector se lo agrega
+    public void agregarObservador (IObserverPuesto o){
+        observadoresPuesto.add(o);
+    }
+    
+    //cuando la llamada finaliza a Sector ya no le interesa seguir observando
+    public void removerObservador (IObserverPuesto o){
+        observadoresPuesto.remove(o);
+    }
+    
+    @Override
     public String toString(){
         return this.numeroPuesto+"";
     }
-       
+    
+    /*
+    public long calcularTiempoAtencioPuesto() {
+        long tiempoTotalAtencion = 0;
+        for (Llamada l : llamadasAtendidas) {
+                long momentoAtencion = CalculadoraFechas.calcularMilisegundos(l.getHoraAtencion().getYear(), l.getHoraAtencion().getMonthValue(), l.getHoraAtencion().getDayOfMonth(), l.getHoraAtencion().getHour(), l.getHoraAtencion().getMinute(), l.getHoraAtencion().getSecond());
+                long momentoFin = CalculadoraFechas.calcularMilisegundos(l.getHoraFin().getYear(), l.getHoraFin().getMonthValue(), l.getHoraFin().getDayOfMonth(), l.getHoraFin().getHour(), l.getHoraFin().getMinute(), l.getHoraFin().getSecond());
+
+                long difernciaTiempo = CalculadoraFechas.calcularDiferenciaDeTiempo(momentoAtencion, momentoFin);
+
+                tiempoTotalAtencion += difernciaTiempo;
+        }
+        return tiempoTotalAtencion / this.getCantidadLlamadasAtendidas();
+    }
+    */
 }
+       

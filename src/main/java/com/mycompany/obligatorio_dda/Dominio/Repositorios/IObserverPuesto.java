@@ -4,12 +4,12 @@
  */
 package com.mycompany.obligatorio_dda.Dominio.Repositorios;
 
-import com.mycompany.obligatorio_dda.Dominio.Entidades.Llamada;
+import com.mycompany.obligatorio_dda.Dominio.Entidades.Puesto;
 
 /**
  *
- * @author zeek2
+ * @author Usuario
  */
-public interface IObserverLlamada{
-    public void update(Llamada llamada);
+public interface IObserverPuesto {
+    public void update(Puesto puesto);
 }

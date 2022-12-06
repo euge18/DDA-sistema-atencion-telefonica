@@ -32,6 +32,7 @@ public class Gestor implements ITipoCliente {
         if (difernciaTiempo >= 180) {
             costo = difernciaTiempo * costoFijo;
             llamada.setCosto(costo);
+            llamada.getCliente().setSaldo(llamada.getCliente().getSaldo()-costo);
             return costo;
         } else {
             costo = ((float) difernciaTiempo * costoFijo) - demora;
@@ -39,8 +40,8 @@ public class Gestor implements ITipoCliente {
                 costo = 0;
             }
             llamada.setCosto(costo);
+            llamada.getCliente().setSaldo(llamada.getCliente().getSaldo()-costo);
             return costo;
         }
-
     }
 }

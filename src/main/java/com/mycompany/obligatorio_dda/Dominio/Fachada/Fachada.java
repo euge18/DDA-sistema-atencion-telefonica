@@ -7,6 +7,7 @@ package com.mycompany.obligatorio_dda.Dominio.Fachada;
 import com.mycompany.obligatorio_dda.Controladores.IFachada;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.*;
 import com.mycompany.obligatorio_dda.Dominio.Servicios.*;
+import com.mycompany.obligatorio_dda.Dominio.Utilitarias.CalculadoraFechas;
 import java.util.ArrayList;
 
 /**
@@ -88,6 +89,10 @@ public class Fachada {
     public Trabajador obtenerTrabajador(int idTrabajador) {
        return ServicioTrabajador.getInstancia().obtenerTrabajador(idTrabajador);
     }
+    
+    public Trabajador obtenerTrabajadorLogin(String ci, String pass){
+        return ServicioTrabajador.getInstancia().obtenerTrabajadorLogin(ci, pass);
+    }
 
     public ArrayList<Puesto> obtenerPuestos() {
        return ServicioPuesto.getInstancia().obtenerPuestos();
@@ -104,37 +109,20 @@ public class Fachada {
     public Cliente obtenerCliente(int idCliente) {
         return ServicioCliente.getInstancia().ObtenerCliente(idCliente);
     }
- 
-    /*
-    private ArrayList<IObserverRemoto> observadores;
     
-    public Fachada(){
-        observadores = new ArrayList<>();
+    public Cliente ObtenerClientePorCedula(String cedulaCliente) {
+        return ServicioCliente.getInstancia().ObtenerClientePorCedula(cedulaCliente);
     }
     
-    @Override
-    public void agregarObserverRemoto(IObserverRemoto obs) throws RemoteException {
-        observadores.add(obs);
-        System.out.println("Agregado observador remoto a servidor");
+    public long calcularMilisegundos(int anio, int mes, int dia, int hora, int minuto, int segundo){
+        return CalculadoraFechas.calcularMilisegundos(anio, mes, dia, hora, minuto, segundo);
     }
     
-    public void notificarObservadoresRemotos(Object o, Evento evt){
-        for(IObserverRemoto io : observadores){
-            try {
-                io.actualizar(o, evt);
-            } catch (RemoteException ex) {
-                Logger.getLogger(Fachada.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+    public long calcularDiferenciaDeTiempo(long atencion, long fin){
+        long tiempo = CalculadoraFechas.calcularDiferenciaDeTiempo(atencion, fin);
+        return tiempo;
     }
+    
+    
 
-    @Override
-    public void update(Observable o, Object arg) {
-        System.out.println("Ingreso update Fachada");
-        if (arg instanceof Evento) {
-            notificarObservadoresRemotos(null, (Evento) arg);
-        }
-    }
-    */
-   
 }

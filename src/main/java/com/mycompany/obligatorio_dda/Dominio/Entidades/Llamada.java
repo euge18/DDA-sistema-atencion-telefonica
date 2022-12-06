@@ -30,17 +30,24 @@ public class Llamada {
     private Trabajador trabajador; 
     private ArrayList<IObserverLlamada> observadores;
 
+    public Llamada(EstadoLLamada estado, LocalDateTime horaInicio) {
+        this.estado = estado;
+        this.horaInicio = horaInicio;
+        
+        this.observadores = new ArrayList<IObserverLlamada>();
+    }
+    
     public Llamada(EstadoLLamada estado, LocalDateTime horaInicio, Cliente cliente) {
         this.estado = estado;
         this.horaInicio = horaInicio;
         this.cliente = cliente;
-        
         this.observadores = new ArrayList<IObserverLlamada>();
     }
    
     public Llamada (int num, String descripcionEncabezado){
         this.idLlamada = -1;
         this.descripcion = descripcionEncabezado;
+        this.observadores = new ArrayList<IObserverLlamada>();
     }
     
     public Llamada(){
