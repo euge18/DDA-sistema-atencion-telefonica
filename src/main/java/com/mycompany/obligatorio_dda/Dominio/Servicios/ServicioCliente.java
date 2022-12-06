@@ -27,9 +27,9 @@ public class ServicioCliente {
         clientes.add(new Cliente(0, "123", "Alison Beker", new ConCosto(), 500));
         clientes.add(new Cliente(1, "222", "Martin Polar", new Exonerado(), 1500));
         clientes.add(new Cliente(2, "333", "Cedric Velmonte", new Gestor(), 1100));
-        clientes.add(new Cliente(3, "85256214", "Karen Gutierrez", new ConCosto(),2100));
-        clientes.add(new Cliente(4, "24566997", "Victoria Donda", new Exonerado(),4563));
-        clientes.add(new Cliente(5, "36655892", "Elias Sané", new Gestor(),800));
+        clientes.add(new Cliente(3, "444", "Karen Gutierrez", new ConCosto(),2100));
+        clientes.add(new Cliente(4, "555", "Victoria Donda", new Exonerado(),4563));
+        clientes.add(new Cliente(5, "666", "Elias Sané", new Gestor(),800));
     }
     
     public ArrayList<Cliente> obtenerClientes(){
