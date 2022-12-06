@@ -154,7 +154,11 @@ public class MantSimuladorController implements IObserverLlamada, IObserversSect
     @Override
     public void update(Sector sector) {
         if(sector.getLlamadasEspera().contains(llamadaPendiente)){
-            this.mensaje = "Aguarde en línea, Ud. se encuentra a " + (sector.getLlamadasEspera().indexOf(llamadaPendiente) + 1) + " llamadas de ser atendido, la espera estimada es de " + sector.tiempoPromedioDemora() + " minutos";
+            boolean esNan =false;
+            if(sector.tiempoPromedioDemora()==Float.NaN){
+                esNan=true;
+            }
+            this.mensaje = "Aguarde en línea, Ud. se encuentra a " + (sector.getLlamadasEspera().indexOf(llamadaPendiente) + 1) + " llamadas de ser atendido, la espera estimada es de " + (esNan? "2": (int)sector.tiempoPromedioDemora()) + " minutos";
             this.ventana.mostrarMensajeFin(mensaje);
         } else if(!sector.getLlamadasEspera().contains(llamadaPendiente)){
             sector.removerObservador(this);
