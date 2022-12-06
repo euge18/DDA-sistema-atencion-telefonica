@@ -162,14 +162,7 @@ public class Llamada {
         return cliente.getTipo().calcularCostoLlamada(llamada);
     }
     
-    //Se rompe aqui cuando finaliza la funcion update, no regresa el control a la clase principal
-    //quizas porque ese update remueve el observador en el medio de la ejecucuion del for?
-    
-    //Cunado el cliente finaliza la llamda se da setEstado y notifica que finalizo, como finalizo
-    //va al for a recorrer sus observadores (size = 1) y va al update de Sector, y este se remueve
-    //cuando regresa el control al for el size=0 y rompe
     public void notifiacearObservers(){
-        //ArrayList<IObserverLlamada> copiaLista = observadores;
         ArrayList<IObserverLlamada> copiaListaObservadores = (ArrayList<IObserverLlamada>) observadores.clone();
         for(IObserverLlamada o : copiaListaObservadores){      
             o.update(this);

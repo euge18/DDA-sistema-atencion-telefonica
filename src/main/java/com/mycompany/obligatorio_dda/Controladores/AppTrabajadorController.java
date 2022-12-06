@@ -4,6 +4,7 @@
  */
 package com.mycompany.obligatorio_dda.Controladores;
 
+import com.mycompany.obligatorio_dda.Dominio.Entidades.Cliente;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.EstadoLLamada;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.Llamada;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.Puesto;
@@ -99,7 +100,7 @@ public class AppTrabajadorController implements IObserverLlamada, IObserverPuest
             long momentoFin = CalculadoraFechas.calcularMilisegundos(llamada.getHoraFin().getYear(), llamada.getHoraFin().getMonthValue(), llamada.getHoraFin().getDayOfMonth(), llamada.getHoraFin().getHour(), llamada.getHoraFin().getMinute(), llamada.getHoraFin().getSecond());
             long diferenciaMilisegundos = Math.abs(momentoAtencion - momentoFin);
             System.out.println("Los segundos son: " + TimeUnit.MILLISECONDS.toSeconds(diferenciaMilisegundos));
-            float segundos = (float) diferenciaMilisegundos / 100;
+            float segundos = (float) diferenciaMilisegundos / 1000;
             setTiempoDeAtencion(tiempoDeAtencion + segundos);
             this.ventana.mostrarTiempoPromedioLlamadas(getTiempoDeAtencion() + segundos);
             if (llamada.getHoraFin() != null) {

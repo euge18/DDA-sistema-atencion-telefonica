@@ -9,8 +9,9 @@ import com.mycompany.obligatorio_dda.Dominio.Entidades.EstadoLLamada;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.Llamada;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.Sector;
 import com.mycompany.obligatorio_dda.Dominio.Fachada.Fachada;
-import com.mycompany.obligatorio_dda.Dominio.Repositorios.IObserverLlamada;
 import com.mycompany.obligatorio_dda.Dominio.Utilitarias.CalculadoraFechas;
+import com.mycompany.obligatorio_dda.Dominio.Repositorios.IObserverLlamada;
+import com.mycompany.obligatorio_dda.Dominio.Repositorios.IObserversSector;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -18,7 +19,7 @@ import java.util.ArrayList;
  *
  * @author zeek2
  */
-public class MantSimuladorController implements IObserverLlamada{
+public class MantSimuladorController implements IObserverLlamada, IObserversSector{
     
         private MantVentanaSimulador ventana;
         
@@ -35,6 +36,7 @@ public class MantSimuladorController implements IObserverLlamada{
         private String mensaje;
                 
         private boolean primeraLlamada=true;
+        
         
         
         
@@ -56,8 +58,6 @@ public class MantSimuladorController implements IObserverLlamada{
         }
         
         public void recibirNumerosCedula (String numero){
-            //Esta linea se puede cambiar pero si ya lo tengo identificado mejor dejarlo asi
-            //o en su defecto ofreserle un boton de "reset cedula"
             if(!clienteIdentificado){
                 cedulaCliente = cedulaCliente + numero;
                 
@@ -83,41 +83,37 @@ public class MantSimuladorController implements IObserverLlamada{
             cedulaCliente="";
         }
         
+        public void resetearVista(){
+            this.cedulaCliente = "";
+            this.clienteIdentificado = false;
+            this.cliente = null;
+            this.llamadaPendiente = null;
+            this.ultimoNumero = "";
+        }
+        
         public void buscarSectorYLlamar(){
             if(clienteIdentificado==true){
                 int numeroSector = Integer.parseInt(ultimoNumero);
                 Sector sector = Fachada.getInstancia().obtenerSector(numeroSector);
                 if (sector == null) {
                     this.mensaje = "Numero de Sector Incorrecto, vuelva a intentarlo";
-                    this.cedulaCliente = "";
-                    this.clienteIdentificado = false;
-                    this.cliente = null;
-                    this.llamadaPendiente = null;
-                    this.ultimoNumero = "";
+                    resetearVista();
                     this.ventana.mostrarMensajeSectorOcupado(mensaje);
                     return;
                 }
                 if(sector.getLlamadasEspera().size()>=5){
                     this.mensaje= "Todas nuestras lineas estan ocupadas, intentelo más tarde";
-                    this.cedulaCliente = "";
-                    this.clienteIdentificado = false;
-                    this.cliente = null;
-                    this.llamadaPendiente = null;
-                    this.ultimoNumero = "";
+                    resetearVista();
                     this.ventana.mostrarMensajeSectorOcupado(mensaje);
                     return;
                 }
                 if(sector.puestosLibres()){
                     this.mensaje= "Este Sector actualmente no tiene puestos libres";
-                    this.cedulaCliente = "";
-                    this.clienteIdentificado = false;
-                    this.cliente = null;
-                    this.llamadaPendiente = null;
-                    this.ultimoNumero = "";
+                    resetearVista();
                     this.ventana.mostrarMensajeSectorOcupado(mensaje);
                     return;
                 }
-
+                sector.agregarObservador(this);
                 this.cliente.hacerLlmada(numeroSector, llamadaPendiente);
                 llamadaPendiente.agregarObservador(this);
                
@@ -151,6 +147,19 @@ public class MantSimuladorController implements IObserverLlamada{
             this.ultimoNumero="";
             this.llamadaPendiente=null;
             this.ventana.mostrarMensajeFin(mensaje);
+        } 
+
+    }
+
+    @Override
+    public void update(Sector sector) {
+        if(sector.getLlamadasEspera().contains(llamadaPendiente)){
+            this.mensaje = "Aguarde en línea, Ud. se encuentra a " + (sector.getLlamadasEspera().indexOf(llamadaPendiente) + 1) + "llamadas de ser atendido, la espera estimada es de N minutos";
+            this.ventana.mostrarMensajeFin(mensaje);
+        } else if(!sector.getLlamadasEspera().contains(llamadaPendiente)){
+            sector.removerObservador(this);
+            this.mensaje = "Llamada en curso...\n usted se esta comunicando con el Sector: " + llamadaPendiente.getSector().getNombre() + "\n y se esta atendido por " + llamadaPendiente.getTrabajador().getNombre() + "\n Su llamada se ha iniciado: " + CalculadoraFechas.formatearFecha(llamadaPendiente.getHoraInicio());
+            this.ventana.mostrarMensajeLlamadaEnCurso(mensaje);
         }
     }
 

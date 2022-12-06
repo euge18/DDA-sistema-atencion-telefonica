@@ -89,11 +89,6 @@ public class Puesto {
         this.cantidadLlamadasAtendidas = cantidadLlamadasAtendidas;
     }
     
-    //AtenderLlamada es otra accion que se reliza desde el formulario
-    //otra opcion es que sector no setee la llamada en Atencion, sino que se la pase al puesto y este
-    //sea quien la setee
- 
-    //puede haber otro parametro booleano para botones de aceptar o rechazar la llamda
     public void atenderLlamada(Llamada llamada){
             llamada.setEstado(EstadoLLamada.CURSO);
             llamada.setHoraAtencion(LocalDateTime.now());
@@ -137,19 +132,5 @@ public class Puesto {
         return this.numeroPuesto+"";
     }
     
-    /*
-    public long calcularTiempoAtencioPuesto() {
-        long tiempoTotalAtencion = 0;
-        for (Llamada l : llamadasAtendidas) {
-                long momentoAtencion = CalculadoraFechas.calcularMilisegundos(l.getHoraAtencion().getYear(), l.getHoraAtencion().getMonthValue(), l.getHoraAtencion().getDayOfMonth(), l.getHoraAtencion().getHour(), l.getHoraAtencion().getMinute(), l.getHoraAtencion().getSecond());
-                long momentoFin = CalculadoraFechas.calcularMilisegundos(l.getHoraFin().getYear(), l.getHoraFin().getMonthValue(), l.getHoraFin().getDayOfMonth(), l.getHoraFin().getHour(), l.getHoraFin().getMinute(), l.getHoraFin().getSecond());
-
-                long difernciaTiempo = CalculadoraFechas.calcularDiferenciaDeTiempo(momentoAtencion, momentoFin);
-
-                tiempoTotalAtencion += difernciaTiempo;
-        }
-        return tiempoTotalAtencion / this.getCantidadLlamadasAtendidas();
-    }
-    */
 }
        

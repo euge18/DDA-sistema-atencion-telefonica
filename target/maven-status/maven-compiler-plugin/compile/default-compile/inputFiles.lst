@@ -4,6 +4,7 @@ C:\Users\zeek2\OneDrive\Escritorio\ObligatorioDDA\DDA-sistema-atencion-telefonic
 C:\Users\zeek2\OneDrive\Escritorio\ObligatorioDDA\DDA-sistema-atencion-telefonica\src\main\java\com\mycompany\obligatorio_dda\IFachada.java
 C:\Users\zeek2\OneDrive\Escritorio\ObligatorioDDA\DDA-sistema-atencion-telefonica\src\main\java\com\mycompany\obligatorio_dda\Evento.java
 C:\Users\zeek2\OneDrive\Escritorio\ObligatorioDDA\DDA-sistema-atencion-telefonica\src\main\java\com\mycompany\obligatorio_dda\Dominio\Entidades\Puesto.java
+C:\Users\zeek2\OneDrive\Escritorio\ObligatorioDDA\DDA-sistema-atencion-telefonica\src\main\java\com\mycompany\obligatorio_dda\Dominio\Repositorios\IObserversSector.java
 C:\Users\zeek2\OneDrive\Escritorio\ObligatorioDDA\DDA-sistema-atencion-telefonica\src\main\java\com\mycompany\obligatorio_dda\Dominio\Entidades\Llamada.java
 C:\Users\zeek2\OneDrive\Escritorio\ObligatorioDDA\DDA-sistema-atencion-telefonica\src\main\java\com\mycompany\obligatorio_dda\Controladores\MantVentanaSimulador.java
 C:\Users\zeek2\OneDrive\Escritorio\ObligatorioDDA\DDA-sistema-atencion-telefonica\src\main\java\com\mycompany\obligatorio_dda\Dominio\Servicios\ServicioPuesto.java

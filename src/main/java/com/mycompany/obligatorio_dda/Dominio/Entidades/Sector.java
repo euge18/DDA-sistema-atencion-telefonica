@@ -4,7 +4,7 @@
  */
 package com.mycompany.obligatorio_dda.Dominio.Entidades;
 
-import com.mycompany.obligatorio_dda.Dominio.Repositorios.IObserverLlamada;
+import com.mycompany.obligatorio_dda.Dominio.Repositorios.*;
 import com.mycompany.obligatorio_dda.Dominio.Servicios.*;
 import com.mycompany.obligatorio_dda.Dominio.Utilitarias.CalculadoraFechas;
 import java.time.LocalDateTime;
@@ -22,15 +22,16 @@ public class Sector implements IObserverLlamada {
     private ArrayList<Llamada> llamadasEspera;
     private ArrayList<Llamada> llamadasFinalizadas;
     private ArrayList<Trabajador> trabajadores;
+    private ArrayList<IObserversSector> observadores;
 
     public Sector(int numeroSector, String nombre) {
         this.numeroSector = numeroSector;
         this.nombre = nombre;
-        //Inicializo las listas en el constructor
         llamadasEspera = new ArrayList<Llamada>();
         llamadasFinalizadas = new ArrayList<Llamada>();
         puestos = new ArrayList<Puesto>();
         trabajadores = new ArrayList<Trabajador>();
+        observadores = new ArrayList<IObserversSector>();
     }
 
     public int getNumeroSector() {
@@ -90,9 +91,6 @@ public class Sector implements IObserverLlamada {
         return null;
     }
     
-    //cuando el trabajador se logea que esta funcion lo asigne automaticamnete
-    // caso no encuentre un puesto se puede crear uno fuera del for, se debe de agregar el nuevo puesto a la lista
-    // pero si todo esta precargado pueden se 5 trabajadores para 5 puestos
     public boolean asignarTrabajadorLibre(Trabajador trabajador) {
         for (Puesto p : puestos) {
             if (p.isActivo() == false) {
@@ -138,11 +136,9 @@ public class Sector implements IObserverLlamada {
     
     public void recibirLlamada (Llamada llamada){
             if (llamadasEspera.size() <= 5) {
-                llamadasEspera.add(llamada);
                 derivarLlamadaAPuesto(llamada);
             } else {
                 llamada.setEstado(EstadoLLamada.RECHAZADA);
-                System.out.println("Todas nuestras lineas se encuentran ocupada, intente llamndo más tarde");
             }
     }
     
@@ -153,12 +149,28 @@ public class Sector implements IObserverLlamada {
                 llamada.setSector(this);
                 llamada.agregarObservador(this);
                 llamadasEspera.remove(llamada);
+                //vuelvo a notificar y si en el update no encuentro la llamda en la lista me remuevo como observador
+                notifiacearObservers();
             } else {
-                System.out.println("Actualmente no hay puestos libres");
-                recibirLlamada(llamada);
-                //hoa
+                llamada.setEstado(EstadoLLamada.ESPERA);
+                llamadasEspera.add(llamada); 
+                notifiacearObservers();
             }
-
+    }
+    
+    public void notifiacearObservers() {
+        ArrayList<IObserversSector> copiaListaObservadores = (ArrayList<IObserversSector>) observadores.clone();
+        for (IObserversSector o : copiaListaObservadores) {
+            o.update(this);
+        }
+    }
+    
+    public void agregarObservador (IObserversSector o){
+        observadores.add(o);
+    }
+    
+    public void removerObservador (IObserversSector o){
+        observadores.remove(o);
     }
     
     public Puesto obtenerPuestoLibre (){
@@ -186,20 +198,16 @@ public class Sector implements IObserverLlamada {
         return tiempoTotalAtencion/puesto.getCantidadLlamadasAtendidas();
     }
     
-    /*Cuando finalice un llamada y el puesto quede libre que Sector busque otra llamada en espera
-    y se lo asigne, ademas de eliminarse como observador de esa llamada*/
 
     @Override
     public void update(Llamada llamada) {
         if (llamada.getEstado() == EstadoLLamada.FINALIZADA){
             llamadasFinalizadas.add(llamada);
-            llamada.removerObservador(this);
-            
+            llamada.removerObservador(this);         
             if (llamadasEspera.isEmpty()){
                 System.out.println("No hay mas llamadas por ahora");
             } else {
                 Llamada proximaLlamada = llamadasEspera.get(0);
-                System.out.println("Proxima llamada");
                 derivarLlamadaAPuesto(proximaLlamada);
             }         
         }
