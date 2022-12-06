@@ -302,7 +302,7 @@ public class AplicacionTrabajador extends javax.swing.JFrame implements VentanaT
     }
 
     @Override
-    public void mostrarTiempoPromedioLlamadas(long cant) {
-        lblNumPromedioTiempo.setText(Long.toString(cant));
+    public void mostrarTiempoPromedioLlamadas(float cant) {
+        lblNumPromedioTiempo.setText(Float.toString(cant));
     }
 }

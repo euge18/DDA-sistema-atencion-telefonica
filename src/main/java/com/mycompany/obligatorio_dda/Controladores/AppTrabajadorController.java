@@ -11,8 +11,10 @@ import com.mycompany.obligatorio_dda.Dominio.Entidades.Trabajador;
 import com.mycompany.obligatorio_dda.Dominio.Fachada.Fachada;
 import com.mycompany.obligatorio_dda.Dominio.Repositorios.IObserverLlamada;
 import com.mycompany.obligatorio_dda.Dominio.Repositorios.IObserverPuesto;
+import com.mycompany.obligatorio_dda.Dominio.Utilitarias.CalculadoraFechas;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import javax.swing.JOptionPane;
 
 /**
@@ -23,12 +25,23 @@ public class AppTrabajadorController implements IObserverLlamada, IObserverPuest
     private VentanaTrabajador ventana;
     private Puesto puesto;
     private Trabajador trabajador;
+    private float tiempoDeAtencion;
+    private Llamada llamadaEnCurso;
+
+    public float getTiempoDeAtencion() {
+        return tiempoDeAtencion;
+    }
+
+    public void setTiempoDeAtencion(float tiempoDeAtencion) {
+        this.tiempoDeAtencion = tiempoDeAtencion;
+    }
     
     public AppTrabajadorController(VentanaTrabajador ventana, Trabajador trabajador) {
         this.ventana = ventana;
         this.trabajador = trabajador;
         puesto = trabajador.getSector().obtenerPuestoTrabajador(trabajador);
         trabajador.getSector().obtenerPuestoTrabajador(trabajador).agregarObservador(this);
+        this.tiempoDeAtencion = 0;
         System.out.println(puesto.getObservadoresPuesto().size());
         Llamada llamadaPrueba = new Llamada(EstadoLLamada.PENDIENTE, LocalDateTime.now(), Fachada.getInstancia().obtenerCliente(1));
         llamadaPrueba.setHoraAtencion(LocalDateTime.now());
@@ -76,14 +89,22 @@ public class AppTrabajadorController implements IObserverLlamada, IObserverPuest
     }
 
     public void finalizarLlamada(){
-       puesto.getLlamadaEnAtencion().setEstado(EstadoLLamada.FINALIZADA);
-        System.out.println(puesto.getLlamadaEnAtencion().getEstado());
+            llamadaEnCurso.setEstado(EstadoLLamada.FINALIZADA);
+            System.out.println(puesto.getLlamadaEnAtencion().getEstado());
     }
     
     @Override
     public void update(Llamada llamada) {
         //No esta funcionando
         if(llamada.getEstado() == EstadoLLamada.FINALIZADA){
+
+            long momentoAtencion = CalculadoraFechas.calcularMilisegundos(llamada.getHoraAtencion().getYear(), llamada.getHoraAtencion().getMonthValue(), llamada.getHoraAtencion().getDayOfMonth(), llamada.getHoraAtencion().getHour(), llamada.getHoraAtencion().getMinute(), llamada.getHoraAtencion().getSecond());
+            long momentoFin = CalculadoraFechas.calcularMilisegundos(llamada.getHoraFin().getYear(), llamada.getHoraFin().getMonthValue(), llamada.getHoraFin().getDayOfMonth(), llamada.getHoraFin().getHour(), llamada.getHoraFin().getMinute(), llamada.getHoraFin().getSecond());
+            long diferenciaMilisegundos = Math.abs(momentoAtencion - momentoFin);
+            System.out.println("Los segundos son: " + TimeUnit.MILLISECONDS.toSeconds(diferenciaMilisegundos));
+            float segundos = (float)diferenciaMilisegundos/100;
+            setTiempoDeAtencion(tiempoDeAtencion+segundos);
+            this.ventana.mostrarTiempoPromedioLlamadas(getTiempoDeAtencion()+ segundos);
             if(llamada.getHoraFin()!=null){
                 llamada.setHoraFin(LocalDateTime.now());
             }
@@ -93,8 +114,8 @@ public class AppTrabajadorController implements IObserverLlamada, IObserverPuest
             ArrayList<Llamada> llamadas = this.puesto.getLlamadasAtendidas();
             llamadas.add(llamada);
             this.puesto.setLlamadasAtendidas(llamadas);
-            this.puesto.setLlamadaEnAtencion(null);          
             llamada.removerObservador(this);
+            this.puesto.setLlamadaEnAtencion(null);          
         }
         
         //llamada.getPuesto().setLlamadaEnAtencion(null);
@@ -106,11 +127,14 @@ public class AppTrabajadorController implements IObserverLlamada, IObserverPuest
             this.ventana.mostrarMensajeLlamadaEnCurso("Llamada finalizada...");
             
             //long tiempoPuesto = this.puesto.calcularTiempoAtencioPuesto();
-            this.ventana.mostrarTiempoPromedioLlamadas(30);
+
             int cantLlamadas = this.puesto.getCantidadLlamadasAtendidas();
             this.puesto.setCantidadLlamadasAtendidas(++cantLlamadas);
             this.ventana.mostrarCantidadLlamadasAtendidas(cantLlamadas);
+            //long tiempoPromedio = getTiempoDeAtencion()/(long)cantLlamadas;
+            //this.ventana.mostrarTiempoPromedioLlamadas(tiempoPromedio);
         } else {
+            llamadaEnCurso = puesto.getLlamadaEnAtencion();
             this.puesto.getLlamadaEnAtencion().agregarObservador(this);
             ventana.mostrarMensajeLlamadaEnCurso("Llamada en curso...");
             ventana.mostrarNombreCliente(puesto.getLlamadaEnAtencion().getCliente().getNombreCompleto());

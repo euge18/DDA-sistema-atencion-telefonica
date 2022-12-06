@@ -7,6 +7,7 @@ package com.mycompany.obligatorio_dda.Dominio.Fachada;
 import com.mycompany.obligatorio_dda.Controladores.IFachada;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.*;
 import com.mycompany.obligatorio_dda.Dominio.Servicios.*;
+import com.mycompany.obligatorio_dda.Dominio.Utilitarias.CalculadoraFechas;
 import java.util.ArrayList;
 
 /**
@@ -112,5 +113,16 @@ public class Fachada {
     public Cliente ObtenerClientePorCedula(String cedulaCliente) {
         return ServicioCliente.getInstancia().ObtenerClientePorCedula(cedulaCliente);
     }
+    
+    public long calcularMilisegundos(int anio, int mes, int dia, int hora, int minuto, int segundo){
+        return CalculadoraFechas.calcularMilisegundos(anio, mes, dia, hora, minuto, segundo);
+    }
+    
+    public long calcularDiferenciaDeTiempo(long atencion, long fin){
+        long tiempo = CalculadoraFechas.calcularDiferenciaDeTiempo(atencion, fin);
+        return tiempo;
+    }
+    
+    
 
 }

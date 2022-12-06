@@ -22,7 +22,7 @@ public interface VentanaTrabajador {
     
     public void mostrarCantidadLlamadasAtendidas(int cant);
     
-    public void mostrarTiempoPromedioLlamadas(long cant);
+    public void mostrarTiempoPromedioLlamadas(float cant);
     
     public void limpiarPantalla();
     
