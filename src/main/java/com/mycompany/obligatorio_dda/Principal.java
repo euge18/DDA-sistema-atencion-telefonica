@@ -6,7 +6,9 @@ package com.mycompany.obligatorio_dda;
 
 import com.mycompany.obligatorio_dda.Dominio.Entidades.*;
 import com.mycompany.obligatorio_dda.Dominio.Servicios.*;
+import com.mycompany.obligatorio_dda.Interfaz.frmAplicacionTest;
 import com.mycompany.obligatorio_dda.Interfaz.frmMonitoreo;
+import com.mycompany.obligatorio_dda.Interfaz.frmSimuladorLlamada;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -16,7 +18,29 @@ import javax.swing.JOptionPane;
  * @author zeek2
  */
 public class Principal {
-        public static void main(String[] args){
+    public static void main(String[] args){
+        ServicioSector SS = ServicioSector.getInstancia();
+        ServicioPuesto SP = ServicioPuesto.getInstancia();
+        ServicioTrabajador ST = ServicioTrabajador.getInstancia();
+        ServicioCliente SC = ServicioCliente.getInstancia();
+        
+        
+        Sector sector0 = SS.ObtenerSector(1);
+        sector0.setPuestos(SP.ObtenerPuetosPorSector(sector0.getNumeroSector()));
+        sector0.setTrabajadores(ST.ObtenerTrabajadoresPorSector(sector0.getNumeroSector()));
+       
+        
+        frmAplicacionTest frmTestApp = new frmAplicacionTest();
+        frmTestApp.setVisible(true);
+        
+        /*
+        Cliente clientePrueba = SC.ObtenerCliente(0);
+        System.out.println(clientePrueba.getNombreCompleto());
+        clientePrueba.hacerLlmada(0);
+        */
+        //Llamada llamadaPrueba = new Llamada(EstadoLLamada.PENDIENTE, LocalDateTime.now(), clientePrueba);
+        
+    /*
         
       //Para que lo primero que hagan las instancias sea inicializar las listas   
       ServicioCliente SC = ServicioCliente.getInstancia();
@@ -25,12 +49,13 @@ public class Principal {
       ServicioSector SS = ServicioSector.getInstancia();
       ServicioTrabajador ST = ServicioTrabajador.getInstancia();
       
+      Sector sectorPrueba = SS.ObtenerSector(1);
+      sectorPrueba.setPuestos(SP.ObtenerPuetosPorSector(sectorPrueba.getNumeroSector()));
+      sectorPrueba.setTrabajadores(ST.ObtenerTrabajadoresPorSector(sectorPrueba.getNumeroSector()));
+      
       //Hay que tener cudado con las listas que sector nesecita de puestos y trabajadores
       //Se pueden inicilizar como ArraysList vacios en los constructores, o llamar a los servicios
       //de trabajador y puestos y pedirle sus listas por sector 
-      Sector sectorPrueba = SS.ObtenerSector(0);
-      sectorPrueba.setPuestos(SP.ObtenerPuetosPorSector(sectorPrueba.getNumeroSector()));
-      sectorPrueba.setTrabajadores(ST.ObtenerTrabajadoresPorSector(sectorPrueba.getNumeroSector()));
       for (Puesto p : sectorPrueba.getPuestos()){
           System.out.println("lista de puestos: " + p.getTrabajadorAsignado().getNombre());
       }
@@ -46,12 +71,14 @@ public class Principal {
       
       //llama a Adimnistracion
       //Hasta este punto bien, Sector la recibe y deriva al puesto correspondiente
-      clientePrueba.hacerLlmada(0);
+      Llamada llamada = new Llamada(EstadoLLamada.PENDIENTE, LocalDateTime.now());
+      
+      clientePrueba.hacerLlmada(1, llamada);
       
       //el puesto libre en Administracion es el 0 atendido por Pablo Estigarribia
       //Funciona bien
       Puesto puestoPrueba = SP.obtenerPuesto(0);
-      Llamada llamada= puestoPrueba.getLlamadaEnAtencion();
+      Llamada llamada2 = puestoPrueba.getLlamadaEnAtencion();
       System.out.println("Datos: " + llamada.getIdLlamada() + " " + llamada.getEstado() + " " + llamada.getTrabajador().getNombre() + " " + llamada.getCliente().getNombreCompleto() + " " + llamada.getHoraAtencion());
       
       //Ahora voy a ver si puedo dejar 10 segundos con un Thread para el posterior calculo del costo
@@ -77,7 +104,8 @@ public class Principal {
         Cliente clienteGestor = SC.ObtenerCliente(2);
 
         
-        Llamada llamadaPruebaCosto = new Llamada(EstadoLLamada.FINALIZADA , LocalDateTime.now(),  clienteGestor);
+        Llamada llamadaPruebaCosto = new Llamada(EstadoLLamada.FINALIZADA , LocalDateTime.now());
+        llamadaPruebaCosto.setCliente(clienteGestor);
         llamadaPruebaCosto.setIdLlamada(7);
         llamadaPruebaCosto.setDescripcion("Esta es una descripcion de Prueba");
         llamadaPruebaCosto.setPuesto(puestoPrueba);
@@ -101,13 +129,28 @@ public class Principal {
         
         System.out.println("Hora atencion: " + llamadaPruebaCosto.getHoraAtencion().toString());
         System.out.println("Hora atencion: " + llamadaPruebaCosto.getHoraFin().toString());
+            System.out.println("Hora Inicio: " + llamadaPruebaCosto.getHoraFin().toString());
         
-        System.out.println("El costo de la llamda fue de: " + llamadaPruebaCosto.calcularCosto(llamadaPruebaCosto));
+        llamadaPruebaCosto.calcularCosto(llamadaPruebaCosto);
         
+        System.out.println("El costo de la llamda fue de: " + llamadaPruebaCosto.getCosto());
+        
+        /*
             frmMonitoreo fMonitoreo = new frmMonitoreo();
             fMonitoreo.setVisible(true);
+        */
         //float costo = llamadaPruebaCosto.calcularCosto();
         
-        //llamadaPruebaCosto.setCosto(llamadaPruebaCosto.calcularCosto());
+
+        //llamadaPruebaCosto.setCosto(llamadaPruebaCosto.calcularCosto());*/
+        
+        
+        
+
+        /*
+        frmSimuladorLlamada fSimulador = new frmSimuladorLlamada();
+        fSimulador.setVisible(true);
+        */
+
     }
 }
