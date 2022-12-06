@@ -96,6 +96,7 @@ public class Sector implements IObserverLlamada {
     public boolean asignarTrabajadorLibre(Trabajador trabajador) {
         for (Puesto p : puestos) {
             if (p.isActivo() == false) {
+                p.setActivo(true);
                 p.setTrabajadorAsignado(trabajador);
                 return true;
             }
@@ -106,6 +107,7 @@ public class Sector implements IObserverLlamada {
         
     
     public void dejarPuesto (Puesto puesto){
+        puesto.setActivo(false);
         puesto.setTrabajadorAsignado(null);
     }
     

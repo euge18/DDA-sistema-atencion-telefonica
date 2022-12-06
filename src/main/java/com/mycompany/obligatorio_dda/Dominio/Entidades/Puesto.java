@@ -99,7 +99,6 @@ public class Puesto {
             llamada.setHoraAtencion(LocalDateTime.now());
             llamada.setPuesto(this);
             llamada.setTrabajador(trabajadorAsignado);
-            ++cantidadLlamadasAtendidas;
             setLlamadaEnAtencion(llamada);          
     }
 

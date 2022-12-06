@@ -99,7 +99,8 @@ public class frmAplicacionTest extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAppTrabajadoresActionPerformed
 
     private void btnSimuladorLlamadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimuladorLlamadasActionPerformed
-        // TODO add your handling code here:
+        frmSimuladorLlamada frmS = new frmSimuladorLlamada();
+        frmS.setVisible(true);
     }//GEN-LAST:event_btnSimuladorLlamadasActionPerformed
 
     private void btnAppMonitoreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAppMonitoreoActionPerformed

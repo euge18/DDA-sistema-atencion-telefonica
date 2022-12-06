@@ -71,7 +71,7 @@ public class MantSimuladorController implements IObserverLlamada{
             llamadaPendiente.setCliente(cliente);
             clienteIdentificado=true;
             
-            this.mensaje = "Para comunicarse con Administracion presione 0\nVentas presione 1 \n Desarrollo presione 3 \n y finalmente presione *";
+            this.mensaje = "Para comunicarse con Administracion presione 1\nVentas presione 2 \n Desarrollo presione 3 \n y finalmente presione *";
             this.ventana.mostrarSectores(mensaje);
             cedulaCliente="";
         }
@@ -129,7 +129,9 @@ public class MantSimuladorController implements IObserverLlamada{
             long momentoInicial = CalculadoraFechas.calcularMilisegundos(llamada.getHoraInicio().getYear(), llamada.getHoraInicio().getMonthValue(), llamada.getHoraInicio().getDayOfMonth(), llamada.getHoraInicio().getHour(), llamada.getHoraInicio().getMinute(), llamada.getHoraInicio().getSecond());
             long momentoFin = CalculadoraFechas.calcularMilisegundos(llamada.getHoraFin().getYear(), llamada.getHoraFin().getMonthValue(), llamada.getHoraFin().getDayOfMonth(), llamada.getHoraFin().getHour(), llamada.getHoraFin().getMinute(), llamada.getHoraFin().getSecond());
             long difernciaTiempo = CalculadoraFechas.calcularDiferenciaDeTiempo(momentoInicial, momentoFin);           
-            this.mensaje = "La llamada ha finalizado...\n Duración: " + difernciaTiempo + " segundos\nha costado: " + llamada.calcularCosto(llamada) + "\ny su saldo ha quedado en: " + llamada.getCliente().getSaldo() + "$";
+            this.mensaje = "La llamada ha finalizado...\n Duración: " + difernciaTiempo + " segundos\nha costado: " + llamada.calcularCosto(llamada) + "\ny su saldo ha quedado en: " + llamada.getCliente().getSaldo() + "$\n para volver a comunicarse: Para comunicarse con Administracion presione 1\nVentas presione 2 \n Desarrollo presione 3 \n y finalmente presione *";
+            this.ultimoNumero="";
+            this.llamadaPendiente=null;
             this.ventana.mostrarMensajeFin(mensaje);
         }
     }

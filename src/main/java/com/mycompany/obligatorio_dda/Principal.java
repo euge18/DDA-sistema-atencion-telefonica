@@ -24,18 +24,20 @@ public class Principal {
         ServicioTrabajador ST = ServicioTrabajador.getInstancia();
         ServicioCliente SC = ServicioCliente.getInstancia();
         
+        
         Sector sector0 = SS.ObtenerSector(1);
         sector0.setPuestos(SP.ObtenerPuetosPorSector(sector0.getNumeroSector()));
         sector0.setTrabajadores(ST.ObtenerTrabajadoresPorSector(sector0.getNumeroSector()));
+       
         
         frmAplicacionTest frmTestApp = new frmAplicacionTest();
         frmTestApp.setVisible(true);
         
-        
+        /*
         Cliente clientePrueba = SC.ObtenerCliente(0);
         System.out.println(clientePrueba.getNombreCompleto());
         clientePrueba.hacerLlmada(0);
-        
+        */
         //Llamada llamadaPrueba = new Llamada(EstadoLLamada.PENDIENTE, LocalDateTime.now(), clientePrueba);
         
     /*

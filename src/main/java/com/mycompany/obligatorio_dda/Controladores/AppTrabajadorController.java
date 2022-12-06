@@ -43,7 +43,7 @@ public class AppTrabajadorController implements IObserverLlamada, IObserverPuest
         trabajador.getSector().obtenerPuestoTrabajador(trabajador).agregarObservador(this);
         this.tiempoDeAtencion = 0;
         System.out.println(puesto.getObservadoresPuesto().size());
-        Llamada llamadaPrueba = new Llamada(EstadoLLamada.PENDIENTE, LocalDateTime.now(), Fachada.getInstancia().obtenerCliente(1));
+        /*Llamada llamadaPrueba = new Llamada(EstadoLLamada.PENDIENTE, LocalDateTime.now(), Fachada.getInstancia().obtenerCliente(1));
         llamadaPrueba.setHoraAtencion(LocalDateTime.now());
         llamadaPrueba.setSector(puesto.getSector());
         llamadaPrueba.setHoraFin(LocalDateTime.now());
@@ -52,6 +52,7 @@ public class AppTrabajadorController implements IObserverLlamada, IObserverPuest
         llamadaPrueba.setEstado(EstadoLLamada.CURSO);
         //llamadaPrueba.agregarObservador(this);
         puesto.setLlamadaEnAtencion(llamadaPrueba);
+        */
         
     }
 
@@ -96,7 +97,7 @@ public class AppTrabajadorController implements IObserverLlamada, IObserverPuest
     public void update(Llamada llamada) {
         //No esta funcionando
         if(llamada.getEstado() == EstadoLLamada.FINALIZADA){
-
+            llamada.setHoraFin(LocalDateTime.now());
             long momentoAtencion = CalculadoraFechas.calcularMilisegundos(llamada.getHoraAtencion().getYear(), llamada.getHoraAtencion().getMonthValue(), llamada.getHoraAtencion().getDayOfMonth(), llamada.getHoraAtencion().getHour(), llamada.getHoraAtencion().getMinute(), llamada.getHoraAtencion().getSecond());
             long momentoFin = CalculadoraFechas.calcularMilisegundos(llamada.getHoraFin().getYear(), llamada.getHoraFin().getMonthValue(), llamada.getHoraFin().getDayOfMonth(), llamada.getHoraFin().getHour(), llamada.getHoraFin().getMinute(), llamada.getHoraFin().getSecond());
             long diferenciaMilisegundos = Math.abs(momentoAtencion - momentoFin);
@@ -124,14 +125,10 @@ public class AppTrabajadorController implements IObserverLlamada, IObserverPuest
     public void update(Puesto puesto) {
         if (this.puesto.getLlamadaEnAtencion() == null) {
             this.ventana.mostrarMensajeLlamadaEnCurso("Llamada finalizada...");
-            
-            //long tiempoPuesto = this.puesto.calcularTiempoAtencioPuesto();
 
             int cantLlamadas = this.puesto.getCantidadLlamadasAtendidas();
             this.puesto.setCantidadLlamadasAtendidas(++cantLlamadas);
             this.ventana.mostrarCantidadLlamadasAtendidas(cantLlamadas);
-            //long tiempoPromedio = getTiempoDeAtencion()/(long)cantLlamadas;
-            //this.ventana.mostrarTiempoPromedioLlamadas(tiempoPromedio);
         } else {
             llamadaEnCurso = puesto.getLlamadaEnAtencion();
             this.puesto.getLlamadaEnAtencion().agregarObservador(this);

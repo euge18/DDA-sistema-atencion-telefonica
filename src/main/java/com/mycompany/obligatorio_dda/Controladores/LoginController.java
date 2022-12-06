@@ -36,6 +36,7 @@ public class LoginController {
         if(trabajador != null){
             Sector sector = Fachada.getInstancia().obtenerSector(trabajador.getSector().getNumeroSector());
             if(sector.asignarTrabajadorLibre(trabajador)){
+                
                 return trabajador;
             } else {
                 ventana.mostrarMensaje("No hay puestos disponibles");
