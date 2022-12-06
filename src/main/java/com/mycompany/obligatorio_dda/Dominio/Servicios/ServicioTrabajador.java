@@ -12,7 +12,8 @@ import java.util.ArrayList;
  * @author zeek2
  */
 public class ServicioTrabajador {
-       private ArrayList<Trabajador> trabajadores;
+    
+    private ArrayList<Trabajador> trabajadores;
     private static ServicioTrabajador instancia = null; //Singleton 
     
     public static ServicioTrabajador getInstancia(){
