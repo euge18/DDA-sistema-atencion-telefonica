@@ -100,6 +100,16 @@ public class MantSimuladorController implements IObserverLlamada{
                     this.ventana.mostrarMensajeSectorOcupado(mensaje);
                     return;
                 }
+                if(sector.puestosLibres()){
+                    this.mensaje= "Este Sector actualmente no tiene puestos libres";
+                    this.cedulaCliente = "";
+                    this.clienteIdentificado = false;
+                    this.cliente = null;
+                    this.llamadaPendiente = null;
+                    this.ultimoNumero = "";
+                    this.ventana.mostrarMensajeSectorOcupado(mensaje);
+                    return;
+                }
 
                 this.cliente.hacerLlmada(numeroSector, llamadaPendiente);
                 llamadaPendiente.agregarObservador(this);

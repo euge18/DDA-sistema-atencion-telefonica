@@ -103,6 +103,22 @@ public class Sector implements IObserverLlamada {
         }
         return false;
     }
+    
+        public boolean puestosLibres() {
+            
+        int puestoLibre = 0;
+        for (Puesto p : puestos) {
+            if (p.isActivo() == true) {
+                ++puestoLibre;
+
+            }
+        }
+        if(puestoLibre>0){
+            return false;
+        } else {
+            return true;
+        } 
+    }
         
         
     
