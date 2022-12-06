@@ -33,6 +33,8 @@ public class MantSimuladorController implements IObserverLlamada{
         private String ultimoNumero;
         
         private String mensaje;
+                
+        private boolean primeraLlamada=true;
         
         
         
@@ -44,7 +46,12 @@ public class MantSimuladorController implements IObserverLlamada{
         
         public void iniciarLlamada(Llamada llamada){
             llamadaPendiente = llamada;
-            this.mensaje = "Ingrese su cedula y presione # para continuar";
+            if(primeraLlamada){
+               this.mensaje = "Ingrese su cedula y presione # para continuar";  
+            }else{
+               this.mensaje= "Ingrese numero de sector que desea llamar";
+            }
+
             this.ventana.mostrarPedirCedula(mensaje);
         }
         
@@ -139,7 +146,8 @@ public class MantSimuladorController implements IObserverLlamada{
             long momentoInicial = CalculadoraFechas.calcularMilisegundos(llamada.getHoraInicio().getYear(), llamada.getHoraInicio().getMonthValue(), llamada.getHoraInicio().getDayOfMonth(), llamada.getHoraInicio().getHour(), llamada.getHoraInicio().getMinute(), llamada.getHoraInicio().getSecond());
             long momentoFin = CalculadoraFechas.calcularMilisegundos(llamada.getHoraFin().getYear(), llamada.getHoraFin().getMonthValue(), llamada.getHoraFin().getDayOfMonth(), llamada.getHoraFin().getHour(), llamada.getHoraFin().getMinute(), llamada.getHoraFin().getSecond());
             long difernciaTiempo = CalculadoraFechas.calcularDiferenciaDeTiempo(momentoInicial, momentoFin);           
-            this.mensaje = "La llamada ha finalizado...\n Duración: " + difernciaTiempo + " segundos\nha costado: " + llamada.calcularCosto(llamada) + "\ny su saldo ha quedado en: " + llamada.getCliente().getSaldo() + "$\n para volver a comunicarse: Para comunicarse con Administracion presione 1\nVentas presione 2 \n Desarrollo presione 3 \n y finalmente presione *";
+            this.mensaje = "La llamada ha finalizado...\n Duración: " + difernciaTiempo + " segundos\nha costado: " + llamada.calcularCosto(llamada) + "\ny su saldo ha quedado en: " + llamada.getCliente().getSaldo() + "$\n Para volver a comunicarse: Presione Iniciar de nuevo";
+            this.primeraLlamada=false;
             this.ultimoNumero="";
             this.llamadaPendiente=null;
             this.ventana.mostrarMensajeFin(mensaje);
