@@ -90,7 +90,6 @@ public class AppTrabajadorController implements IObserverLlamada, IObserverPuest
 
     public void finalizarLlamada(){
             llamadaEnCurso.setEstado(EstadoLLamada.FINALIZADA);
-            System.out.println(puesto.getLlamadaEnAtencion().getEstado());
     }
     
     @Override
