@@ -151,11 +151,7 @@ public class Sector implements IObserverLlamada {
             if (puestoLibre != null) {
                 puestoLibre.atenderLlamada(llamada);
                 llamada.setSector(this);
-                //Sector se agrega como observer
                 llamada.agregarObservador(this);
-                //Aqui se llama al observer desde la funcion del setEstado, 
-                //pues sector debe saber cuando finaliza para agregarla a las llamadas 
-                //finalizadas y reasignar el puesto
                 llamadasEspera.remove(llamada);
             } else {
                 System.out.println("Actualmente no hay puestos libres");
