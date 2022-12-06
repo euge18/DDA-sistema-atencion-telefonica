@@ -35,6 +35,11 @@ public class Cliente {
         this.saldo = saldo;
     }
     
+    //Sacar este constructor de prueba
+    public Cliente(){
+        
+    }
+    
 
     public int getIdCliente() {
         return idCliente;

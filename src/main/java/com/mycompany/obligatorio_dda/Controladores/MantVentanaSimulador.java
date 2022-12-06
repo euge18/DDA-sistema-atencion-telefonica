@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author zeek2
  */
-public interface MantVentanaSimulador {
+public interface MantVentanaSimulador{
     
     public void mostrarMensajeBienvenida (String mensaje);
     
