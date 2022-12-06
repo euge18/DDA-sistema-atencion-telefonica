@@ -268,6 +268,7 @@ public class frmSimuladorLlamada extends javax.swing.JFrame implements MantVenta
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         this.setVisible(false);
+        controlador.finalizarLlamada();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed

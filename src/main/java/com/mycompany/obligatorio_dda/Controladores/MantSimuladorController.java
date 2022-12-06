@@ -40,6 +40,7 @@ public class MantSimuladorController implements IObserverLlamada, IObserversSect
         
         
         
+        
         public MantSimuladorController(MantVentanaSimulador ventana){
             this.ventana = ventana;
             this.mensaje = "--BIENVENIDO--\n Para Comunicarse con nosotros presione el botón Iniciar\n Si desea abandonar la seción puede presionar Salir";
@@ -49,7 +50,7 @@ public class MantSimuladorController implements IObserverLlamada, IObserversSect
         public void iniciarLlamada(Llamada llamada){
             llamadaPendiente = llamada;
             if(primeraLlamada){
-               this.mensaje = "Ingrese su cedula y presione # para continuar";  
+               this.mensaje = "Ingrese su cédula seguida de la tecla numeral #";  
             }else{
                this.mensaje= "Ingrese numero de sector que desea llamar";
             }
@@ -57,19 +58,19 @@ public class MantSimuladorController implements IObserverLlamada, IObserversSect
             this.ventana.mostrarPedirCedula(mensaje);
         }
         
-        public void recibirNumerosCedula (String numero){
-            if(!clienteIdentificado){
+    public void recibirNumerosCedula(String numero) {
+            if (!clienteIdentificado) {
                 cedulaCliente = cedulaCliente + numero;
-                
+
             } else {
                 ultimoNumero = numero;
             }
-        }
+    }
         
         public void buscarCliente(){
             Cliente cliente = Fachada.getInstancia().ObtenerClientePorCedula(cedulaCliente);
             if(cliente==null){
-                this.mensaje = "No existe un cliente con es cedula vuelva a intentarlo"; 
+                this.mensaje = "Cliente no registrado"; 
                 this.ventana.mostrarMensajeClienteNoEncontrado(mensaje);
                 cedulaCliente = "";
                 return;
@@ -96,19 +97,19 @@ public class MantSimuladorController implements IObserverLlamada, IObserversSect
                 int numeroSector = Integer.parseInt(ultimoNumero);
                 Sector sector = Fachada.getInstancia().obtenerSector(numeroSector);
                 if (sector == null) {
-                    this.mensaje = "Numero de Sector Incorrecto, vuelva a intentarlo";
+                    this.mensaje = "Sector no valido";
                     resetearVista();
                     this.ventana.mostrarMensajeSectorOcupado(mensaje);
                     return;
                 }
                 if(sector.getLlamadasEspera().size()>=5){
-                    this.mensaje= "Todas nuestras lineas estan ocupadas, intentelo más tarde";
+                    this.mensaje= "Comuníquese más tarde…";
                     resetearVista();
                     this.ventana.mostrarMensajeSectorOcupado(mensaje);
                     return;
                 }
                 if(sector.puestosLibres()){
-                    this.mensaje= "Este Sector actualmente no tiene puestos libres";
+                    this.mensaje= "Sector no disponible";
                     resetearVista();
                     this.ventana.mostrarMensajeSectorOcupado(mensaje);
                     return;
@@ -142,7 +143,7 @@ public class MantSimuladorController implements IObserverLlamada, IObserversSect
             long momentoInicial = CalculadoraFechas.calcularMilisegundos(llamada.getHoraInicio().getYear(), llamada.getHoraInicio().getMonthValue(), llamada.getHoraInicio().getDayOfMonth(), llamada.getHoraInicio().getHour(), llamada.getHoraInicio().getMinute(), llamada.getHoraInicio().getSecond());
             long momentoFin = CalculadoraFechas.calcularMilisegundos(llamada.getHoraFin().getYear(), llamada.getHoraFin().getMonthValue(), llamada.getHoraFin().getDayOfMonth(), llamada.getHoraFin().getHour(), llamada.getHoraFin().getMinute(), llamada.getHoraFin().getSecond());
             long difernciaTiempo = CalculadoraFechas.calcularDiferenciaDeTiempo(momentoInicial, momentoFin);           
-            this.mensaje = "La llamada ha finalizado...\n Duración: " + difernciaTiempo + " segundos\nha costado: " + llamada.calcularCosto(llamada) + "\ny su saldo ha quedado en: " + llamada.getCliente().getSaldo() + "$\n Para volver a comunicarse: Presione Iniciar de nuevo";
+            this.mensaje = "Llamada FinalizadA...\n Duración: " + difernciaTiempo + " segundos\nCosto: " + llamada.calcularCosto(llamada) + "\nSu saldo es de: " + llamada.getCliente().getSaldo() + "$\n Para volver a comunicarse: Presione Iniciar de nuevo\nPara comunicarse con Administracion presione 1\nVentas presione 2 \n Desarrollo presione 3 \n y finalmente presione *";
             this.primeraLlamada=false;
             this.ultimoNumero="";
             this.llamadaPendiente=null;
@@ -162,7 +163,7 @@ public class MantSimuladorController implements IObserverLlamada, IObserversSect
             this.ventana.mostrarMensajeFin(mensaje);
         } else if(!sector.getLlamadasEspera().contains(llamadaPendiente)){
             sector.removerObservador(this);
-            this.mensaje = "Llamada en curso...\n usted se esta comunicando con el Sector: " + llamadaPendiente.getSector().getNombre() + "\n y se esta atendido por " + llamadaPendiente.getTrabajador().getNombre() + "\n Su llamada se ha iniciado: " + CalculadoraFechas.formatearFecha(llamadaPendiente.getHoraInicio());
+            this.mensaje = "Llamada en curso...\n Ud. se esta comunicando con el Sector: " + llamadaPendiente.getSector().getNombre() + "\n y esta siendo atendido por " + llamadaPendiente.getTrabajador().getNombre() + "\n Su llamada se ha iniciado en: " + CalculadoraFechas.formatearFecha(llamadaPendiente.getHoraInicio());
             this.ventana.mostrarMensajeLlamadaEnCurso(mensaje);
         }
     }
