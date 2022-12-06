@@ -118,12 +118,28 @@ public class Sector implements IObserverLlamada {
         } 
     }
         
-        
+    public float tiempoPromedioDemora() {
+        float totalTiempoDemoraSector = 0;
+        int cantLlamadasAtendidas = 0;
+        for (Puesto p : puestos) {
+            if (p.isActivo() == true) {
+                totalTiempoDemoraSector += p.getTotalTiempoDemora();
+                cantLlamadasAtendidas += p.getCantidadLlamadasAtendidas();
+            }
+        }
+        float promedio = totalTiempoDemoraSector / (float) cantLlamadasAtendidas;
+        return promedio;
+    }
     
     public void dejarPuesto (Puesto puesto){
         puesto.setActivo(false);
         puesto.setTrabajadorAsignado(null);
+        puesto.setCantidadLlamadasAtendidas(0);
+        puesto.setTotalTiempoDemora(0);
     }
+    
+    
+    
     
     //calcular timepo segun la lista de llamadas finalizadas
     public float calcularTiempoPromedioAtencion (){

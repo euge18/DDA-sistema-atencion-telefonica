@@ -22,6 +22,15 @@ public class Puesto {
     private Sector sector;
     private ArrayList<IObserverPuesto> observadoresPuesto;
     private ArrayList<Llamada> llamadasAtendidas;
+    private float totalTiempoDemora;
+
+    public float getTotalTiempoDemora() {
+        return totalTiempoDemora;
+    }
+
+    public void setTotalTiempoDemora(float totalTiempoDemora) {
+        this.totalTiempoDemora = totalTiempoDemora;
+    }
 
     public ArrayList<Llamada> getLlamadasAtendidas() {
         return llamadasAtendidas;

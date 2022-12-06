@@ -27,6 +27,15 @@ public class AppTrabajadorController implements IObserverLlamada, IObserverPuest
     private Puesto puesto;
     private Trabajador trabajador;
     private float tiempoDeAtencion;
+    private float tiempoDemora;
+
+    public float getTiempoDemora() {
+        return tiempoDemora;
+    }
+
+    public void setTiempoDemora(float tiempoDemora) {
+        this.tiempoDemora = tiempoDemora;
+    }
     private Llamada llamadaEnCurso;
 
     public float getTiempoDeAtencion() {
@@ -43,6 +52,7 @@ public class AppTrabajadorController implements IObserverLlamada, IObserverPuest
         puesto = trabajador.getSector().obtenerPuestoTrabajador(trabajador);
         trabajador.getSector().obtenerPuestoTrabajador(trabajador).agregarObservador(this);
         this.tiempoDeAtencion = 0;
+        this.tiempoDemora=0;
     }
 
     public VentanaTrabajador getVentana() {
@@ -84,6 +94,7 @@ public class AppTrabajadorController implements IObserverLlamada, IObserverPuest
         this.puesto=null;
         this.trabajador=null;
         this.tiempoDeAtencion=0;
+        this.tiempoDemora=0;
         this.llamadaEnCurso=null;
     }
 
@@ -96,12 +107,16 @@ public class AppTrabajadorController implements IObserverLlamada, IObserverPuest
         //No esta funcionando
         if (llamada.getEstado() == EstadoLLamada.FINALIZADA) {
             llamada.setHoraFin(LocalDateTime.now());
+            long momentoInicio = CalculadoraFechas.calcularMilisegundos(llamada.getHoraInicio().getYear(), llamada.getHoraInicio().getMonthValue(), llamada.getHoraInicio().getDayOfMonth(), llamada.getHoraInicio().getHour(), llamada.getHoraInicio().getMinute(), llamada.getHoraInicio().getSecond());//linea agregada
             long momentoAtencion = CalculadoraFechas.calcularMilisegundos(llamada.getHoraAtencion().getYear(), llamada.getHoraAtencion().getMonthValue(), llamada.getHoraAtencion().getDayOfMonth(), llamada.getHoraAtencion().getHour(), llamada.getHoraAtencion().getMinute(), llamada.getHoraAtencion().getSecond());
             long momentoFin = CalculadoraFechas.calcularMilisegundos(llamada.getHoraFin().getYear(), llamada.getHoraFin().getMonthValue(), llamada.getHoraFin().getDayOfMonth(), llamada.getHoraFin().getHour(), llamada.getHoraFin().getMinute(), llamada.getHoraFin().getSecond());
             long diferenciaMilisegundos = Math.abs(momentoAtencion - momentoFin);
-            System.out.println("Los segundos son: " + TimeUnit.MILLISECONDS.toSeconds(diferenciaMilisegundos));
+            long tiempoDemoraMilisegundos = Math.abs(momentoInicio - momentoFin);//linea agregada
             float segundos = (float) diferenciaMilisegundos / 1000;
+            float minutos = ((float) tiempoDemoraMilisegundos /1000)/60;//linea agregada
+            setTiempoDemora(tiempoDemora + minutos);//linea agregada
             setTiempoDeAtencion(tiempoDeAtencion + segundos);
+            this.puesto.setTotalTiempoDemora(tiempoDemora);
             this.ventana.mostrarTiempoPromedioLlamadas(getTiempoDeAtencion() + segundos);
             if (llamada.getHoraFin() != null) {
                 llamada.setHoraFin(LocalDateTime.now());
