@@ -82,7 +82,7 @@ public class AplicacionTrabajador extends javax.swing.JFrame implements VentanaT
         jScrollPane1.setViewportView(txtDescripcion);
 
         lblIndicadorEstadoLlamada.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblIndicadorEstadoLlamada.setText("Llamada en curso");
+        lblIndicadorEstadoLlamada.setText("Bienvenido");
 
         lblCliente.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lblCliente.setText("Cliente:");
@@ -126,11 +126,11 @@ public class AplicacionTrabajador extends javax.swing.JFrame implements VentanaT
                                 .addGap(39, 39, 39)
                                 .addComponent(lblTiempoPromedio, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(51, 51, 51))
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGap(69, 69, 69)
                                 .addComponent(lblNumLlamadasAtendidas, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblNumPromedioTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblNumPromedioTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(73, 73, 73))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)

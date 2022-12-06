@@ -13,6 +13,7 @@ import com.mycompany.obligatorio_dda.Dominio.Repositorios.IObserverLlamada;
 import com.mycompany.obligatorio_dda.Dominio.Repositorios.IObserverPuesto;
 import com.mycompany.obligatorio_dda.Dominio.Utilitarias.CalculadoraFechas;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import javax.swing.JOptionPane;
@@ -42,7 +43,6 @@ public class AppTrabajadorController implements IObserverLlamada, IObserverPuest
         puesto = trabajador.getSector().obtenerPuestoTrabajador(trabajador);
         trabajador.getSector().obtenerPuestoTrabajador(trabajador).agregarObservador(this);
         this.tiempoDeAtencion = 0;
-        System.out.println(puesto.getObservadoresPuesto().size());
         /*Llamada llamadaPrueba = new Llamada(EstadoLLamada.PENDIENTE, LocalDateTime.now(), Fachada.getInstancia().obtenerCliente(1));
         llamadaPrueba.setHoraAtencion(LocalDateTime.now());
         llamadaPrueba.setSector(puesto.getSector());
@@ -95,46 +95,40 @@ public class AppTrabajadorController implements IObserverLlamada, IObserverPuest
     
     @Override
     public void update(Llamada llamada) {
-        //No esta funcionando
         if(llamada.getEstado() == EstadoLLamada.FINALIZADA){
             llamada.setHoraFin(LocalDateTime.now());
             long momentoAtencion = CalculadoraFechas.calcularMilisegundos(llamada.getHoraAtencion().getYear(), llamada.getHoraAtencion().getMonthValue(), llamada.getHoraAtencion().getDayOfMonth(), llamada.getHoraAtencion().getHour(), llamada.getHoraAtencion().getMinute(), llamada.getHoraAtencion().getSecond());
-            long momentoFin = CalculadoraFechas.calcularMilisegundos(llamada.getHoraFin().getYear(), llamada.getHoraFin().getMonthValue(), llamada.getHoraFin().getDayOfMonth(), llamada.getHoraFin().getHour(), llamada.getHoraFin().getMinute(), llamada.getHoraFin().getSecond());
-            long diferenciaMilisegundos = Math.abs(momentoAtencion - momentoFin);
-            System.out.println("Los segundos son: " + TimeUnit.MILLISECONDS.toSeconds(diferenciaMilisegundos));
-            float segundos = (float)diferenciaMilisegundos/100;
-            setTiempoDeAtencion(tiempoDeAtencion+segundos);
-            this.ventana.mostrarTiempoPromedioLlamadas(getTiempoDeAtencion()+ segundos);
+            long momentoFinal = CalculadoraFechas.calcularMilisegundos(llamada.getHoraFin().getYear(), llamada.getHoraFin().getMonthValue(), llamada.getHoraFin().getDayOfMonth(), llamada.getHoraFin().getHour(), llamada.getHoraFin().getMinute(), llamada.getHoraFin().getSecond());
+            long difernciaTiempo = CalculadoraFechas.calcularDiferenciaDeTiempo(momentoAtencion, momentoFinal); 
+            this.ventana.mostrarMensajeLlamadaEnCurso("Llamada finalizada... - Duracion: " + difernciaTiempo + " - Costo: " + llamada.calcularCosto(llamada));
+            setTiempoDeAtencion(tiempoDeAtencion + difernciaTiempo);
             if(llamada.getHoraFin()!=null){
                 llamada.setHoraFin(LocalDateTime.now());
             }
             llamada.setEstado(EstadoLLamada.FINALIZADA);
-         llamada.setDescripcion(ventana.getDescripcion());
+            llamada.setDescripcion(ventana.getDescripcion());
             this.ventana.limpiarPantalla();
             ArrayList<Llamada> llamadas = this.puesto.getLlamadasAtendidas();
             llamadas.add(llamada);
             this.puesto.setLlamadasAtendidas(llamadas);
+            this.ventana.mostrarTiempoPromedioLlamadas(getTiempoDeAtencion()/llamadas.size());
             llamada.removerObservador(this);
-            this.puesto.setLlamadaEnAtencion(null);          
+            this.puesto.setLlamadaEnAtencion(null);  
         }
-        
-        //llamada.getPuesto().setLlamadaEnAtencion(null);
     }  
 
     @Override
     public void update(Puesto puesto) {
         if (this.puesto.getLlamadaEnAtencion() == null) {
-            this.ventana.mostrarMensajeLlamadaEnCurso("Llamada finalizada...");
-
             int cantLlamadas = this.puesto.getCantidadLlamadasAtendidas();
             this.puesto.setCantidadLlamadasAtendidas(++cantLlamadas);
-            this.ventana.mostrarCantidadLlamadasAtendidas(cantLlamadas);
+            this.ventana.mostrarCantidadLlamadasAtendidas(cantLlamadas); //MIRAR
         } else {
             llamadaEnCurso = puesto.getLlamadaEnAtencion();
             this.puesto.getLlamadaEnAtencion().agregarObservador(this);
             ventana.mostrarMensajeLlamadaEnCurso("Llamada en curso...");
             ventana.mostrarNombreCliente(puesto.getLlamadaEnAtencion().getCliente().getNombreCompleto());
-            ventana.mostrarCantidadLlamadasAtendidas(puesto.getCantidadLlamadasAtendidas());
+            ventana.mostrarCantidadLlamadasAtendidas(puesto.getCantidadLlamadasAtendidas()); //MIRAR
         }
 
     }
