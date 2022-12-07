@@ -130,9 +130,11 @@ public class MantSimuladorController implements IObserverLlamada, IObserversSect
             }
         }
         
-        public void finalizarLlamada(){
+    public void finalizarLlamada() {
+        if (llamadaPendiente != null) {
             llamadaPendiente.setEstado(EstadoLLamada.FINALIZADA);
         }
+    }
         
         
 

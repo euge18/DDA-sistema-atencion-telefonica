@@ -26,15 +26,15 @@ public class ServicioTrabajador {
     private ServicioTrabajador(){
         trabajadores = new ArrayList<>();
 
-        trabajadores.add(new Trabajador(0, "111", "123", "Pablo Estigarribia", ServicioSector.getInstancia().ObtenerSector(1)));
-        trabajadores.add(new Trabajador(1, "8742156", "234", "Marcela Lopez", ServicioSector.getInstancia().ObtenerSector(1)));
+        trabajadores.add(new Trabajador(0, "111", "111", "Pablo Estigarribia", ServicioSector.getInstancia().ObtenerSector(1)));
+        trabajadores.add(new Trabajador(1, "222", "222", "Marcela Lopez", ServicioSector.getInstancia().ObtenerSector(1)));
 
 
-        trabajadores.add(new Trabajador(2, "8741545", "789", "Eloisa Perez", ServicioSector.getInstancia().ObtenerSector(1)));
-        trabajadores.add(new Trabajador(3, "7456622", "456", "Tadeo Molina", ServicioSector.getInstancia().ObtenerSector(1)));
+        trabajadores.add(new Trabajador(2, "333", "333", "Eloisa Perez", ServicioSector.getInstancia().ObtenerSector(1)));
+        trabajadores.add(new Trabajador(3, "444", "444", "Tadeo Molina", ServicioSector.getInstancia().ObtenerSector(1)));
 
-        trabajadores.add(new Trabajador(4, "75565653", "555", "Gabriela Mendez", ServicioSector.getInstancia().ObtenerSector(2)));
-        trabajadores.add(new Trabajador(5, "15464455", "111", "Rueben Nubes", ServicioSector.getInstancia().ObtenerSector(2)));
+        trabajadores.add(new Trabajador(4, "555", "555", "Gabriela Mendez", ServicioSector.getInstancia().ObtenerSector(2)));
+        trabajadores.add(new Trabajador(5, "666", "666", "Rueben Nubes", ServicioSector.getInstancia().ObtenerSector(2)));
     }
     
     public ArrayList<Trabajador> ObtenerTrabajadores(){

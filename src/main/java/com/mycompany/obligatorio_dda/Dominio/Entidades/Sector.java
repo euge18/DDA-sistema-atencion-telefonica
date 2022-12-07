@@ -155,20 +155,7 @@ public class Sector implements IObserverLlamada {
             }
     }
     
-    public void derivarLlamadaAPuesto(Llamada llamada) {
-            Puesto puestoLibre = obtenerPuestoLibre();
-            if (puestoLibre != null) {
-                puestoLibre.atenderLlamada(llamada);
-                llamada.setSector(this);
-                llamada.agregarObservador(this);
-                llamadasEspera.remove(llamada);
-                notifiacearObservers();
-            } else {
-                llamada.setEstado(EstadoLLamada.ESPERA);
-                llamadasEspera.add(llamada); 
-                notifiacearObservers();
-            }
-    }
+
     
     public void notifiacearObservers() {
         ArrayList<IObserversSector> copiaListaObservadores = (ArrayList<IObserversSector>) observadores.clone();
@@ -187,11 +174,26 @@ public class Sector implements IObserverLlamada {
     
     public Puesto obtenerPuestoLibre (){
         for (Puesto p : puestos) {
-            if (p.isActivo() == true && p.getLlamadaEnAtencion() == null) {
+            if (p.isActivo() == true && p.getLlamadaEnAtencion() == null && p.getTrabajadorAsignado() != null) {
                 return p;
             }
         }
         return null;
+    }
+    
+        public void derivarLlamadaAPuesto(Llamada llamada) {
+            Puesto puestoLibre = obtenerPuestoLibre();
+            if (puestoLibre != null) {
+                puestoLibre.atenderLlamada(llamada);
+                llamada.setSector(this);
+                llamada.agregarObservador(this);
+                llamadasEspera.remove(llamada);
+                notifiacearObservers();
+            } else {
+                llamada.setEstado(EstadoLLamada.ESPERA);
+                llamadasEspera.add(llamada); 
+                notifiacearObservers();
+            }
     }
     
     //creo no se usa
