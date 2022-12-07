@@ -26,14 +26,14 @@ public class ServicioTrabajador {
         trabajadores = new ArrayList<>();
 
         trabajadores.add(new Trabajador(0, "111", "123", "Pablo Estigarribia", ServicioSector.getInstancia().ObtenerSector(1)));
-        trabajadores.add(new Trabajador(1, "8742156", "234", "Marcela Lopez", ServicioSector.getInstancia().ObtenerSector(1)));
+        trabajadores.add(new Trabajador(1, "222", "123", "Marcela Lopez", ServicioSector.getInstancia().ObtenerSector(1)));
 
 
-        trabajadores.add(new Trabajador(2, "8741545", "789", "Eloisa Perez", ServicioSector.getInstancia().ObtenerSector(1)));
-        trabajadores.add(new Trabajador(3, "7456622", "456", "Tadeo Molina", ServicioSector.getInstancia().ObtenerSector(1)));
+        trabajadores.add(new Trabajador(2, "333", "123", "Eloisa Perez", ServicioSector.getInstancia().ObtenerSector(2)));
+        trabajadores.add(new Trabajador(3, "444", "123", "Tadeo Molina", ServicioSector.getInstancia().ObtenerSector(2)));
 
-        trabajadores.add(new Trabajador(4, "75565653", "555", "Gabriela Mendez", ServicioSector.getInstancia().ObtenerSector(2)));
-        trabajadores.add(new Trabajador(5, "15464455", "111", "Rueben Nubes", ServicioSector.getInstancia().ObtenerSector(2)));
+        trabajadores.add(new Trabajador(4, "555", "123", "Gabriela Mendez", ServicioSector.getInstancia().ObtenerSector(3)));
+        trabajadores.add(new Trabajador(5, "666", "123", "Rueben Nubes", ServicioSector.getInstancia().ObtenerSector(3)));
     }
     
     public ArrayList<Trabajador> ObtenerTrabajadores(){
