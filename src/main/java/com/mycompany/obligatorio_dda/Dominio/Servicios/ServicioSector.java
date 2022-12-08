@@ -12,7 +12,9 @@ import java.util.ArrayList;
  * @author zeek2
  */
 public class ServicioSector {
-      private ArrayList<Sector> sectores;
+    
+    
+    private ArrayList<Sector> sectores;
     private static ServicioSector instancia = null; //Singleton 
     
     public static ServicioSector getInstancia(){

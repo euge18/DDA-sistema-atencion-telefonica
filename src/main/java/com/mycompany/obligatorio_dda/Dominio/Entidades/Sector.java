@@ -102,20 +102,18 @@ public class Sector implements IObserverLlamada {
         return false;
     }
     
-        public boolean puestosLibres() {
-            
+    public boolean puestosLibres() {
         int puestoLibre = 0;
         for (Puesto p : puestos) {
             if (p.isActivo() == true) {
                 ++puestoLibre;
-
             }
         }
-        if(puestoLibre>0){
+        if (puestoLibre > 0) {
             return false;
         } else {
             return true;
-        } 
+        }
     }
         
     public float tiempoPromedioDemora() {
@@ -141,7 +139,6 @@ public class Sector implements IObserverLlamada {
     
     
     
-    //calcular timepo segun la lista de llamadas finalizadas
     public float calcularTiempoPromedioAtencion (){
         float timepoTotalAtencion = 0;
         for(Llamada l : llamadasFinalizadas){
@@ -158,21 +155,7 @@ public class Sector implements IObserverLlamada {
             }
     }
     
-    public void derivarLlamadaAPuesto(Llamada llamada) {
-            Puesto puestoLibre = obtenerPuestoLibre();
-            if (puestoLibre != null) {
-                puestoLibre.atenderLlamada(llamada);
-                llamada.setSector(this);
-                llamada.agregarObservador(this);
-                llamadasEspera.remove(llamada);
-                //vuelvo a notificar y si en el update no encuentro la llamda en la lista me remuevo como observador
-                notifiacearObservers();
-            } else {
-                llamada.setEstado(EstadoLLamada.ESPERA);
-                llamadasEspera.add(llamada); 
-                notifiacearObservers();
-            }
-    }
+
     
     public void notifiacearObservers() {
         ArrayList<IObserversSector> copiaListaObservadores = (ArrayList<IObserversSector>) observadores.clone();
@@ -191,19 +174,36 @@ public class Sector implements IObserverLlamada {
     
     public Puesto obtenerPuestoLibre (){
         for (Puesto p : puestos) {
-            if (p.isActivo() == true && p.getLlamadaEnAtencion() == null) {
+            if (p.isActivo() == true && p.getLlamadaEnAtencion() == null && p.getTrabajadorAsignado() != null) {
                 return p;
             }
         }
         return null;
     }
     
+        public void derivarLlamadaAPuesto(Llamada llamada) {
+            Puesto puestoLibre = obtenerPuestoLibre();
+            if (puestoLibre != null) {
+                puestoLibre.atenderLlamada(llamada);
+                llamada.setSector(this);
+                llamada.agregarObservador(this);
+                llamadasEspera.remove(llamada);
+                notifiacearObservers();
+            } else {
+                llamada.setEstado(EstadoLLamada.ESPERA);
+                llamadasEspera.add(llamada); 
+                notifiacearObservers();
+            }
+    }
+    
+    //creo no se usa
     public long calcularTiempoAtencioPuesto(int numPuesto){
         Puesto puesto = ServicioPuesto.getInstancia().obtenerPuesto(numPuesto);
         long tiempoTotalAtencion =0;
         for(Llamada l : llamadasFinalizadas){
             if(l.getPuesto().getNumeroPuesto()==numPuesto){
                 long momentoAtencion = CalculadoraFechas.calcularMilisegundos(l.getHoraAtencion().getYear(), l.getHoraAtencion().getMonthValue(), l.getHoraAtencion().getDayOfMonth(), l.getHoraAtencion().getHour(), l.getHoraAtencion().getMinute(), l.getHoraAtencion().getSecond());
+                
                 long momentoFin = CalculadoraFechas.calcularMilisegundos(l.getHoraFin().getYear(), l.getHoraFin().getMonthValue(), l.getHoraFin().getDayOfMonth(), l.getHoraFin().getHour(), l.getHoraFin().getMinute(), l.getHoraFin().getSecond());
 
                 long difernciaTiempo = CalculadoraFechas.calcularDiferenciaDeTiempo(momentoAtencion, momentoFin);

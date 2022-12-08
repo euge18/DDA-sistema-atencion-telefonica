@@ -12,7 +12,8 @@ import java.util.ArrayList;
  * @author zeek2
  */
 public class ServicioTrabajador {
-       private ArrayList<Trabajador> trabajadores;
+    
+    private ArrayList<Trabajador> trabajadores;
     private static ServicioTrabajador instancia = null; //Singleton 
     
     public static ServicioTrabajador getInstancia(){
@@ -27,7 +28,7 @@ public class ServicioTrabajador {
 
         trabajadores.add(new Trabajador(0, "111", "123", "Pablo Estigarribia", ServicioSector.getInstancia().ObtenerSector(1)));
         trabajadores.add(new Trabajador(1, "222", "123", "Marcela Lopez", ServicioSector.getInstancia().ObtenerSector(1)));
-
+        trabajadores.add(new Trabajador(6, "777", "123", "Jhonatan Suarez", ServicioSector.getInstancia().ObtenerSector(1)));
 
         trabajadores.add(new Trabajador(2, "333", "123", "Eloisa Perez", ServicioSector.getInstancia().ObtenerSector(2)));
         trabajadores.add(new Trabajador(3, "444", "123", "Tadeo Molina", ServicioSector.getInstancia().ObtenerSector(2)));

@@ -12,8 +12,8 @@ import java.util.ArrayList;
  * @author zeek2
  */
 public class ServicioLlamada {
-       private static int ultimoIdLlamada;
     
+    private static int ultimoIdLlamada;
     private ArrayList<Llamada> llamadas;
     private static ServicioLlamada instancia = null; //Singleton 
     

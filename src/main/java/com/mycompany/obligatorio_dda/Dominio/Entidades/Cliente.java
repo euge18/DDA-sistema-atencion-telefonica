@@ -35,11 +35,6 @@ public class Cliente {
         this.saldo = saldo;
     }
     
-    //Sacar este constructor de prueba
-    public Cliente(){
-        
-    }
-    
 
     public int getIdCliente() {
         return idCliente;
@@ -90,24 +85,7 @@ public class Cliente {
         }
   
     }
-    
-    //Este SACAR => SOLO PARA QUE ANDE LA APPTEST TRABAJADOR
-        public void hacerLlmada(int numeroSector){
-        if (saldo>0){
-            Llamada llamda = new Llamada(EstadoLLamada.PENDIENTE, LocalDateTime.now(), this);
-            ServicioLlamada.getInstancia().agregarLlamada(llamda);
-            Sector sector = ServicioSector.getInstancia().ObtenerSector(numeroSector);
-            if (sector != null) {
-                sector.recibirLlamada(llamda);
-            } else {
-                //Ver como lanzar mensajes
-                System.out.println("Ingrese un número de Sector valido");
-            }
-        } else {
-            System.out.println("Regarge su saldo");
-        }
-  
-    }
+
     
     public void finalizarLlamda(Llamada llmada){
         llmada.setEstado(EstadoLLamada.FINALIZADA);

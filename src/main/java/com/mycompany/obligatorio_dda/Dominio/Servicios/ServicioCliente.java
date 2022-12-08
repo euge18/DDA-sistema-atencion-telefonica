@@ -12,7 +12,8 @@ import java.util.ArrayList;
  * @author zeek2
  */
 public class ServicioCliente {
-      private ArrayList<Cliente> clientes;
+    
+    private ArrayList<Cliente> clientes;
     private static ServicioCliente instancia = null; //Singleton 
     
     public static ServicioCliente getInstancia(){

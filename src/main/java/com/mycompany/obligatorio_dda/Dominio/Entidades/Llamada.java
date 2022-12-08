@@ -15,8 +15,8 @@ import java.util.ArrayList;
  * @author zeek2
  */
 public class Llamada {
-      private static int costoFijo = 1;
     
+    private static int costoFijo = 1;
     private int idLlamada;
     private EstadoLLamada estado;
     private LocalDateTime horaInicio;
@@ -179,10 +179,6 @@ public class Llamada {
         observadores.remove(o);
     }
     
-    
-
-    
-    //Ver como convertir las fechas en formatos mas lindos
     @Override
     public String toString(){       
         if(this.idLlamada==-1){

@@ -114,7 +114,6 @@ public class Puesto {
         this.observadoresPuesto = observadoresPuesto;
     }
     
-    //Aqui podria haber una funcion contestar, 
     
     public void finalizarLlamada(Llamada llamamda){
         llamamda.setEstado(EstadoLLamada.FINALIZADA);

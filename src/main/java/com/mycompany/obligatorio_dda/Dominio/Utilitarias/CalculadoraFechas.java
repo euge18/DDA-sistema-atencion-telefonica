@@ -21,9 +21,7 @@ public class CalculadoraFechas {
     }
 
     public static long calcularDiferenciaDeTiempo(long atencion, long fin) {
-
         long diferenciaMilisegundos = Math.abs(atencion - fin);
-
         return TimeUnit.MILLISECONDS.toSeconds(diferenciaMilisegundos);
     }
     

@@ -13,7 +13,6 @@ import com.mycompany.obligatorio_dda.Dominio.Utilitarias.CalculadoraFechas;
 import com.mycompany.obligatorio_dda.Dominio.Repositorios.IObserverLlamada;
 import com.mycompany.obligatorio_dda.Dominio.Repositorios.IObserversSector;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 /**
  *
@@ -36,10 +35,6 @@ public class MantSimuladorController implements IObserverLlamada, IObserversSect
         private String mensaje;
                 
         private boolean primeraLlamada=true;
-        
-        
-        
-        
         
         public MantSimuladorController(MantVentanaSimulador ventana){
             this.ventana = ventana;
@@ -130,9 +125,11 @@ public class MantSimuladorController implements IObserverLlamada, IObserversSect
             }
         }
         
-        public void finalizarLlamada(){
+    public void finalizarLlamada() {
+        if (llamadaPendiente != null) {
             llamadaPendiente.setEstado(EstadoLLamada.FINALIZADA);
         }
+    }
         
         
 
@@ -140,7 +137,9 @@ public class MantSimuladorController implements IObserverLlamada, IObserversSect
     public void update(Llamada llamada) {
         if(llamada.getEstado()==EstadoLLamada.FINALIZADA){
             llamada.removerObservador(this);
-            llamada.setHoraFin(LocalDateTime.now());
+
+            llamada.setHoraFin(LocalDateTime.now()); 
+
             long momentoInicial = CalculadoraFechas.calcularMilisegundos(llamada.getHoraInicio().getYear(), llamada.getHoraInicio().getMonthValue(), llamada.getHoraInicio().getDayOfMonth(), llamada.getHoraInicio().getHour(), llamada.getHoraInicio().getMinute(), llamada.getHoraInicio().getSecond());
             long momentoFin = CalculadoraFechas.calcularMilisegundos(llamada.getHoraFin().getYear(), llamada.getHoraFin().getMonthValue(), llamada.getHoraFin().getDayOfMonth(), llamada.getHoraFin().getHour(), llamada.getHoraFin().getMinute(), llamada.getHoraFin().getSecond());
             long difernciaTiempo = CalculadoraFechas.calcularDiferenciaDeTiempo(momentoInicial, momentoFin);           
