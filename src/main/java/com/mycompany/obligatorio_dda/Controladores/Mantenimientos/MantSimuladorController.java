@@ -37,6 +37,8 @@ public class MantSimuladorController implements IObserverLlamada, IObserversSect
                 
         private boolean primeraLlamada=true;
         
+        private boolean puedeTeclear=false;
+        
         public MantSimuladorController(MantVentanaSimulador ventana){
             this.ventana = ventana;
             this.mensaje = "--BIENVENIDO--\n Para Comunicarse con nosotros presione el botón Iniciar\n Si desea abandonar la seción puede presionar Salir";
@@ -45,6 +47,7 @@ public class MantSimuladorController implements IObserverLlamada, IObserversSect
         
         public void iniciarLlamada(Llamada llamada){
             llamadaPendiente = llamada;
+            puedeTeclear = true;
             if(primeraLlamada){
                this.mensaje = "Ingrese su cédula seguida de la tecla numeral #";  
             }else{
@@ -55,12 +58,14 @@ public class MantSimuladorController implements IObserverLlamada, IObserversSect
         }
         
     public void recibirNumerosCedula(String numero) {
+        if (puedeTeclear) {
             if (!clienteIdentificado) {
                 cedulaCliente = cedulaCliente + numero;
 
             } else {
                 ultimoNumero = numero;
             }
+        }
     }
         
         public void buscarCliente(){
@@ -127,6 +132,7 @@ public class MantSimuladorController implements IObserverLlamada, IObserversSect
         }
         
     public void finalizarLlamada() {
+        puedeTeclear = false;
         if (llamadaPendiente != null) {
             llamadaPendiente.setEstado(EstadoLLamada.FINALIZADA);
         }
@@ -138,13 +144,12 @@ public class MantSimuladorController implements IObserverLlamada, IObserversSect
     public void update(Llamada llamada) {
         if(llamada.getEstado()==EstadoLLamada.FINALIZADA){
             llamada.removerObservador(this);
-
             llamada.setHoraFin(LocalDateTime.now()); 
 
             long momentoInicial = CalculadoraFechas.calcularMilisegundos(llamada.getHoraInicio().getYear(), llamada.getHoraInicio().getMonthValue(), llamada.getHoraInicio().getDayOfMonth(), llamada.getHoraInicio().getHour(), llamada.getHoraInicio().getMinute(), llamada.getHoraInicio().getSecond());
             long momentoFin = CalculadoraFechas.calcularMilisegundos(llamada.getHoraFin().getYear(), llamada.getHoraFin().getMonthValue(), llamada.getHoraFin().getDayOfMonth(), llamada.getHoraFin().getHour(), llamada.getHoraFin().getMinute(), llamada.getHoraFin().getSecond());
             long difernciaTiempo = CalculadoraFechas.calcularDiferenciaDeTiempo(momentoInicial, momentoFin);           
-            this.mensaje = "Llamada FinalizadA...\n Duración: " + difernciaTiempo + " segundos\nCosto: " + llamada.calcularCosto(llamada) + "\nSu saldo es de: " + llamada.getCliente().getSaldo() + "$\n Para volver a comunicarse: Presione Iniciar de nuevo\nPara comunicarse con Administracion presione 1\nVentas presione 2 \n Desarrollo presione 3 \n y finalmente presione *";
+            this.mensaje = "Llamada Finalizada...\n Duración: " + difernciaTiempo + " segundos\nCosto: " + llamada.calcularCosto(llamada) + "\nSu saldo es de: " + llamada.getCliente().getSaldo() + "$\n Para volver a comunicarse: Presione Iniciar de nuevo\nPara comunicarse con Administracion presione 1\nVentas presione 2 \n Desarrollo presione 3 \n y finalmente presione *";
             this.primeraLlamada=false;
             this.ultimoNumero="";
             this.llamadaPendiente=null;

@@ -67,7 +67,4 @@ public class Trabajador {
     public String toString(){
         return this.nombre;
     }
-    
-    //Login y Logout son funciones que usa el formulario de Login (como el PortalTareas)
-    // por tanto son responsabilidades del controlador verificar la existencia de ese trabajador
 }

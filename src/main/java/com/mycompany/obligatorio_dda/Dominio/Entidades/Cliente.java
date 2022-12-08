@@ -68,22 +68,19 @@ public class Cliente {
         this.tipo = tipo;
     }
     
-    //ESTE DEJAR => LO NESECITA EL SIMULADOR DEL LADO DEL CLIENTE
-    public void hacerLlmada(int numeroSector, Llamada llamada){
-        if (saldo>0){
-            llamada.setCliente(this);
-            ServicioLlamada.getInstancia().agregarLlamada(llamada);
-            Sector sector = ServicioSector.getInstancia().ObtenerSector(numeroSector);
-            if (sector != null) {
-                sector.recibirLlamada(llamada);
-            } else {
-                //Ver como lanzar mensajes
-                System.out.println("Ingrese un número de Sector valido");
-            }
-        } else {
-            System.out.println("Regarge su saldo");
+    public void hacerLlmada(int numeroSector, Llamada llamada) {
+        try {
+            if (saldo > 0) {
+                llamada.setCliente(this);
+                ServicioLlamada.getInstancia().agregarLlamada(llamada);
+                Sector sector = ServicioSector.getInstancia().ObtenerSector(numeroSector);
+                if (sector != null) {
+                    sector.recibirLlamada(llamada);
+                } 
+            } 
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
-  
     }
 
     

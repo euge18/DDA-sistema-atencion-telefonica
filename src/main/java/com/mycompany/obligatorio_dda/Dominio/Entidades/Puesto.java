@@ -97,12 +97,16 @@ public class Puesto {
         this.cantidadLlamadasAtendidas = cantidadLlamadasAtendidas;
     }
     
-    public void atenderLlamada(Llamada llamada){
+    public void atenderLlamada(Llamada llamada) {
+        try {
             llamada.setEstado(EstadoLLamada.CURSO);
             llamada.setHoraAtencion(LocalDateTime.now());
             llamada.setPuesto(this);
             llamada.setTrabajador(trabajadorAsignado);
-            setLlamadaEnAtencion(llamada);          
+            setLlamadaEnAtencion(llamada);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     public ArrayList<IObserverPuesto> getObservadoresPuesto() {
@@ -124,12 +128,10 @@ public class Puesto {
         }
     }
     
-    //cuando la llamada deriva a un puesto a Sector se lo agrega
     public void agregarObservador (IObserverPuesto o){
         observadoresPuesto.add(o);
     }
     
-    //cuando la llamada finaliza a Sector ya no le interesa seguir observando
     public void removerObservador (IObserverPuesto o){
         observadoresPuesto.remove(o);
     }

@@ -169,32 +169,34 @@ public class Llamada {
         }
     }
     
-    //cuando la llamada deriva a un puesto a Sector se lo agrega
     public void agregarObservador (IObserverLlamada o){
         observadores.add(o);
     }
-    
-    //cuando la llamada finaliza a Sector ya no le interesa seguir observando
+
     public void removerObservador (IObserverLlamada o){
         observadores.remove(o);
     }
     
     @Override
-    public String toString(){       
-        if(this.idLlamada==-1){
-            return this.descripcion;
-        } else {
-                  long difernciaTiempo = 0;
-        boolean Fin;
-        if (this.estado==EstadoLLamada.FINALIZADA){
-            Fin = true;
-            long momentoAtencion = CalculadoraFechas.calcularMilisegundos(this.getHoraAtencion().getYear(), this.getHoraAtencion().getMonthValue(), this.getHoraAtencion().getDayOfMonth(), this.getHoraAtencion().getHour(), this.getHoraAtencion().getMinute(), this.getHoraAtencion().getSecond());
-            long momentoFin = CalculadoraFechas.calcularMilisegundos(this.getHoraFin().getYear(), this.getHoraFin().getMonthValue(), this.getHoraFin().getDayOfMonth(), this.getHoraFin().getHour(), this.getHoraFin().getMinute(), this.getHoraFin().getSecond());
-            difernciaTiempo = CalculadoraFechas.calcularDiferenciaDeTiempo(momentoAtencion, momentoFin);
-        } else {
-            Fin = false;
-        }    
-        return this.idLlamada + " | " + this.estado + " | " + CalculadoraFechas.formatearFecha(this.horaInicio) + " | " + (Fin? CalculadoraFechas.formatearFecha(this.horaFin): "Sin Finalizar") + " | " + this.puesto + " | " + this.puesto.getTrabajadorAsignado() + " | " +(Fin? difernciaTiempo: "Sin Finalizar") + " | " + (Fin? this.costo: "Sin Finalizar") + " | " + this.cliente + " | " + this.cliente.getSaldo();  
+    public String toString() {
+        try {
+            if (this.idLlamada == -1) {
+                return this.descripcion;
+            } else {
+                long difernciaTiempo = 0;
+                boolean Fin;
+                if (this.estado == EstadoLLamada.FINALIZADA) {
+                    Fin = true;
+                    long momentoAtencion = CalculadoraFechas.calcularMilisegundos(this.getHoraAtencion().getYear(), this.getHoraAtencion().getMonthValue(), this.getHoraAtencion().getDayOfMonth(), this.getHoraAtencion().getHour(), this.getHoraAtencion().getMinute(), this.getHoraAtencion().getSecond());
+                    long momentoFin = CalculadoraFechas.calcularMilisegundos(this.getHoraFin().getYear(), this.getHoraFin().getMonthValue(), this.getHoraFin().getDayOfMonth(), this.getHoraFin().getHour(), this.getHoraFin().getMinute(), this.getHoraFin().getSecond());
+                    difernciaTiempo = CalculadoraFechas.calcularDiferenciaDeTiempo(momentoAtencion, momentoFin);
+                } else {
+                    Fin = false;
+                }
+                return this.idLlamada + " | " + this.estado + " | " + CalculadoraFechas.formatearFecha(this.horaInicio) + " | " + (Fin ? CalculadoraFechas.formatearFecha(this.horaFin) : "Sin Finalizar") + " | " + this.puesto + " | " + this.puesto.getTrabajadorAsignado() + " | " + (Fin ? difernciaTiempo : "Sin Finalizar") + " | " + (Fin ? this.costo : "Sin Finalizar") + " | " + this.cliente + " | " + this.cliente.getSaldo();
+            }
+        } catch (Exception ex) {
+            return ex.getMessage();
         }
     }
     

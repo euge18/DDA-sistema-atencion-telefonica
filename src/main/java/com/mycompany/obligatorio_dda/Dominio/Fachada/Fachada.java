@@ -23,15 +23,12 @@ import java.util.ArrayList;
  * @author zeek2
  */
 
-
-//Arreglar Fachada y Aplicarle un Patron Observer para que los Controlers lo usen
-
 public class Fachada {
     
     private ArrayList<IFachada> observadores; 
     
-     private static Fachada instancia = null; //Singleton 
-    
+    private static Fachada instancia = null; 
+     
     public static Fachada getInstancia(){
        if(instancia == null){
            instancia = new Fachada();
@@ -131,6 +128,4 @@ public class Fachada {
         return tiempo;
     }
     
-    
-
 }
