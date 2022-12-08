@@ -4,8 +4,8 @@
  */
 package com.mycompany.obligatorio_dda.Interfaz;
 
-import com.mycompany.obligatorio_dda.Controladores.LoginController;
-import com.mycompany.obligatorio_dda.Controladores.VentanaLogin;
+import com.mycompany.obligatorio_dda.Controladores.Mantenimientos.LoginController;
+import com.mycompany.obligatorio_dda.Controladores.Interfaces.VentanaLogin;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.Trabajador;
 import javax.swing.JOptionPane;
 

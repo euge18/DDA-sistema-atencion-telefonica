@@ -4,13 +4,11 @@
  */
 package com.mycompany.obligatorio_dda.Interfaz;
 
-import com.mycompany.obligatorio_dda.Controladores.MantSimuladorController;
-import com.mycompany.obligatorio_dda.Controladores.MantVentanaSimulador;
-import com.mycompany.obligatorio_dda.Controladores.Mensaje;
+import com.mycompany.obligatorio_dda.Controladores.Mantenimientos.MantSimuladorController;
+import com.mycompany.obligatorio_dda.Controladores.Interfaces.MantVentanaSimulador;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.EstadoLLamada;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.Llamada;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 /**
  *

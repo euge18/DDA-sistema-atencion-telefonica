@@ -4,10 +4,10 @@
  */
 package com.mycompany.obligatorio_dda.Dominio.Entidades;
 
-import com.mycompany.obligatorio_dda.Dominio.Repositorios.*;
-import com.mycompany.obligatorio_dda.Dominio.Servicios.*;
+import com.mycompany.obligatorio_dda.Dominio.Repositorios.IObserversSector;
+import com.mycompany.obligatorio_dda.Dominio.Repositorios.IObserverLlamada;
+import com.mycompany.obligatorio_dda.Dominio.Servicios.ServicioPuesto;
 import com.mycompany.obligatorio_dda.Dominio.Utilitarias.CalculadoraFechas;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
