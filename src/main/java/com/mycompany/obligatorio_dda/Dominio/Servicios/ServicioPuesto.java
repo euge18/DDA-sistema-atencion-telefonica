@@ -33,7 +33,6 @@ public class ServicioPuesto {
 
         puestos.add(new Puesto(4, false, ServicioTrabajador.getInstancia().obtenerTrabajador(4), ServicioSector.getInstancia().ObtenerSector(3)));
         puestos.add(new Puesto(5, false, ServicioTrabajador.getInstancia().obtenerTrabajador(5), ServicioSector.getInstancia().ObtenerSector(3)));
-        //Agregar puestos
     }
     
     public ArrayList<Puesto> obtenerPuestos(){

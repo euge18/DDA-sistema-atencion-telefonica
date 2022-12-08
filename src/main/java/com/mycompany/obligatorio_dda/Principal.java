@@ -7,11 +7,6 @@ package com.mycompany.obligatorio_dda;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.*;
 import com.mycompany.obligatorio_dda.Dominio.Servicios.*;
 import com.mycompany.obligatorio_dda.Interfaz.frmAplicacionTest;
-import com.mycompany.obligatorio_dda.Interfaz.frmMonitoreo;
-import com.mycompany.obligatorio_dda.Interfaz.frmSimuladorLlamada;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,14 +17,19 @@ public class Principal {
         ServicioSector SS = ServicioSector.getInstancia();
         ServicioPuesto SP = ServicioPuesto.getInstancia();
         ServicioTrabajador ST = ServicioTrabajador.getInstancia();
-        ServicioCliente SC = ServicioCliente.getInstancia();
         
+        Sector sector1 = SS.ObtenerSector(1);
+        sector1.setPuestos(SP.ObtenerPuetosPorSector(sector1.getNumeroSector()));
+        sector1.setTrabajadores(ST.ObtenerTrabajadoresPorSector(sector1.getNumeroSector()));
         
-        Sector sector0 = SS.ObtenerSector(1);
-        sector0.setPuestos(SP.ObtenerPuetosPorSector(sector0.getNumeroSector()));
-        sector0.setTrabajadores(ST.ObtenerTrabajadoresPorSector(sector0.getNumeroSector()));
+        Sector sector2 = SS.ObtenerSector(2);
+        sector2.setPuestos(SP.ObtenerPuetosPorSector(sector2.getNumeroSector()));
+        sector2.setTrabajadores(ST.ObtenerTrabajadoresPorSector(sector2.getNumeroSector()));
+        
+        Sector sector3 = SS.ObtenerSector(3);
+        sector3.setPuestos(SP.ObtenerPuetosPorSector(sector3.getNumeroSector()));
+        sector3.setTrabajadores(ST.ObtenerTrabajadoresPorSector(sector3.getNumeroSector()));
        
-        
         frmAplicacionTest frmTestApp = new frmAplicacionTest();
         frmTestApp.setVisible(true);
         
