@@ -134,10 +134,7 @@ public class Sector implements IObserverLlamada {
         puesto.setTrabajadorAsignado(null);
         puesto.setCantidadLlamadasAtendidas(0);
         puesto.setTotalTiempoDemora(0);
-    }
-    
-    
-    
+    } 
     
     public float calcularTiempoPromedioAtencion (){
         float timepoTotalAtencion = 0;
@@ -147,15 +144,17 @@ public class Sector implements IObserverLlamada {
         return timepoTotalAtencion/puestos.size();
     }
     
-    public void recibirLlamada (Llamada llamada){
+    public void recibirLlamada(Llamada llamada) {
+        try {
             if (llamadasEspera.size() <= 5) {
                 derivarLlamadaAPuesto(llamada);
             } else {
                 llamada.setEstado(EstadoLLamada.RECHAZADA);
             }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
-    
-
     
     public void notifiacearObservers() {
         ArrayList<IObserversSector> copiaListaObservadores = (ArrayList<IObserversSector>) observadores.clone();
@@ -181,7 +180,8 @@ public class Sector implements IObserverLlamada {
         return null;
     }
     
-        public void derivarLlamadaAPuesto(Llamada llamada) {
+    public void derivarLlamadaAPuesto(Llamada llamada) {
+        try {
             Puesto puestoLibre = obtenerPuestoLibre();
             if (puestoLibre != null) {
                 puestoLibre.atenderLlamada(llamada);
@@ -191,41 +191,29 @@ public class Sector implements IObserverLlamada {
                 notifiacearObservers();
             } else {
                 llamada.setEstado(EstadoLLamada.ESPERA);
-                llamadasEspera.add(llamada); 
+                llamadasEspera.add(llamada);
                 notifiacearObservers();
             }
-    }
-    
-    //creo no se usa
-    public long calcularTiempoAtencioPuesto(int numPuesto){
-        Puesto puesto = ServicioPuesto.getInstancia().obtenerPuesto(numPuesto);
-        long tiempoTotalAtencion =0;
-        for(Llamada l : llamadasFinalizadas){
-            if(l.getPuesto().getNumeroPuesto()==numPuesto){
-                long momentoAtencion = CalculadoraFechas.calcularMilisegundos(l.getHoraAtencion().getYear(), l.getHoraAtencion().getMonthValue(), l.getHoraAtencion().getDayOfMonth(), l.getHoraAtencion().getHour(), l.getHoraAtencion().getMinute(), l.getHoraAtencion().getSecond());
-                
-                long momentoFin = CalculadoraFechas.calcularMilisegundos(l.getHoraFin().getYear(), l.getHoraFin().getMonthValue(), l.getHoraFin().getDayOfMonth(), l.getHoraFin().getHour(), l.getHoraFin().getMinute(), l.getHoraFin().getSecond());
-
-                long difernciaTiempo = CalculadoraFechas.calcularDiferenciaDeTiempo(momentoAtencion, momentoFin);
-                
-                tiempoTotalAtencion+=difernciaTiempo;
-            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
-        return tiempoTotalAtencion/puesto.getCantidadLlamadasAtendidas();
-    }
-    
+    } 
 
     @Override
     public void update(Llamada llamada) {
-        if (llamada.getEstado() == EstadoLLamada.FINALIZADA){
-            llamadasFinalizadas.add(llamada);
-            llamada.removerObservador(this);         
-            if (llamadasEspera.isEmpty()){
-                System.out.println("No hay mas llamadas por ahora");
-            } else {
-                Llamada proximaLlamada = llamadasEspera.get(0);
-                derivarLlamadaAPuesto(proximaLlamada);
-            }         
+        try {
+            if (llamada.getEstado() == EstadoLLamada.FINALIZADA) {
+                llamadasFinalizadas.add(llamada);
+                llamada.removerObservador(this);
+                if (llamadasEspera.isEmpty()) {
+                    System.out.println("No hay mas llamadas por ahora");
+                } else {
+                    Llamada proximaLlamada = llamadasEspera.get(0);
+                    derivarLlamadaAPuesto(proximaLlamada);
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
     }
     
