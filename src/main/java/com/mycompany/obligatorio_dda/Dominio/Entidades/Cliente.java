@@ -5,8 +5,8 @@
 package com.mycompany.obligatorio_dda.Dominio.Entidades;
 
 import com.mycompany.obligatorio_dda.Dominio.Repositorios.ITipoCliente;
-import com.mycompany.obligatorio_dda.Dominio.Servicios.*;
-import java.time.LocalDateTime;
+import com.mycompany.obligatorio_dda.Dominio.Servicios.ServicioLlamada;
+import com.mycompany.obligatorio_dda.Dominio.Servicios.ServicioSector;
 
 /**
  *

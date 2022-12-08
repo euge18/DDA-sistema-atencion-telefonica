@@ -5,7 +5,6 @@
 package com.mycompany.obligatorio_dda.Dominio.Repositorios;
 
 import com.mycompany.obligatorio_dda.Dominio.Entidades.Sector;
-import java.util.ArrayList;
 
 /**
  *

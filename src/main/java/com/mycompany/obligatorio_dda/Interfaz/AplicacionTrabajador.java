@@ -4,8 +4,8 @@
  */
 package com.mycompany.obligatorio_dda.Interfaz;
 
-import com.mycompany.obligatorio_dda.Controladores.AppTrabajadorController;
-import com.mycompany.obligatorio_dda.Controladores.VentanaTrabajador;
+import com.mycompany.obligatorio_dda.Controladores.Mantenimientos.AppTrabajadorController;
+import com.mycompany.obligatorio_dda.Controladores.Interfaces.VentanaTrabajador;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.Trabajador;
 import javax.swing.JOptionPane;
 

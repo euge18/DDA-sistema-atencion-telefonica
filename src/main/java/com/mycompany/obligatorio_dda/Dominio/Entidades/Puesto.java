@@ -4,8 +4,7 @@
  */
 package com.mycompany.obligatorio_dda.Dominio.Entidades;
 
-import com.mycompany.obligatorio_dda.Dominio.Repositorios.IObserverPuesto;
-import com.mycompany.obligatorio_dda.Dominio.Utilitarias.CalculadoraFechas;
+import com.mycompany.obligatorio_dda.Dominio.Repositorios.IObserverPuesto;;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 

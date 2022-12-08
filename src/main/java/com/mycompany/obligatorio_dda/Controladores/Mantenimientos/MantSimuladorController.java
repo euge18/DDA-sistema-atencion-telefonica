@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.obligatorio_dda.Controladores;
+package com.mycompany.obligatorio_dda.Controladores.Mantenimientos;
 
+import com.mycompany.obligatorio_dda.Controladores.Interfaces.MantVentanaSimulador;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.Cliente;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.EstadoLLamada;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.Llamada;
@@ -21,7 +22,7 @@ import java.time.LocalDateTime;
 public class MantSimuladorController implements IObserverLlamada, IObserversSector{
     
         private MantVentanaSimulador ventana;
-        
+       
         private Llamada llamadaPendiente;
         
         private Cliente cliente;
