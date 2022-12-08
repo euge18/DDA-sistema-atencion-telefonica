@@ -28,11 +28,11 @@ public class ServicioPuesto {
         puestos.add(new Puesto(0, false, ServicioTrabajador.getInstancia().obtenerTrabajador(0), ServicioSector.getInstancia().ObtenerSector(1)));
         puestos.add(new Puesto(1, false, ServicioTrabajador.getInstancia().obtenerTrabajador(1), ServicioSector.getInstancia().ObtenerSector(1)));
 
-        puestos.add(new Puesto(2, false, ServicioTrabajador.getInstancia().obtenerTrabajador(2), ServicioSector.getInstancia().ObtenerSector(1)));
-        puestos.add(new Puesto(3, false, ServicioTrabajador.getInstancia().obtenerTrabajador(3), ServicioSector.getInstancia().ObtenerSector(1)));
+        puestos.add(new Puesto(2, false, ServicioTrabajador.getInstancia().obtenerTrabajador(2), ServicioSector.getInstancia().ObtenerSector(2)));
+        puestos.add(new Puesto(3, false, ServicioTrabajador.getInstancia().obtenerTrabajador(3), ServicioSector.getInstancia().ObtenerSector(2)));
 
-        puestos.add(new Puesto(4, false, ServicioTrabajador.getInstancia().obtenerTrabajador(4), ServicioSector.getInstancia().ObtenerSector(2)));
-        puestos.add(new Puesto(5, false, ServicioTrabajador.getInstancia().obtenerTrabajador(5), ServicioSector.getInstancia().ObtenerSector(2)));
+        puestos.add(new Puesto(4, false, ServicioTrabajador.getInstancia().obtenerTrabajador(4), ServicioSector.getInstancia().ObtenerSector(3)));
+        puestos.add(new Puesto(5, false, ServicioTrabajador.getInstancia().obtenerTrabajador(5), ServicioSector.getInstancia().ObtenerSector(3)));
         //Agregar puestos
     }
     
