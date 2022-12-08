@@ -4,19 +4,15 @@
  */
 package com.mycompany.obligatorio_dda.Controladores;
 
-import com.mycompany.obligatorio_dda.Dominio.Entidades.Cliente;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.EstadoLLamada;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.Llamada;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.Puesto;
 import com.mycompany.obligatorio_dda.Dominio.Entidades.Trabajador;
-import com.mycompany.obligatorio_dda.Dominio.Fachada.Fachada;
 import com.mycompany.obligatorio_dda.Dominio.Repositorios.IObserverLlamada;
 import com.mycompany.obligatorio_dda.Dominio.Repositorios.IObserverPuesto;
 import com.mycompany.obligatorio_dda.Dominio.Utilitarias.CalculadoraFechas;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 import javax.swing.JOptionPane;
 
 /**
@@ -53,16 +49,6 @@ public class AppTrabajadorController implements IObserverLlamada, IObserverPuest
         puesto = trabajador.getSector().obtenerPuestoTrabajador(trabajador);
         trabajador.getSector().obtenerPuestoTrabajador(trabajador).agregarObservador(this);
         this.tiempoDeAtencion = 0;
-        /*Llamada llamadaPrueba = new Llamada(EstadoLLamada.PENDIENTE, LocalDateTime.now(), Fachada.getInstancia().obtenerCliente(1));
-        llamadaPrueba.setHoraAtencion(LocalDateTime.now());
-        llamadaPrueba.setSector(puesto.getSector());
-        llamadaPrueba.setHoraFin(LocalDateTime.now());
-        llamadaPrueba.setTrabajador(trabajador);
-        llamadaPrueba.setHoraFin(LocalDateTime.now());
-        llamadaPrueba.setEstado(EstadoLLamada.CURSO);
-        //llamadaPrueba.agregarObservador(this);
-        puesto.setLlamadaEnAtencion(llamadaPrueba);
-        */
         this.tiempoDemora=0;
     }
 
@@ -117,23 +103,19 @@ public class AppTrabajadorController implements IObserverLlamada, IObserverPuest
     public void update(Llamada llamada) {
         if(llamada.getEstado() == EstadoLLamada.FINALIZADA){
                 llamada.setHoraFin(LocalDateTime.now());
-                long momentoInicio = CalculadoraFechas.calcularMilisegundos(llamada.getHoraInicio().getYear(), llamada.getHoraInicio().getMonthValue(), llamada.getHoraInicio().getDayOfMonth(), llamada.getHoraInicio().getHour(), llamada.getHoraInicio().getMinute(), llamada.getHoraInicio().getSecond());//linea agregada
+                long momentoInicio = CalculadoraFechas.calcularMilisegundos(llamada.getHoraInicio().getYear(), llamada.getHoraInicio().getMonthValue(), llamada.getHoraInicio().getDayOfMonth(), llamada.getHoraInicio().getHour(), llamada.getHoraInicio().getMinute(), llamada.getHoraInicio().getSecond());
                 long momentoAtencion = CalculadoraFechas.calcularMilisegundos(llamada.getHoraAtencion().getYear(), llamada.getHoraAtencion().getMonthValue(), llamada.getHoraAtencion().getDayOfMonth(), llamada.getHoraAtencion().getHour(), llamada.getHoraAtencion().getMinute(), llamada.getHoraAtencion().getSecond());
-
                 long momentoFin = CalculadoraFechas.calcularMilisegundos(llamada.getHoraFin().getYear(), llamada.getHoraFin().getMonthValue(), llamada.getHoraFin().getDayOfMonth(), llamada.getHoraFin().getHour(), llamada.getHoraFin().getMinute(), llamada.getHoraFin().getSecond());
                 long difernciaTiempo = CalculadoraFechas.calcularDiferenciaDeTiempo(momentoAtencion, momentoFin); 
+                
                 this.ventana.mostrarMensajeLlamadaEnCurso("Llamada finalizada... - Duracion: " + difernciaTiempo + " - Costo: " + llamada.calcularCosto(llamada));
                 setTiempoDeAtencion(tiempoDeAtencion + difernciaTiempo);
                 if(llamada.getHoraFin()!=null){
 
-                long diferenciaMilisegundos = Math.abs(momentoAtencion - momentoFin);
-                long tiempoDemoraMilisegundos = Math.abs(momentoInicio - momentoFin);//linea agregada
-                float segundos = (float) diferenciaMilisegundos / 1000;
-                float minutos = ((float) tiempoDemoraMilisegundos /1000)/60;//linea agregada
-                setTiempoDemora(tiempoDemora + minutos);//linea agregada
-                setTiempoDeAtencion(tiempoDeAtencion + segundos);
+                long tiempoDemoraMilisegundos = Math.abs(momentoInicio - momentoFin);
+                float minutos = ((float) tiempoDemoraMilisegundos /1000)/60;
+                setTiempoDemora(tiempoDemora + minutos);
                 this.puesto.setTotalTiempoDemora(tiempoDemora);
-                this.ventana.mostrarTiempoPromedioLlamadas(getTiempoDeAtencion() + segundos);
                 if (llamada.getHoraFin() != null) {
                     llamada.setHoraFin(LocalDateTime.now());
                 }
@@ -145,7 +127,6 @@ public class AppTrabajadorController implements IObserverLlamada, IObserverPuest
                 this.puesto.setLlamadasAtendidas(llamadas);
                 this.ventana.mostrarTiempoPromedioLlamadas(getTiempoDeAtencion()/llamadas.size());
                 llamada.removerObservador(this);
-
                 this.puesto.setLlamadaEnAtencion(null);
             }
         }  
@@ -156,13 +137,13 @@ public class AppTrabajadorController implements IObserverLlamada, IObserverPuest
         if (this.puesto.getLlamadaEnAtencion() == null) {
             int cantLlamadas = this.puesto.getCantidadLlamadasAtendidas();
             this.puesto.setCantidadLlamadasAtendidas(++cantLlamadas);
-            this.ventana.mostrarCantidadLlamadasAtendidas(cantLlamadas); //MIRAR
+            this.ventana.mostrarCantidadLlamadasAtendidas(cantLlamadas); 
         } else {
             llamadaEnCurso = puesto.getLlamadaEnAtencion();
             this.puesto.getLlamadaEnAtencion().agregarObservador(this);
             ventana.mostrarMensajeLlamadaEnCurso("Llamada en curso...");
             ventana.mostrarNombreCliente(puesto.getLlamadaEnAtencion().getCliente().getNombreCompleto());
-            ventana.mostrarCantidadLlamadasAtendidas(puesto.getCantidadLlamadasAtendidas()); //MIRAR
+            ventana.mostrarCantidadLlamadasAtendidas(puesto.getCantidadLlamadasAtendidas());
         }
 
     }

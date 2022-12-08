@@ -36,10 +36,6 @@ public class MantSimuladorController implements IObserverLlamada, IObserversSect
                 
         private boolean primeraLlamada=true;
         
-        
-        
-        
-        
         public MantSimuladorController(MantVentanaSimulador ventana){
             this.ventana = ventana;
             this.mensaje = "--BIENVENIDO--\n Para Comunicarse con nosotros presione el botón Iniciar\n Si desea abandonar la seción puede presionar Salir";
